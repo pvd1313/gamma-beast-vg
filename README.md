@@ -11,6 +11,7 @@ Links:
 
 # Requirements
 - [S.T.A.L.K.E.R. Anomaly v.1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
+- [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases)
 - [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10)
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone)
 
