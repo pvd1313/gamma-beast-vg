@@ -1,0 +1,26 @@
+-- THIS SCRIPT IS OBSOLETE. LOOK beast_vg for actual logic.
+
+-- Referenced by:
+-- liz_fdda_redone_headgear_animations (G.A.M.M.A. 0.9.4)
+-- uni_anim_detectors (G.A.M.M.A. 0.9.4)
+-- uni_anim_knives (G.A.M.M.A. 0.9.4)
+
+-- fix_beefnvg_anim (G.A.M.M.A. 0.9.4)
+local mc_anm_time_1 = 0
+local torch_anm_time = 0
+--
+
+-- drx_da_main (G.A.M.M.A. 0.9.4)
+-- item_device (G.A.M.M.A. 0.9.4)
+function nvg_glitch(power)
+	beast_vg.nvg_glitch(power)
+end
+--
+
+-- item_device (G.A.M.M.A. 0.9.4)
+local play_animation = true
+
+function brightness_adjust()
+	beast_vg.brightness_adjust()
+end
+--
