@@ -1,0 +1,16 @@
+{
+  "Lua.workspace.library": [
+    "C:/repo/anomaly-definitions/library",
+    "C:/Games/Gamma/mods/Beast VG - PVD/gamedata/scripts",
+    "C:/repo/gamma-0.9.4-scripts"
+  ],
+  "Lua.workspace.ignoreSubmodules": false,
+  "Lua.diagnostics.disable": [
+    "lowercase-global"
+  ],
+  "Lua.runtime.plugin": "C:/repo/anomaly-definitions/plugin.lua",
+  "Lua.runtime.version": "Lua 5.1",
+  "files.associations": {
+    "*.script": "lua"
+  }
+}
