@@ -1,21 +1,21 @@
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
-	["view_through_scope"] = false,
-	["off_when_nv_scope"] = false,
-	["off_when_hv_scope"] = false,
-	["off_when_binoc"] = false,
-	["stays_pda"] = true,
-	["gain_max"] = 2.0,
-	["gain_min"] = 0.5,
-	["gain_offset"] = 1.0,
-	["washout_thresh"] = 0.1,
-	["shader_scope_compat"] = false,
-	["gen1_tubes"] = 1.0,
-	["gen2_tubes"] = 2.0,
-	["gen3_tubes"] = 4.0,
-	["gen1_mode"] = 3.0,
-	["gen2_mode"] = 0.0,
-	["gen3_mode"] = 0.0
+    ["view_through_scope"] = false,
+    ["off_when_nv_scope"] = false,
+    ["off_when_hv_scope"] = false,
+    ["off_when_binoc"] = false,
+    ["stays_pda"] = true,
+    ["gain_max"] = 2.0,
+    ["gain_min"] = 0.5,
+    ["gain_offset"] = 1.0,
+    ["washout_thresh"] = 0.1,
+    ["shader_scope_compat"] = false,
+    ["gen1_tubes"] = 1.0,
+    ["gen2_tubes"] = 2.0,
+    ["gen3_tubes"] = 4.0,
+    ["gen1_mode"] = 3.0,
+    ["gen2_mode"] = 0.0,
+    ["gen3_mode"] = 0.0
 }
 
 function get_config(key)
@@ -24,28 +24,28 @@ end
 
 function on_mcm_load()
     op = { 
-		id = "beast_vg",
-		sh = true,
-		gr = {
-			{ id = "title", type= "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title", size = { 512, 50 }, spacing = 20 },
-			{ id = "view_through_scope", type = "check", val = 1, def = true },
-			{ id = "off_when_nv_scope", type = "check", val = 1, def = false },
-			{ id = "off_when_hv_scope", type = "check", val = 1, def = false },
-			{ id = "off_when_binoc", type = "check", val = 1, def = false },
-			{ id = "stays_pda", type = "check", val = 1, def = true },
-			{ id = "gain_max", type = "track", val = 2, min = 1.0, max = 3.0, step = 0.1, def = 2.0 },
+        id = "beast_vg",
+        sh = true,
+        gr = {
+            { id = "title", type= "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title", size = { 512, 50 }, spacing = 20 },
+            { id = "view_through_scope", type = "check", val = 1, def = true },
+            { id = "off_when_nv_scope", type = "check", val = 1, def = false },
+            { id = "off_when_hv_scope", type = "check", val = 1, def = false },
+            { id = "off_when_binoc", type = "check", val = 1, def = false },
+            { id = "stays_pda", type = "check", val = 1, def = true },
+            { id = "gain_max", type = "track", val = 2, min = 1.0, max = 3.0, step = 0.1, def = 2.0 },
             { id = "gain_min", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.5 },
-			{ id = "gain_offset", type = "track", val = 2, min = 0.5,max = 3.0,step = 0.1, def = 1.0 },
-			{ id = "washout_thresh", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.1 },		
-			{ id = "gen1_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 1.0 },
-			{ id = "gen2_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 2.0 },
-			{ id = "gen3_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 4.0 },
-			{ id = "gen1_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 3.0 },
-			{ id = "gen2_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
-			{ id = "gen3_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
-			{ id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title_2", size = { 512,50 }, spacing = 20 },
-			{ id = "shader_scope_compat", type = "check", val = 1, def = false }
-		}
+            { id = "gain_offset", type = "track", val = 2, min = 0.5,max = 3.0,step = 0.1, def = 1.0 },
+            { id = "washout_thresh", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.1 },        
+            { id = "gen1_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 1.0 },
+            { id = "gen2_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 2.0 },
+            { id = "gen3_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 4.0 },
+            { id = "gen1_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 3.0 },
+            { id = "gen2_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
+            { id = "gen3_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
+            { id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title_2", size = { 512,50 }, spacing = 20 },
+            { id = "shader_scope_compat", type = "check", val = 1, def = false }
+        }
     }
     return op
 end
