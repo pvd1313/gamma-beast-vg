@@ -28,9 +28,19 @@ local flip_down = 1              -- flip down value (1 all the way up, 100 all t
 
 -- Configs (PVD failed to add it to LTX, thats why it is here, hard-coded) 
 -- Also maybe there is way to detect scope time at runtime.
-local nvg_heat_scope_names = { "1pn93n2_1gs", "t12", "gauss_sight"}
-local nvg_night_scope_names = { "1pn93", "pn23", "vulkan" }
-local nvg_binoc_names = { "wpn_binoc_inv" }
+local nvg_heat_scope_names = {
+    ["1pn93n2_1gs"] = true,
+    ["t12"] = true,
+    ["gauss_sight"] = true,
+}
+local nvg_night_scope_names = {
+    ["1pn93"] = true,
+    ["pn23"] = true,
+    ["vulkan"] = true,
+}
+local nvg_binoc_names = {
+    ["wpn_binoc_inv"] = true,
+}
 
 -- Variables for turn-on animation
 local torch_anm_state = 0
@@ -313,27 +323,18 @@ function check_active_scope_restricts_nvg()
     local scope_name = try_get_active_scope_name()
     if (not scope_name) then return false end
 
-    if (nvg_off_when_hv_scope and table_contains(nvg_heat_scope_names, scope_name)) then
+    if (nvg_off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
         return true
     end
 
-    if (nvg_off_when_nv_scope and table_contains(nvg_night_scope_names, scope_name)) then
+    if (nvg_off_when_nv_scope and nvg_night_scope_names[scope_name]) then
         return true
     end
 
-    if (nvg_off_when_binoc and table_contains(nvg_binoc_names, scope_name)) then
+    if (nvg_off_when_binoc and nvg_binoc_names[scope_name]) then
         return true
     end
 
-    return false
-end
-
-function table_contains(tbl, val)
-    for _, v in ipairs(tbl) do
-        if v == val then
-            return true
-        end
-    end
     return false
 end
 
