@@ -1,8 +1,4 @@
------------------------------------------------------------------------------
---        
------------------------------------------------------------------------------
-
--- Beef NVG MCM values
+-- MCM values
 local nvg_gain_max = 2.0             -- max value for nvg gain (brightness)
 local nvg_gain_min = 0.5             -- min value for nvg gain (brightness)
 local nvg_washout_thresh = 0.1       -- used to calculate washout effect on light sources
@@ -42,8 +38,6 @@ local torch_anm_state = 0
 -- Variables for on-weapon zoom (and shader scopes compat)
 local nvg_blocker_scope = false
 local tube_count_temp = 0
---local vignette_temp = 0
-local radius_temp
 local scope_blur_temp = 0
 local shader_scope_flag = false
 local zoom = true
@@ -121,29 +115,6 @@ end
 function allow_animation()
     return (torch_anm_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
 end
-
-local lowered_anm_kinds = {
-    ["w_sniper"]  = true,
-    ["w_rifle"]   = true,
-    ["w_smg"]     = true,
-    ["w_shotgun"] = true,
-}
-
-local lowered_anm_classes = {
-    ["WP_VAL"]   = true,
-    ["WP_AK74"]  = true,
-    ["WP_LR300"] = true,
-    ["WP_BM16"]  = true,
-    ["WP_SVD"]   = true,
-    ["WP_SVU"]   = true,
-    ["WP_GROZA"] = true,
-    ["WP_ASHTG"] = true,
-    ["WP_SHOTG"] = true,
-    ["WP_RG6"]   = true,
-    ["WP_RPG7"]  = true,
-    ["D_PDA"]    = true,
-}
-
 
 item_device.set_nightvision = function (section, state)
     if mcm_enable_nvg_animation and z_beefs_nvgs.play_animation then
@@ -411,17 +382,17 @@ end
 
 function update_weapon_zoom_in()
     if (not item_device.nv_state) then return end
-    
+
     local active_scope_restricts_nvg = check_active_scope_restricts_nvg()
-    
+
     if (active_scope_restricts_nvg) then
         nvg_blocker_scope = true
         console_disable_nvg_shader()
-    
+
     elseif (not active_scope_restricts_nvg and nvg_blocker_scope) then
         nvg_blocker_scope = false
         console_update_nvg_shader()
-    
+
     elseif (shader_scope_compat) then
         local scopeName = nil
         local wpn = db.actor:active_item()
@@ -433,21 +404,21 @@ function update_weapon_zoom_in()
         else
             scopeName = utils_item.get_param(wpn:section(), wpn:id(), "scope_texture", "string")
         end
-        
+
         --local tex_active = get_console():get_integer("scope_2dtexactive")
         if scopeName and scopeRadii.scopeRadii[scopeName] then
             scope_blur_temp = get_console():get_float("scope_blur_inner")
             tube_count_temp = nvg_num_tubes
             radius_temp = nvg_radius
-            --vignette_temp = vignette_current
             nvg_num_tubes = 1
             get_console():execute("scope_blur_inner 0")
             nvg_radius = math.min(scopeRadii.scopeRadii[scopeName], 0.9)
-            --vignette_current = 0.5 - scopeRadii.scopeRadii[scopeName]
+
             CreateTimeEvent("nvg_scope", "nvg_scope", 0.25, function()
                 console_update_nvg_shader()
                 return true
             end)
+
             shader_scope_flag = true
         end
     end
@@ -455,18 +426,18 @@ end
 
 function check_active_scope_restricts_nvg()
     if (not nvg_view_through_scope) then return true end
-    
+
     local scope_name = try_get_active_scope_name()
     if (not scope_name) then return false end
-    
+
     if (nvg_off_when_hv_scope and table_contains(nvg_heat_scope_names, scope_name)) then
         return true
     end
-    
+
     if (nvg_off_when_nv_scope and table_contains(nvg_night_scope_names, scope_name)) then
         return true
     end
-    
+
     if (nvg_off_when_binoc and table_contains(nvg_binoc_names, scope_name)) then
         return true
     end
@@ -483,34 +454,33 @@ function table_contains(tbl, val)
     return false
 end
 
-
 function try_get_active_scope_name()
     local wpn = db.actor:active_item()
     if not wpn then return nil end
-        
+
     local c_wpn = wpn:cast_Weapon()
     if not c_wpn then return nil end
-    
+
     if (c_wpn:GetZoomType() ~= 0) then return nil end
-        
+
     return get_sight_section(wpn)
 end
 
 function try_get_active_weapon_zoom_type()
     local wpn = db.actor:active_item()
     if not wpn then return -1 end
-    
+
     local c_wpn = wpn:cast_Weapon()
     if not c_wpn then return -1 end
-    
+
     return c_wpn:GetZoomType()
-    
+
 end
 
 -- copied from z_3d_scopes.scipt
 function get_sight_section(wpn)
     local wpn_section = wpn:section()
-    
+
     local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
     if modular_attachments then
         local c_wpn = wpn:cast_Weapon()
@@ -535,7 +505,7 @@ end
 function on_game_start()
     RegisterScriptCallback("on_game_load", on_game_load)
     RegisterScriptCallback("on_option_change", on_option_change)
-    
+
     on_option_change()
 end
 
@@ -571,9 +541,9 @@ end
 
 function actor_on_weapon_zoom_out()
     zoom = false
-    
+
     if (not item_device.nv_state) then return end
-    
+
     if (nvg_blocker_scope) then
         nvg_blocker_scope = false
         console_update_nvg_shader()
@@ -620,8 +590,8 @@ function actor_on_update()
     tg = time_global()
     if tg < tmr then return end
     tmr = tg + tmr_step
-    
-    
+
+
     if (zoom) then
         local new_zoom_type = try_get_active_weapon_zoom_type()
         if (new_zoom_type ~= wpn_zoom_type) then

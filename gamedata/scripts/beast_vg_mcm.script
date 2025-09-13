@@ -23,7 +23,7 @@ function get_config(key)
 end
 
 function on_mcm_load()
-    op = { 
+    op = {
         id = "beast_vg",
         sh = true,
         gr = {
@@ -36,7 +36,7 @@ function on_mcm_load()
             { id = "gain_max", type = "track", val = 2, min = 1.0, max = 3.0, step = 0.1, def = 2.0 },
             { id = "gain_min", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.5 },
             { id = "gain_offset", type = "track", val = 2, min = 0.5,max = 3.0,step = 0.1, def = 1.0 },
-            { id = "washout_thresh", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.1 },        
+            { id = "washout_thresh", type = "track", val = 2, min = 0.1, max = 0.9, step = 0.1, def = 0.1 },
             { id = "gen1_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 1.0 },
             { id = "gen2_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 2.0 },
             { id = "gen3_tubes", type = "list", val = 2, content={ { 1.0, "single_centered" }, { 1.1, "single_left" }, { 1.2, "single_right" }, { 2.0, "dual_centered" }, { 4.0, "quad_centered" } }, def = 4.0 },
