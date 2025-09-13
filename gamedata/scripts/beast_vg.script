@@ -320,7 +320,7 @@ end
 function check_active_scope_restricts_nvg()
     if (not nvg_view_through_scope) then return true end
 
-    local scope_name = try_get_active_scope_name()
+    local scope_name = beast_vg_util.try_get_active_scope_name()
     if (not scope_name) then return false end
 
     if (nvg_off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
@@ -336,50 +336,6 @@ function check_active_scope_restricts_nvg()
     end
 
     return false
-end
-
-function try_get_active_scope_name()
-    local wpn = db.actor:active_item()
-    if not wpn then return nil end
-
-    local c_wpn = wpn:cast_Weapon()
-    if not c_wpn then return nil end
-
-    if (c_wpn:GetZoomType() ~= 0) then return nil end
-
-    return get_sight_section(wpn)
-end
-
-function try_get_active_weapon_zoom_type()
-    local wpn = db.actor:active_item()
-    if not wpn then return -1 end
-
-    local c_wpn = wpn:cast_Weapon()
-    if not c_wpn then return -1 end
-
-    return c_wpn:GetZoomType()
-
-end
-
--- copied from z_3d_scopes.scipt
-function get_sight_section(wpn)
-    local wpn_section = wpn:section()
-
-    local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
-    if modular_attachments then
-        local c_wpn = wpn:cast_Weapon()
-        if c_wpn['IsScopeAttached'](c_wpn) then
-            return c_wpn['GetScopeName'](c_wpn)
-        end
-        return nil
-    end
-
-    local parent = ini_sys:r_string_ex(wpn_section, "parent_section") or wpn_section
-    if #parent == #wpn_section then
-        return wpn_section
-    end
-
-    return wpn_section:sub(#parent + 2)
 end
 
 -----------------------------------------------------------------------------
@@ -419,7 +375,7 @@ end
 
 function actor_on_weapon_zoom_in()
     zoom = true
-    wpn_zoom_type = try_get_active_weapon_zoom_type()
+    wpn_zoom_type = beast_vg_util.try_get_active_weapon_zoom_type()
     update_weapon_zoom_in()
 end
 
@@ -474,9 +430,8 @@ function actor_on_update()
     if tg < tmr then return end
     tmr = tg + tmr_step
 
-
     if (zoom) then
-        local new_zoom_type = try_get_active_weapon_zoom_type()
+        local new_zoom_type = beast_vg_util.try_get_active_weapon_zoom_type()
         if (new_zoom_type ~= wpn_zoom_type) then
             wpn_zoom_type = new_zoom_type
             update_weapon_zoom_in()
