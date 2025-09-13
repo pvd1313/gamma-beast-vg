@@ -167,7 +167,7 @@ function set_nightvision_animated(section, state)
     local weapon_zoomed = axr_main.weapon_is_zoomed and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
     local det_active = db.actor:active_detector() or nil
 
-    -- if holding weapon and aiming disable ADS
+    -- If holding weapon and aiming disable ADS.
     if (db.actor:active_item()) then
         if not det_active and weapon_zoomed then
             if (get_console():get_bool("wpn_aim_toggle")) then
@@ -180,133 +180,16 @@ function set_nightvision_animated(section, state)
 
     if state then
         --enable nvg
-        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))     --anim bug? small delay to prevent ctd
-        lam2.add_action(get_template_action_nvg_enable_start())             --enter hand motion
-        lam2.add_action(get_template_action_nvg_enable(section))            --equip nvg motion
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))       -- Anim bug? small delay to prevent ctd.
+        lam2.add_action(beast_vg_anim.get_template_action_nvg_enable_start())  -- Enter hand motion.
+        lam2.add_action(beast_vg_anim.get_template_action_nvg_enable(section)) -- Equip nvg motion.
     else
         --disable nvg
-        lam2.add_action(get_template_action_nvg_disable_start())            --fade in
-        lam2.add_action(get_template_action_nvg_disable(section))           --unequip nvg motion
-        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))     --anim bug? small delay to prevent ctd
-        lam2.add_action(get_template_action_nvg_disable_end())              --exit hand motion
+        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable_start())  -- Fade in.
+        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable(section)) -- Unequip NVG motion.
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))        -- Anim bug? Small delay to prevent ctd.
+        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable_end())    -- Exit hand motion.
     end
-end
-
---- ----------------------------------------------------
---- action templates
---- ----------------------------------------------------
-
-function get_template_action_nvg_enable_start()
-    local a = lam2.get_template_action_play_animation()
-    a.tag = "nvg_animation"
-    a.name = "nvg_enable_start"
-    a.sec = "anim_nvg_transition_hud"
-    a.anm = "anm_show_start"
-    a.cam = "cam_show_start"
-    a.hands = 1
-    a.anm_blend = true
-    a.on_enter = function (self)
-        game.play_hud_anm("liz\\headlamp\\liz_headlamp_toggle_weapon_sway.anm", 0, 1, 1, false)
-        -- weapon inertia expanded patch
-        if liz_inertia_expanded then
-            liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, true)
-        end
-    end
-    return a
-end
-
-function get_template_action_nvg_enable(section)
-    local a = lam2.get_template_action_play_animation()
-    a.tag = "nvg_animation"
-    a.name = "nvg_enable"
-    a.sec = "anim_nvg_hud"
-    a.anm = "anm_show"
-    a.hands = 1
-    a.anm_blend = true
-    a.target = section
-    a.fade_start = false
-    a.fade_end = false
-    a.on_execute = function (self, time)
-        if time > self.duration - 0.35 and not self.fade_start then
-            self.fade_start = true
-            level.add_pp_effector("deimos_short.ppe", 4233, false)
-        end
-        if time > self.duration - 0.25 and not self.fade_end then
-            self.fade_end = true
-            level.remove_pp_effector(4233)
-        end
-    end
-    a.on_exit = function (self)
-        item_device.set_nightvision(self.target, true)
-        torch_anm_state = 0
-        -- weapon inertia expanded patch
-        if liz_inertia_expanded then
-            liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, false)
-        end
-    end
-    return a
-end
-
-function get_template_action_nvg_disable_start()
-    local a = {
-        tag = "nvg_animation",
-        name = "nvg_disable_start",
-        hands = 1,
-        fade_disabled = false,
-        enter = function (self)
-            level.add_pp_effector("deimos_short.ppe", 4233, false)
-        end,
-        execute = function (self,time)
-            if not self.fade_disabled then
-                self.fade_disabled = true
-                level.remove_pp_effector(4233)
-            end
-            if time > 0.4 then
-                return lam2.states.success
-            end
-            return lam2.states.running
-        end
-    }
-    return a
-end
-
-function get_template_action_nvg_disable(section)
-    local a = lam2.get_template_action_play_animation()
-    a.tag = "nvg_animation"
-    a.name = "nvg_disable"
-    a.sec = "anim_nvg_hud"
-    a.anm = "anm_hide"
-    a.cam = "cam_hide"
-    a.hands = 1
-    a.anm_blend = true
-    a.target = section
-    a.on_enter = function (self)
-        game.play_hud_anm("liz\\headlamp\\liz_headlamp_toggle_weapon_sway.anm", 0, 1, 1, false)
-        item_device.set_nightvision(self.target, false)
-        -- weapon inertia expanded patch
-        if liz_inertia_expanded then
-            liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, true)
-        end
-    end
-    return a
-end
-
-function get_template_action_nvg_disable_end()
-    local a = lam2.get_template_action_play_animation()
-    a.tag = "nvg_animation"
-    a.name = "nvg_disable_end"
-    a.sec = "anim_nvg_transition_hud"
-    a.anm = "anm_hide_end"
-    a.hands = 1
-    a.anm_blend = true
-    a.on_exit = function (self)
-        torch_anm_state = 0
-        -- weapon inertia expanded patch
-        if liz_inertia_expanded then
-            liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, false)
-        end
-    end
-    return a
 end
 
 function brightness_adjust()
@@ -330,7 +213,7 @@ function brightness_adjust()
             gain_directionality = not gain_directionality
         end
     end
-    local snd_adjust = sound_object('interface\\inv_nvg')
+    local snd_adjust = sound_object("interface\\inv_nvg")
     snd_adjust:play(db.actor, 0, sound_object.s2d)
     console_update_nvg_shader()
 end
@@ -575,7 +458,6 @@ function actor_on_info_callback(npc, info_id)
         end
     end
 end
-
 
 local tmr = 0
 local tmr_step = 200
