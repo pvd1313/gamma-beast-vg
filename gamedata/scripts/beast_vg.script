@@ -42,9 +42,6 @@ local nvg_binoc_names = {
     ["wpn_binoc_inv"] = true,
 }
 
--- Variables for turn-on animation
-local torch_anm_state = 0
-
 -- Variables for on-weapon zoom (and shader scopes compat)
 local nvg_blocker_scope = false
 local tube_count_temp = 0
@@ -122,8 +119,8 @@ end
 --        NVG TURN ON AND TURN OFF FUNCTIONS, INCL ANIMATION
 -----------------------------------------------------------------------------
 
-function allow_animation()
-    return (torch_anm_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
+function check_animation_allowed()
+    return (beast_vg_anim.torch_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
 end
 
 item_device.set_nightvision = function (section, state)
@@ -170,10 +167,10 @@ end
 function set_nightvision_animated(section, state)
     if (not section) then return end
     if not ini_sys:r_string_ex(section, "nv_effect") then return end
-    if (not allow_animation()) or (not item_device.can_toggle_torch()) then return end
+    if (not check_animation_allowed()) or (not item_device.can_toggle_torch()) then return end
     if lam2.get_action_with_tag("nvg_animation") then return end
 
-    torch_anm_state = 1
+    beast_vg_anim.torch_state = 1
     local weapon_zoomed = axr_main.weapon_is_zoomed and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
     local det_active = db.actor:active_detector() or nil
 

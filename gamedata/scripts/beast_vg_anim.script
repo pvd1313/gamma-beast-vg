@@ -1,3 +1,5 @@
+torch_state = 0
+
 function get_template_action_nvg_enable_start()
     local a = lam2.get_template_action_play_animation()
     a.tag = "nvg_animation"
@@ -40,7 +42,7 @@ function get_template_action_nvg_enable(section)
     end
     a.on_exit = function (self)
         item_device.set_nightvision(self.target, true)
-        torch_anm_state = 0
+        torch_state = 0
         -- weapon inertia expanded patch
         if liz_inertia_expanded then
             liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, false)
@@ -102,7 +104,7 @@ function get_template_action_nvg_disable_end()
     a.hands = 1
     a.anm_blend = true
     a.on_exit = function (self)
-        torch_anm_state = 0
+        torch_state = 0
         -- weapon inertia expanded patch
         if liz_inertia_expanded then
             liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, false)
