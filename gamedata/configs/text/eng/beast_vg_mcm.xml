@@ -1,10 +1,4 @@
-<!-- 
-	Anomaly Modconfiguration Menu strings
-	
--->
-
 <string_table>
-
 	<string id="ui_mcm_beast_vg_title">
 		<text>Beast VG</text>
 	</string>	
