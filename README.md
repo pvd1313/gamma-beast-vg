@@ -1,12 +1,12 @@
 # About
-Next generation of Beef's NVG for [S.T.A.L.K.E.R. G.A.M.M.A.](https://discord.com/invite/stalker-gamma)
+Next generation of Beef's NVG for [G.A.M.M.A.](https://discord.com/invite/stalker-gamma)
 
-Based on mods:
+### Based on mods:
 - Beef's NVG - theRealBeef
 - FDDA Redone - lizzardman
 - G.A.M.M.A. Massive Text Overhaul Project - SageDaHerb and Dr.Pr1nkos
 
-Links: 
+### Links:
 - [Beast VG git](https://github.com/pvd1313/gamma-beast-vg)
 
 # Requirements
@@ -16,28 +16,32 @@ Links:
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone)
 
 # Installation
-1. Install `Beast VG` with `Mod Organizer`
-2. Put `Beast VG` right after `FDDA Redone`
-3. Enjoy
+1. Install `Beast VG` with `Mod Organizer`.
+2. Put `Beast VG` right after `FDDA Redone`.
+3. Enjoy (:
 
-# Features
-- Added MCM option to temporary disable NVGs when ADS with HV scopes
-- Added MCM option to temporary disable NVGs when ADS with NV scopes
-- Added MCM option to temporary disable NVGs when viewing through binocular
+# Changes
+### Features:
+- Added MCM option to temporary disable NVGs when ADS with HV scopes.
+- Added MCM option to temporary disable NVGs when ADS with NV scopes.
+- Added MCM option to temporary disable NVGs when viewing through binocular.
 
-# Fixes
-- Removed ability to toggle NVGs brightness when NVGs is temporary disabled, to prevent shader from turning on
+### Fixes:
+- Removed ability to toggle NVGs brightness when NVGs is temporary disabled, to prevent shader from turning on.
+
+### Other:
+- Removed support for 2D scopes.
 
 # Known issues
-- Turning on NVG while on ADS / binocular will turn on NVG shader without following MCM defined logic
-- Integrated weapon scopes not supported
-- NVG does not care if NV scope is turned on / off
+- Turning on NVG while on ADS / binocular will turn on NVG shader without following MCM defined logic.
+- Integrated weapon scopes not supported.
+- NVG does not care if NV scope is turned on / off.
 
 # TODO
-- Add VG state memory during game load / level transition
-- Add VG low battery notification
-- Add Heat VG
-- Add MCM option to turn off VG when 3D PDA is fully opened only
-- Add support for integrated scopes
-- Add MCM option to tweak amount of blur in shader
-- Add MCM option to tweak max view distance in shader
+- Add VG state memory during game load / level transition.
+- Add VG low battery notification.
+- Add Heat VG.
+- Add MCM option to turn off VG when 3D PDA is fully opened only.
+- Add support for integrated scopes.
+- Add MCM option to tweak amount of blur in shader.
+- Add MCM option to tweak max view distance in shader.
