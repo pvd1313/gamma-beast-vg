@@ -1,5 +1,5 @@
 # About
-Next generation of Beef's NVG for [G.A.M.M.A.](https://discord.com/invite/stalker-gamma)
+Next generation of Beef's NVG for [Anomaly 1.5.3]([https://discord.com/invite/stalker-gamma](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release))
 
 ### Based on mods:
 - Beef's NVG - theRealBeef
