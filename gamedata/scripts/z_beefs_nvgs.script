@@ -13,7 +13,7 @@ local torch_anm_time = 0
 -- drx_da_main (G.A.M.M.A. 0.9.4)
 -- item_device (G.A.M.M.A. 0.9.4)
 function nvg_glitch(power)
-    beast_vg.nvg_glitch(power)
+    beast_vg.set_glitch_power(power)
 end
 --
 

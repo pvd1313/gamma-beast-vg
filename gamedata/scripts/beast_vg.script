@@ -251,7 +251,7 @@ function state_change_effect()
 end
 
 -- nvg glitch effect during blowouts and psy storms
-function nvg_glitch(power)
+function set_glitch_power(power)
     if item_device.nv_state then
         if glitch_power ~= power then
             glitch_power = power
