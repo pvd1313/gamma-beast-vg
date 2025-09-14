@@ -8,7 +8,6 @@ local nvg_off_when_hv_scope = false  -- disable goggles when aimed with HV scope
 local nvg_off_when_binoc = false     -- disable goggles when aimed with binocular?
 local nvg_gain_offset = 1.0          -- offset for nvg gain to accomodate for brighter/darker worlds
 local nvg_stays_pda = true           -- disable nvg on PDA?
-local shader_scope_compat = false    -- compatibility with 2d shader scopes
 local nvg_radius = 0.5               -- Radius of circles
 
 -- Variables
@@ -44,9 +43,6 @@ local nvg_binoc_names = {
 
 -- Variables for on-weapon zoom (and shader scopes compat)
 local nvg_blocker_scope = false
-local tube_count_temp = 0
-local scope_blur_temp = 0
-local shader_scope_flag = false
 local zoom = true
 
 -- Variables for PDA auto-turn-off functionality
@@ -207,18 +203,18 @@ function brightness_adjust()
     local step_size = (nvg_gain_max - nvg_gain_min) / 3
     if gain_directionality and nvg_gain_current <= nvg_gain_max then
         nvg_gain_current = nvg_gain_current + step_size
-
         if nvg_gain_current >= nvg_gain_max then
             nvg_gain_current = nvg_gain_max
             gain_directionality = not gain_directionality
         end
+
     elseif not gain_directionality and nvg_gain_current >= nvg_gain_min then
         nvg_gain_current = nvg_gain_current - step_size
-
         if nvg_gain_current <= nvg_gain_min then
             nvg_gain_current = nvg_gain_min
             gain_directionality = not gain_directionality
         end
+
     end
     local snd_adjust = sound_object("interface\\inv_nvg")
     snd_adjust:play(db.actor, 0, sound_object.s2d)
@@ -283,34 +279,6 @@ function update_weapon_zoom_in()
         nvg_blocker_scope = false
         console_update_nvg_shader()
 
-    elseif (shader_scope_compat) then
-        local scopeName = nil
-        local wpn = db.actor:active_item()
-        if wpn:weapon_scope_status() == 2 then
-            if wpn:weapon_is_scope() then
-                local scope = utils_item.get_attached_scope(wpn)
-                scopeName = utils_item.get_param(scope, wpn:id(), "scope_texture", "string")
-            end
-        else
-            scopeName = utils_item.get_param(wpn:section(), wpn:id(), "scope_texture", "string")
-        end
-
-        --local tex_active = get_console():get_integer("scope_2dtexactive")
-        if scopeName and scopeRadii.scopeRadii[scopeName] then
-            scope_blur_temp = get_console():get_float("scope_blur_inner")
-            tube_count_temp = nvg_num_tubes
-            radius_temp = nvg_radius
-            nvg_num_tubes = 1
-            get_console():execute("scope_blur_inner 0")
-            nvg_radius = math.min(scopeRadii.scopeRadii[scopeName], 0.9)
-
-            CreateTimeEvent("nvg_scope", "nvg_scope", 0.25, function()
-                console_update_nvg_shader()
-                return true
-            end)
-
-            shader_scope_flag = true
-        end
     end
 end
 
@@ -366,7 +334,6 @@ function on_option_change()
     nv_eff["nightvision_2"].nvg_mode = beast_vg_mcm.get_config("gen2_mode")
     nv_eff["nightvision_3"].nvg_mode = beast_vg_mcm.get_config("gen3_mode")
     nvg_stays_pda = beast_vg_mcm.get_config("stays_pda")
-    shader_scope_compat = beast_vg_mcm.get_config("shader_scope_compat")
     mcm_enable_nvg_animation = liz_fdda_redone_mcm.get_config("nvg/enable")
 end
 
@@ -383,15 +350,6 @@ function actor_on_weapon_zoom_out()
 
     if (nvg_blocker_scope) then
         nvg_blocker_scope = false
-        console_update_nvg_shader()
-    elseif (shader_scope_compat and shader_scope_flag) then
-        --vignette_current = vignette_temp
-        nvg_num_tubes = tube_count_temp
-        --nvg_radius = radius_temp
-        nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
-        get_console():execute("scope_blur_inner " .. scope_blur_temp)
-        RemoveTimeEvent("nvg_scope", "nvg_scope")
-        shader_scope_flag = false
         console_update_nvg_shader()
     end
 end
@@ -435,19 +393,10 @@ function actor_on_update()
             end
     end
 
-    if ((not zoom) and (item_device.nv_state)) and (nvg_blocker_scope or shader_scope_flag) then
+    if ((not zoom) and (item_device.nv_state) and (nvg_blocker_scope)) then
         -- check for disable NVG while ADS
         if (nvg_blocker_scope and check_active_scope_restricts_nvg()) then
             nvg_blocker_scope = false
-            console_update_nvg_shader()
-        elseif (shader_scope_compat and shader_scope_flag) then
-            --vignette_current = vignette_temp
-            nvg_num_tubes = tube_count_temp
-            --nvg_radius = radius_temp
-            nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
-            get_console():execute("scope_blur_inner " .. scope_blur_temp)
-            RemoveTimeEvent("nvg_scope", "nvg_scope")
-            shader_scope_flag = false
             console_update_nvg_shader()
         end
     end

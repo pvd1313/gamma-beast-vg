@@ -7,12 +7,6 @@
 	<string id="ui_mcm_menu_beast_vg">
 		<text>Beast VG</text>
 	</string>
-	<string id="ui_mcm_beast_vg_title_2">
-		<text>Совместимость с Shader Based 2d Scope</text>
-	</string>
-	<string id="ui_mcm_beast_vg_shader_scope_compat">
-		<text>Включите, если установлен этот аддон</text>
-	</string>
 	<string id="ui_mcm_beast_vg_gain_max">
 		<text>Максимальное усиление ПНВ</text>
 	</string>

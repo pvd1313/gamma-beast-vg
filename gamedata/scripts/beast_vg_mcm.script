@@ -9,7 +9,6 @@ local defaults = {
     ["gain_min"] = 0.5,
     ["gain_offset"] = 1.0,
     ["washout_thresh"] = 0.1,
-    ["shader_scope_compat"] = false,
     ["gen1_tubes"] = 1.0,
     ["gen2_tubes"] = 2.0,
     ["gen3_tubes"] = 4.0,
@@ -43,8 +42,6 @@ function on_mcm_load()
             { id = "gen1_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 3.0 },
             { id = "gen2_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
             { id = "gen3_mode", type = "list", val = 2, content={ { 0.0, "blurred_background" }, { 1.0, "black_background" }, { 2.0, "image_overlay" }, { 3.0, "clear_vision" } }, def = 0.0 },
-            { id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title_2", size = { 512,50 }, spacing = 20 },
-            { id = "shader_scope_compat", type = "check", val = 1, def = false }
         }
     }
     return op
