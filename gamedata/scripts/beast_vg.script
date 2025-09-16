@@ -1,32 +1,32 @@
 -- MCM values
-local nvg_gain_max = 2.0             -- max value for nvg gain (brightness)
-local nvg_gain_min = 0.5             -- min value for nvg gain (brightness)
-local nvg_washout_thresh = 0.1       -- used to calculate washout effect on light sources
-local nvg_view_through_scope = false -- can you keep your NVGs on when looking through scope?
-local nvg_off_when_nv_scope = false  -- disable goggles when aimed with NV scope?
-local nvg_off_when_hv_scope = false  -- disable goggles when aimed with HV scope?
-local nvg_off_when_binoc = false     -- disable goggles when aimed with binocular?
-local nvg_gain_offset = 1.0          -- offset for nvg gain to accomodate for brighter/darker worlds
-local nvg_stays_pda = true           -- disable nvg on PDA?
-local nvg_radius = 0.5               -- Radius of circles
+local nvg_gain_max = 2.0             -- Max value for nvg gain (brightness).
+local nvg_gain_min = 0.5             -- Min value for nvg gain (brightness).
+local nvg_washout_thresh = 0.1       -- Used to calculate washout effect on light sources.
+local nvg_view_through_scope = false -- Can you keep your NVGs on when looking through scope?
+local nvg_off_when_nv_scope = false  -- Disable goggles when aimed with NV scope?
+local nvg_off_when_hv_scope = false  -- Disable goggles when aimed with HV scope?
+local nvg_off_when_binoc = false     -- Disable goggles when aimed with binocular?
+local nvg_gain_offset = 1.0          -- Offset for nvg gain to accomodate for brighter/darker worlds.
+local nvg_stays_pda = true           -- Disable nvg on PDA?
+local nvg_radius = 0.5               -- Radius of circles.
 
 -- Variables
-local nvg_generation = 0         -- 1, 2, or 3
-local nvg_num_tubes = 0          -- 1, 2, or 4 tubes -- 11 for single offset left and 12 for single offset right
-local nvg_gain_current = 1       -- current gain setting
-local gain_directionality = true -- directionality of brightness adjust
-local vignette_amount = 0.05     -- standard vignette value
-local vignette_current = 1.0     -- current vignette value, for turn-on/ turn-off effect
-local vignette_speed = 1.4       -- how fast vignette changes
-local glitch_power = 0           -- how much 'glitch' to add to NVGs
-local nvg_mode = 0               -- overlay preset
-local crt_latch = false          -- latches crt effect on turn-on
-local flip_latch = false         -- latches flip down effect on turn-on
-local flip_speed = 1.4           -- how fast to flip down
-local flip_down = 1              -- flip down value (1 all the way up, 100 all the way down)
+local nvg_generation = 0         -- 1, 2, or 3.
+local nvg_num_tubes = 0          -- 1, 2, or 4 tubes -- 11 for single offset left and 12 for single offset right.
+local nvg_gain_current = 1       -- Current gain setting.
+local gain_directionality = true -- Directionality of brightness adjust.
+local vignette_amount = 0.05     -- Standard vignette value.
+local vignette_current = 1.0     -- Current vignette value, for turn-on/ turn-off effect.
+local vignette_speed = 1.4       -- How fast vignette changes.
+local glitch_power = 0           -- How much 'glitch' to add to NVGs.
+local nvg_mode = 0               -- Overlay preset.
+local crt_latch = false          -- Latches crt effect on turn-on.
+local flip_latch = false         -- Latches flip down effect on turn-on.
+local flip_speed = 1.4           -- How fast to flip down.
+local flip_down = 1              -- Flip down value (1 all the way up, 100 all the way down).
 
--- Configs (PVD failed to add it to LTX, thats why it is here, hard-coded) 
--- Also maybe there is way to detect scope time at runtime.
+-- Configs (v.fuchadzhy failed to add it to LTX, thats why it is here, hard-coded).
+-- Also maybe there is way to detect scope type at runtime.
 local nvg_heat_scope_names = {
     ["1pn93n2_1gs"] = true,
     ["t12"] = true,
@@ -41,15 +41,15 @@ local nvg_binoc_names = {
     ["wpn_binoc_inv"] = true,
 }
 
--- Variables for on-weapon zoom (and shader scopes compat)
+-- Variables for on-weapon zoom.
 local nvg_blocker_scope = false
 local zoom = true
 
--- Variables for PDA auto-turn-off functionality
+-- Variables for auto-turn-off functionality.
 local nvg_blocker_pda = false
 local mcm_enable_nvg_animation = true
 
--- to store the effect
+-- Variables to store the effect.
 local nv_eff = {
     ["nightvision_1"] = {
         nvg_generation = 1,
@@ -75,12 +75,12 @@ local nv_eff = {
 function pack_nvg_data()
     local x_1 = tostring(nvg_generation)                      -- Generation (1,2,3) - outputs 1.x to 3.x
     local x_2 = tostring(nvg_num_tubes * 10)                  -- Num Tubes (1,2,4,1.1,1.2) outputs x.10, x.20, x.40, x.11, or x.12
-    local y_1 = tostring(math.floor(nvg_gain_current * 10))   -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment
-    local y_2 = tostring(math.floor(nvg_washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment
-    local z_1 = tostring(math.floor(vignette_current * 100))  -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment
-    local z_2 = tostring(math.floor(glitch_power * 10))       -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment
-    local w_1 = tostring((math.floor(nvg_gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment
-    local w_2 = tostring(nvg_mode)                            -- Mode (0,1) - outputs w.0 or w.1 depending on mode
+    local y_1 = tostring(math.floor(nvg_gain_current * 10))   -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment.
+    local y_2 = tostring(math.floor(nvg_washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment.
+    local z_1 = tostring(math.floor(vignette_current * 100))  -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment.
+    local z_2 = tostring(math.floor(glitch_power * 10))       -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
+    local w_1 = tostring((math.floor(nvg_gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment.
+    local w_2 = tostring(nvg_mode)                            -- Mode (0,1) - outputs w.0 or w.1 depending on mode.
 
     return "(" ..
     x_1 .. "." .. x_2 .. "," .. y_1 .. "." .. y_2 .. "," .. z_1 .. "." .. z_2 .. "," .. w_1 .. "." .. w_2 .. ")"
@@ -250,7 +250,7 @@ function state_change_effect()
     end
 end
 
--- nvg glitch effect during blowouts and psy storms
+-- Nvg glitch effect during blowouts and psy storms.
 function set_glitch_power(power)
     if item_device.nv_state then
         if glitch_power ~= power then

@@ -20,7 +20,7 @@ function try_get_active_weapon_zoom_type()
     return c_wpn:GetZoomType()
 end
 
--- copied from z_3d_scopes.scipt
+-- Copied from: z_3d_scopes.scipt (G.A.M.M.A. 0.9.4)
 function get_sight_section(wpn)
     local wpn_section = wpn:section()
 
