@@ -1,9 +1,9 @@
 function try_get_active_scope_name()
     local wpn = db.actor:active_item()
-    if not wpn then return nil end
+    if (not wpn) then return nil end
 
     local c_wpn = wpn:cast_Weapon()
-    if not c_wpn then return nil end
+    if (not c_wpn) then return nil end
 
     if (c_wpn:GetZoomType() ~= 0) then return nil end
 
@@ -12,10 +12,10 @@ end
 
 function try_get_active_weapon_zoom_type()
     local wpn = db.actor:active_item()
-    if not wpn then return -1 end
+    if (not wpn) then return -1 end
 
     local c_wpn = wpn:cast_Weapon()
-    if not c_wpn then return -1 end
+    if (not c_wpn) then return -1 end
 
     return c_wpn:GetZoomType()
 end
@@ -25,9 +25,9 @@ function get_sight_section(wpn)
     local wpn_section = wpn:section()
 
     local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
-    if modular_attachments then
+    if (modular_attachments) then
         local c_wpn = wpn:cast_Weapon()
-        if c_wpn['IsScopeAttached'](c_wpn) then
+        if (c_wpn['IsScopeAttached'](c_wpn)) then
             return c_wpn['GetScopeName'](c_wpn)
         end
         return nil

@@ -129,7 +129,7 @@ item_device.set_nightvision = function (section, state)
     if (not section) then return end
 
     local nv_settings = nv_eff[ini_sys:r_string_ex(section, "nv_effect")]
-    if nv_settings then
+    if (nv_settings) then
         nvg_generation = nv_settings.nvg_generation
         nvg_num_tubes = nv_settings.nvg_num_tubes
         nvg_mode = nv_settings.nvg_mode
@@ -162,9 +162,9 @@ end
 
 function set_nightvision_animated(section, state)
     if (not section) then return end
-    if not ini_sys:r_string_ex(section, "nv_effect") then return end
+    if (not ini_sys:r_string_ex(section, "nv_effect")) then return end
     if (not check_animation_allowed()) or (not item_device.can_toggle_torch()) then return end
-    if lam2.get_action_with_tag("nvg_animation") then return end
+    if (lam2.get_action_with_tag("nvg_animation")) then return end
 
     beast_vg_anim.torch_state = 1
     local weapon_zoomed = axr_main.weapon_is_zoomed and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
@@ -181,13 +181,13 @@ function set_nightvision_animated(section, state)
         end
     end
 
-    if state then
-        --enable nvg
+    if (state) then
+        -- Enable NVG.
         lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))       -- Anim bug? small delay to prevent ctd.
         lam2.add_action(beast_vg_anim.get_template_action_nvg_enable_start())  -- Enter hand motion.
         lam2.add_action(beast_vg_anim.get_template_action_nvg_enable(section)) -- Equip nvg motion.
     else
-        --disable nvg
+        -- Disable NVG
         lam2.add_action(beast_vg_anim.get_template_action_nvg_disable_start())  -- Fade in.
         lam2.add_action(beast_vg_anim.get_template_action_nvg_disable(section)) -- Unequip NVG motion.
         lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))        -- Anim bug? Small delay to prevent ctd.
@@ -250,7 +250,7 @@ function state_change_effect()
     end
 end
 
--- Nvg glitch effect during blowouts and psy storms.
+-- NVG glitch effect during blowouts and psy storms.
 function set_glitch_power(power)
     if item_device.nv_state then
         if glitch_power ~= power then
@@ -356,14 +356,15 @@ end
 
 function actor_on_info_callback(npc, info_id)
     local actor = db.actor
-    if actor and item_device.nv_state then
-        if info_id == "ui_pda" and not nvg_stays_pda then
-            if not nvg_blocker_pda then
+
+    if (actor and item_device.nv_state) then
+        if (info_id == "ui_pda" and not nvg_stays_pda) then
+            if (not nvg_blocker_pda) then
                 console_disable_nvg_shader()
                 nvg_blocker_pda = true
             end
-        elseif info_id == "ui_pda_hide" and not nvg_stays_pda then
-            if nvg_blocker_pda then
+        elseif (info_id == "ui_pda_hide" and not nvg_stays_pda) then
+            if (nvg_blocker_pda) then
                 console_update_nvg_shader()
                 nvg_blocker_pda = false
             end
