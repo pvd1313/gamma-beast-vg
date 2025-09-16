@@ -147,7 +147,7 @@ item_device.set_nightvision = function(section, state)
             flip_latch = false
             vignette_current = 1.0
             flip_down = 1
-            nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
+            nvg_radius = 0.5 -- Hack to fix not correctly going back until i am better at this shit
             bvg_sfx.play(bvg_sfx_id.vision_finish)
             item_device.nv_state = false
             set_actor_callback_registered(false)
@@ -180,13 +180,11 @@ function set_nightvision_animated(section, state)
     local det_active = db.actor:active_detector() or nil
 
     -- If holding weapon and aiming disable ADS.
-    if (db.actor:active_item()) then
-        if not det_active and weapon_zoomed then
-            if (get_console():get_bool("wpn_aim_toggle")) then
-                level.press_action(bind_to_dik(key_bindings.kWPN_ZOOM))
-            else
-                level.release_action(bind_to_dik(key_bindings.kWPN_ZOOM))
-            end
+    if (db.actor:active_item() and (not det_active and weapon_zoomed)) then
+        if (get_console():get_bool("wpn_aim_toggle")) then
+            level.press_action(bind_to_dik(key_bindings.kWPN_ZOOM))
+        else
+            level.release_action(bind_to_dik(key_bindings.kWPN_ZOOM))
         end
     end
 
@@ -210,15 +208,16 @@ function brightness_adjust()
     end
 
     local step_size = (nvg_gain_max - nvg_gain_min) / 3
-    if gain_directionality and nvg_gain_current <= nvg_gain_max then
+    if (gain_directionality and nvg_gain_current <= nvg_gain_max) then
         nvg_gain_current = nvg_gain_current + step_size
-        if nvg_gain_current >= nvg_gain_max then
+        if (nvg_gain_current >= nvg_gain_max) then
             nvg_gain_current = nvg_gain_max
             gain_directionality = not gain_directionality
         end
-    elseif not gain_directionality and nvg_gain_current >= nvg_gain_min then
+
+    elseif (not gain_directionality and nvg_gain_current >= nvg_gain_min) then
         nvg_gain_current = nvg_gain_current - step_size
-        if nvg_gain_current <= nvg_gain_min then
+        if (nvg_gain_current <= nvg_gain_min) then
             nvg_gain_current = nvg_gain_min
             gain_directionality = not gain_directionality
         end
@@ -235,23 +234,23 @@ end
 -----------------------------------------------------------------------------
 
 function state_change_effect()
-    if not flip_latch and item_device.nv_state then
-        if flip_down < 100 then
+    if (not flip_latch and item_device.nv_state) then
+        if (flip_down < 100) then
             flip_down = flip_down * flip_speed
         end
 
-        if flip_down >= 100 then
+        if (flip_down >= 100) then
             flip_down = 100
             flip_latch = true
         end
     end
 
-    if flip_latch and not crt_latch and item_device.nv_state then
-        if vignette_current > vignette_amount then
+    if (flip_latch and not crt_latch and item_device.nv_state) then
+        if (vignette_current > vignette_amount) then
             vignette_current = vignette_current * (1 / vignette_speed)
         end
 
-        if vignette_current <= vignette_amount then
+        if (vignette_current <= vignette_amount) then
             vignette_current = vignette_amount
             crt_latch = true
         end
@@ -260,12 +259,10 @@ end
 
 -- NVG glitch effect during blowouts and psy storms.
 function set_glitch_power(power)
-    if item_device.nv_state then
-        if glitch_power ~= power then
-            glitch_power = power
-            if (not check_nvg_blocked()) then
-                console_update_nvg_shader()
-            end
+    if (item_device.nv_state and glitch_power ~= power) then
+        glitch_power = power
+        if (not check_nvg_blocked()) then
+            console_update_nvg_shader()
         end
     end
 end

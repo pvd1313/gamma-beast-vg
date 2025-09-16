@@ -12,7 +12,7 @@ function get_template_action_nvg_enable_start()
     a.on_enter = function (self)
         game.play_hud_anm("liz\\headlamp\\liz_headlamp_toggle_weapon_sway.anm", 0, 1, 1, false)
         -- weapon inertia expanded patch
-        if liz_inertia_expanded then
+        if (liz_inertia_expanded) then
             liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, true)
         end
     end
@@ -61,11 +61,11 @@ function get_template_action_nvg_disable_start()
             level.add_pp_effector("deimos_short.ppe", 4233, false)
         end,
         execute = function (self,time)
-            if not self.fade_disabled then
+            if (not self.fade_disabled) then
                 self.fade_disabled = true
                 level.remove_pp_effector(4233)
             end
-            if time > 0.4 then
+            if (time > 0.4) then
                 return lam2.states.success
             end
             return lam2.states.running
@@ -88,7 +88,7 @@ function get_template_action_nvg_disable(section)
         game.play_hud_anm("liz\\headlamp\\liz_headlamp_toggle_weapon_sway.anm", 0, 1, 1, false)
         item_device.set_nightvision(self.target, false)
         -- weapon inertia expanded patch
-        if liz_inertia_expanded then
+        if (liz_inertia_expanded) then
             liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, true)
         end
     end
@@ -106,7 +106,7 @@ function get_template_action_nvg_disable_end()
     a.on_exit = function (self)
         torch_state = 0
         -- weapon inertia expanded patch
-        if liz_inertia_expanded then
+        if (liz_inertia_expanded) then
             liz_inertia_expanded.set_mask_flag(liz_inertia_expanded.mask_layers.anm_plays, false)
         end
     end

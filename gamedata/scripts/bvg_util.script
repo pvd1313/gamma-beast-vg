@@ -31,8 +31,8 @@ function get_sight_section(wpn)
     local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
     if (modular_attachments) then
         local c_wpn = wpn:cast_Weapon()
-        if (c_wpn['IsScopeAttached'](c_wpn)) then
-            return c_wpn['GetScopeName'](c_wpn)
+        if (c_wpn:IsScopeAttached()) then
+            return c_wpn:GetScopeName()
         end
         return nil
     end
