@@ -116,7 +116,7 @@ end
 -----------------------------------------------------------------------------
 
 function check_animation_allowed()
-    return (beast_vg_anim.torch_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
+    return (bvg_anim.torch_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
 end
 
 item_device.set_nightvision = function(section, state)
@@ -137,7 +137,7 @@ item_device.set_nightvision = function(section, state)
 
         if state and (not item_device.nv_state) then
             console_update_nvg_shader()
-            beast_vg_sfx.play(beast_vg_sfx_id.vision_start)
+            bvg_sfx.play(bvg_sfx_id.vision_start)
             item_device.nv_state = true
             set_actor_callback_registered(true)
 
@@ -148,7 +148,7 @@ item_device.set_nightvision = function(section, state)
             vignette_current = 1.0
             flip_down = 1
             nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
-            beast_vg_sfx.play(beast_vg_sfx_id.vision_finish)
+            bvg_sfx.play(bvg_sfx_id.vision_finish)
             item_device.nv_state = false
             set_actor_callback_registered(false)
         end
@@ -175,7 +175,7 @@ function set_nightvision_animated(section, state)
     if (not check_animation_allowed()) or (not item_device.can_toggle_torch()) then return end
     if (lam2.get_action_with_tag("nvg_animation")) then return end
 
-    beast_vg_anim.torch_state = 1
+    bvg_anim.torch_state = 1
     local weapon_zoomed = axr_main.weapon_is_zoomed and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
     local det_active = db.actor:active_detector() or nil
 
@@ -193,14 +193,14 @@ function set_nightvision_animated(section, state)
     if (state) then
         -- Enable NVG.
         lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))       -- Anim bug? small delay to prevent ctd.
-        lam2.add_action(beast_vg_anim.get_template_action_nvg_enable_start())  -- Enter hand motion.
-        lam2.add_action(beast_vg_anim.get_template_action_nvg_enable(section)) -- Equip nvg motion.
+        lam2.add_action(bvg_anim.get_template_action_nvg_enable_start())  -- Enter hand motion.
+        lam2.add_action(bvg_anim.get_template_action_nvg_enable(section)) -- Equip nvg motion.
     else
         -- Disable NVG
-        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable_start())  -- Fade in.
-        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable(section)) -- Unequip NVG motion.
+        lam2.add_action(bvg_anim.get_template_action_nvg_disable_start())  -- Fade in.
+        lam2.add_action(bvg_anim.get_template_action_nvg_disable(section)) -- Unequip NVG motion.
         lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))        -- Anim bug? Small delay to prevent ctd.
-        lam2.add_action(beast_vg_anim.get_template_action_nvg_disable_end())    -- Exit hand motion.
+        lam2.add_action(bvg_anim.get_template_action_nvg_disable_end())    -- Exit hand motion.
     end
 end
 
@@ -224,7 +224,7 @@ function brightness_adjust()
         end
     end
 
-    beast_vg_sfx.play(beast_vg_sfx_id.brightness_adjust)
+    bvg_sfx.play(bvg_sfx_id.brightness_adjust)
 
     console_update_nvg_shader()
 end
@@ -293,7 +293,7 @@ end
 function check_active_scope_restricts_nvg()
     if (not nvg_view_through_scope) then return true end
 
-    local scope_name = beast_vg_util.try_get_active_scope_name()
+    local scope_name = bvg_util.try_get_active_scope_name()
     if (not scope_name) then return false end
 
     if (nvg_off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
@@ -327,27 +327,27 @@ function on_game_load()
 end
 
 function on_option_change()
-    nvg_gain_max = beast_vg_mcm.get_config("gain_max")
-    nvg_gain_min = beast_vg_mcm.get_config("gain_min")
-    nvg_gain_offset = beast_vg_mcm.get_config("gain_offset")
-    nvg_washout_thresh = beast_vg_mcm.get_config("washout_thresh")
-    nvg_view_through_scope = beast_vg_mcm.get_config("view_through_scope")
-    nvg_off_when_nv_scope = beast_vg_mcm.get_config("off_when_nv_scope")
-    nvg_off_when_hv_scope = beast_vg_mcm.get_config("off_when_hv_scope")
-    nvg_off_when_binoc = beast_vg_mcm.get_config("off_when_binoc")
-    nv_eff["nightvision_1"].nvg_num_tubes = beast_vg_mcm.get_config("gen1_tubes")
-    nv_eff["nightvision_2"].nvg_num_tubes = beast_vg_mcm.get_config("gen2_tubes")
-    nv_eff["nightvision_3"].nvg_num_tubes = beast_vg_mcm.get_config("gen3_tubes")
-    nv_eff["nightvision_1"].nvg_mode = beast_vg_mcm.get_config("gen1_mode")
-    nv_eff["nightvision_2"].nvg_mode = beast_vg_mcm.get_config("gen2_mode")
-    nv_eff["nightvision_3"].nvg_mode = beast_vg_mcm.get_config("gen3_mode")
-    nvg_stays_pda = beast_vg_mcm.get_config("stays_pda")
+    nvg_gain_max = bvg_mcm.get_config("gain_max")
+    nvg_gain_min = bvg_mcm.get_config("gain_min")
+    nvg_gain_offset = bvg_mcm.get_config("gain_offset")
+    nvg_washout_thresh = bvg_mcm.get_config("washout_thresh")
+    nvg_view_through_scope = bvg_mcm.get_config("view_through_scope")
+    nvg_off_when_nv_scope = bvg_mcm.get_config("off_when_nv_scope")
+    nvg_off_when_hv_scope = bvg_mcm.get_config("off_when_hv_scope")
+    nvg_off_when_binoc = bvg_mcm.get_config("off_when_binoc")
+    nv_eff["nightvision_1"].nvg_num_tubes = bvg_mcm.get_config("gen1_tubes")
+    nv_eff["nightvision_2"].nvg_num_tubes = bvg_mcm.get_config("gen2_tubes")
+    nv_eff["nightvision_3"].nvg_num_tubes = bvg_mcm.get_config("gen3_tubes")
+    nv_eff["nightvision_1"].nvg_mode = bvg_mcm.get_config("gen1_mode")
+    nv_eff["nightvision_2"].nvg_mode = bvg_mcm.get_config("gen2_mode")
+    nv_eff["nightvision_3"].nvg_mode = bvg_mcm.get_config("gen3_mode")
+    nvg_stays_pda = bvg_mcm.get_config("stays_pda")
     mcm_enable_nvg_animation = liz_fdda_redone_mcm.get_config("nvg/enable")
 end
 
 function actor_on_weapon_zoom_in()
     zoom = true
-    wpn_zoom_type = beast_vg_util.try_get_active_weapon_zoom_type()
+    wpn_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
     update_weapon_zoom_in()
 end
 
@@ -395,7 +395,7 @@ function actor_on_update()
     tmr = tg + tmr_step
 
     if (zoom) then
-        local new_zoom_type = beast_vg_util.try_get_active_weapon_zoom_type()
+        local new_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
         if (new_zoom_type ~= wpn_zoom_type) then
             wpn_zoom_type = new_zoom_type
             update_weapon_zoom_in()

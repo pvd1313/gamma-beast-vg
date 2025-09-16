@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="windows-1251"?>
 
 <string_table>
-	<string id="ui_mcm_beast_vg_title">
+	<string id="ui_mcm_bvg_title">
 		<text>Beast VG</text>
 	</string>
-	<string id="ui_mcm_menu_beast_vg">
+	<string id="ui_mcm_menu_bvg">
 		<text>Beast VG</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_max">
+	<string id="ui_mcm_bvg_gain_max">
 		<text>Максимальное усиление ПНВ</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_max_desc">
+	<string id="ui_mcm_bvg_gain_max_desc">
 		<text>Более высокие значения позволяют увеличить "яркость", но с определенным лимитом. Рекомендуется устанавливать эту настройку на основе пресета погоды cloudy_dark_2 в полночь.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_min">
+	<string id="ui_mcm_bvg_gain_min">
 		<text>Минимальное усиление ПНВ</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_min_desc">
+	<string id="ui_mcm_bvg_gain_min_desc">
 		<text>Более низкие значения позволяют ещё больше ослаблять ПНВ - очень низкие значения даже позволят использовать его днём.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_offset">
+	<string id="ui_mcm_bvg_gain_offset">
 		<text>Смещение, применяемое к яркости мира</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_offset_desc">
+	<string id="ui_mcm_bvg_gain_offset_desc">
 		<text>1.0 оставляет яркость мира как есть, большие значения умножают яркость мира (но не источники света).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_washout_thresh">
+	<string id="ui_mcm_bvg_washout_thresh">
 		<text>Порог для размывания источника света</text>
 	</string>
-	<string id="ui_mcm_beast_vg_washout_thresh_desc">
+	<string id="ui_mcm_bvg_washout_thresh_desc">
 		<text>Обычно рекомендуется оставить значение на 0,1, но его можно увеличить, чтобы немного уменьшить размывание источников света.
 			Это значение скейлится с коэффициентом усиления ПНВ, так что более высокие коэффициенты усиления имеют больший размыв, а более низкие - меньший размыв.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_view_through_scope">
+	<string id="ui_mcm_bvg_view_through_scope">
 		<text>Возможность использовать ПНВ при прицеливании:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_view_through_scope_desc">
+	<string id="ui_mcm_bvg_view_through_scope_desc">
 		<text>Если эта опция включена, вы можете держать свой ПНВ включенным во время прицеливания. Если опция отключена, ваш персонаж отключает ПНВ при прицеливании.</text>
 	</string>
 
-	<string id="ui_mcm_beast_vg_off_when_nv_scope">
+	<string id="ui_mcm_bvg_off_when_nv_scope">
 		<text>Отключать основной ПНВ при наведении из прицела с ПНВ:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_nv_scope_desc">
+	<string id="ui_mcm_bvg_off_when_nv_scope_desc">
 		<text>Если эта опция включена, ваш основной ПНВ будет отключен во время прицеливания через оптику с ПНВ.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_hv_scope">
+	<string id="ui_mcm_bvg_off_when_hv_scope">
 		<text>Отключать основной ПНВ при наведении из прицела с ТПВ:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_hv_scope_desc">
+	<string id="ui_mcm_bvg_off_when_hv_scope_desc">
 		<text>Если эта опция включена, ваш основной ПНВ будет отключен во время прицеливания через оптику с ТПВ.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_binoc">
+	<string id="ui_mcm_bvg_off_when_binoc">
 		<text>Отключать основной ПНВ во время обзора через бинокль:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_binoc_desc">
+	<string id="ui_mcm_bvg_off_when_binoc_desc">
 		<text>Если эта опция включена, ваш основной ПНВ будет отключен когда персонаж смотрит через бинокль.</text>
 	</string>
 
-	<string id="ui_mcm_beast_vg_stays_pda">
+	<string id="ui_mcm_bvg_stays_pda">
 		<text>ПНВ остается включенным в КПК:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_stays_pda_desc">
+	<string id="ui_mcm_bvg_stays_pda_desc">
 		<text>Если эта опция отключена, ПНВ автоматически отключается при просмотре вашего КПК.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_tubes">
+	<string id="ui_mcm_bvg_gen1_tubes">
 		<text>Расположение трубок у ПНВ 1 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_tubes_desc">
+	<string id="ui_mcm_bvg_gen1_tubes_desc">
 		<text>Выберите количество трубок для ПНВ 1 поколения (по умолчанию 1 трубка посередине).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_tubes">
+	<string id="ui_mcm_bvg_gen2_tubes">
 		<text>Расположение трубок у ПНВ 2 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_tubes_desc">
+	<string id="ui_mcm_bvg_gen2_tubes_desc">
 		<text>Выберите количество трубок для ПНВ 2 поколения (по умолчанию 2 трубки посередине).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_tubes">
+	<string id="ui_mcm_bvg_gen3_tubes">
 		<text>Расположение трубок у ПНВ 3 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_tubes_desc">
+	<string id="ui_mcm_bvg_gen3_tubes_desc">
 		<text>Выберите количество трубок для ПНВ 3 поколения (по умолчанию 4 трубки посередине).</text>
 	</string>
 	<string id="ui_mcm_lst_single_centered">
@@ -97,22 +97,22 @@
 	<string id="ui_mcm_lst_quad_centered">
 		<text>Четыре трубки, посередине</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_mode">
+	<string id="ui_mcm_bvg_gen1_mode">
 		<text>Оверлей ПНВ 1 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_mode_desc">
+	<string id="ui_mcm_bvg_gen1_mode_desc">
 		<text>Выберите желаемый фоновый оверлей (по умолчанию Без оверлея).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_mode">
+	<string id="ui_mcm_bvg_gen2_mode">
 		<text>Оверлей ПНВ 2 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_mode_desc">
+	<string id="ui_mcm_bvg_gen2_mode_desc">
 		<text>Выберите желаемый фоновый оверлей (по умолчанию Размытый Оверлей).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_mode">
+	<string id="ui_mcm_bvg_gen3_mode">
 		<text>Оверлей ПНВ 3 поколения:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_mode_desc">
+	<string id="ui_mcm_bvg_gen3_mode_desc">
 		<text>Выберите желаемый фоновый оверлей (по умолчанию Размытый Оверлей).</text>
 	</string>
 	<string id="ui_mcm_lst_blurred_background">

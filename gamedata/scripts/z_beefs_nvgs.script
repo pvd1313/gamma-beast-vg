@@ -14,7 +14,7 @@ local torch_anm_time = 0
 -- Referenced by: drx_da_main (G.A.M.M.A. 0.9.4)
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
 function nvg_glitch(power)
-    beast_vg.set_glitch_power(power)
+    bvg.set_glitch_power(power)
 end
 
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
@@ -22,5 +22,5 @@ local play_animation = true
 
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
 function brightness_adjust()
-    beast_vg.brightness_adjust()
+    bvg.brightness_adjust()
 end

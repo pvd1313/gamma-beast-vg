@@ -1,81 +1,81 @@
 <string_table>
-	<string id="ui_mcm_beast_vg_title">
+	<string id="ui_mcm_bvg_title">
 		<text>Beast VG</text>
 	</string>
-	<string id="ui_mcm_menu_beast_vg">
+	<string id="ui_mcm_menu_bvg">
 		<text>Beast VG</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_max">
+	<string id="ui_mcm_bvg_gain_max">
 		<text>The max gain that can be applied to NVGs:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_max_desc">
+	<string id="ui_mcm_bvg_gain_max_desc">
 		<text>Higher values allow you more 'brightness', although it will eventually cap out. Recommend to set this based cloudy_dark_2 weather at midnight.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_min">
+	<string id="ui_mcm_bvg_gain_min">
 		<text>The min gain that can be applied to NVGs:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_min_desc">
+	<string id="ui_mcm_bvg_gain_min_desc">
 		<text>Lower values allow you to turn down the NVGs more - very low values will even enable you to use the NVGs during daylight.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_offset">
+	<string id="ui_mcm_bvg_gain_offset">
 		<text>An offset applied to world brightness:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gain_offset_desc">
+	<string id="ui_mcm_bvg_gain_offset_desc">
 		<text>1.0 leaves world brightness as-is, larger values multiply world brightness (but not light sources).</text>
 	</string>
-	<string id="ui_mcm_beast_vg_washout_thresh">
+	<string id="ui_mcm_bvg_washout_thresh">
 		<text>The threshold for light source washout:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_washout_thresh_desc">
+	<string id="ui_mcm_bvg_washout_thresh_desc">
 		<text>Generally recommended to keep at 0.1, but can be increased to reduce washout on light sources slightly. 
 		This value scales with the nvg gain so that higher gains have more washout and lower gains have less washout.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_view_through_scope">
+	<string id="ui_mcm_bvg_view_through_scope">
 		<text>Can use NVG while Aiming Down Sights:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_view_through_scope_desc">
+	<string id="ui_mcm_bvg_view_through_scope_desc">
 		<text>If this box is checked, you can keep your NVGs on while ADS. If its is unchecked, your character will disable their NVGs while raising their weapon.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_nv_scope">
+	<string id="ui_mcm_bvg_off_when_nv_scope">
 		<text>Disable NVG while Aiming Down Sights with NV scope:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_nv_scope_desc">
+	<string id="ui_mcm_bvg_off_when_nv_scope_desc">
 		<text>If this box is checked, your NVGs will be disabled while ADS with NV scope.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_hv_scope">
+	<string id="ui_mcm_bvg_off_when_hv_scope">
 		<text>Disable NVG while Aiming Down Sights with HV scope:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_hv_scope_desc">
+	<string id="ui_mcm_bvg_off_when_hv_scope_desc">
 		<text>If this box is checked, your NVGs will be disabled while ADS with HV scope.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_binoc">
+	<string id="ui_mcm_bvg_off_when_binoc">
 		<text>Disable NVG while viewing through binocular:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_off_when_binoc_desc">
+	<string id="ui_mcm_bvg_off_when_binoc_desc">
 		<text>If this box is checked, your NVGs will be disabled while your character is looking through binocular.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_stays_pda">
+	<string id="ui_mcm_bvg_stays_pda">
 		<text>NVGs stay on when viewing PDA:</text>
 	</string>
-	<string id="ui_mcm_beast_vg_stays_pda_desc">
+	<string id="ui_mcm_bvg_stays_pda_desc">
 		<text>If this box is unchecked, your NVGs automatically disable when looking at your PDA.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_tubes">
+	<string id="ui_mcm_bvg_gen1_tubes">
 		<text>Gen 1 Tube Setup: (Default single tube centered)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_tubes_desc">
+	<string id="ui_mcm_bvg_gen1_tubes_desc">
 		<text>Choose the number of tubes for Gen 1 NVGs.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_tubes">
+	<string id="ui_mcm_bvg_gen2_tubes">
 		<text>Gen 2 Tube Setup: (Default dual tubes centered)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_tubes_desc">
+	<string id="ui_mcm_bvg_gen2_tubes_desc">
 		<text>Choose the number of tubes for Gen 2 NVGs.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_tubes">
+	<string id="ui_mcm_bvg_gen3_tubes">
 		<text>Gen 3 Tube Setup: (Default quad tubes centered)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_tubes_desc">
+	<string id="ui_mcm_bvg_gen3_tubes_desc">
 		<text>Choose the number of tubes for Gen 3 NVGs.</text>
 	</string>
 	<string id="ui_mcm_lst_single_centered">
@@ -93,22 +93,22 @@
 	<string id="ui_mcm_lst_quad_centered">
 		<text>Quad Tubes, Centered</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_mode">
+	<string id="ui_mcm_bvg_gen1_mode">
 		<text>Gen 1 Overlay Background: (Default is No Overlay)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen1_mode_desc">
+	<string id="ui_mcm_bvg_gen1_mode_desc">
 		<text>Choose what background overlay you want.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_mode">
+	<string id="ui_mcm_bvg_gen2_mode">
 		<text>Gen 2 Overlay Background: (Default is Blurred Overlay)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen2_mode_desc">
+	<string id="ui_mcm_bvg_gen2_mode_desc">
 		<text>Choose what background overlay you want.</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_mode">
+	<string id="ui_mcm_bvg_gen3_mode">
 		<text>Gen 3 Overlay Background: (Default is Blurred Overlay)</text>
 	</string>
-	<string id="ui_mcm_beast_vg_gen3_mode_desc">
+	<string id="ui_mcm_bvg_gen3_mode_desc">
 		<text>Choose what background overlay you want.</text>
 	</string>
 	<string id="ui_mcm_lst_blurred_background">

@@ -18,15 +18,15 @@ local defaults = {
 }
 
 function get_config(key)
-    if ui_mcm then return ui_mcm.get("beast_vg/"..key) else return defaults[key] end
+    if ui_mcm then return ui_mcm.get("bvg/"..key) else return defaults[key] end
 end
 
 function on_mcm_load()
     op = {
-        id = "beast_vg",
+        id = "bvg",
         sh = true,
         gr = {
-            { id = "title", type= "slide", link = "ui_options_slider_player", text = "ui_mcm_beast_vg_title", size = { 512, 50 }, spacing = 20 },
+            { id = "title", type= "slide", link = "ui_options_slider_player", text = "ui_mcm_bvg_title", size = { 512, 50 }, spacing = 20 },
             { id = "view_through_scope", type = "check", val = 1, def = true },
             { id = "off_when_nv_scope", type = "check", val = 1, def = false },
             { id = "off_when_hv_scope", type = "check", val = 1, def = false },
