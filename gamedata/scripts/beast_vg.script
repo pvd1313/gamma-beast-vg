@@ -119,7 +119,7 @@ function check_animation_allowed()
     return (beast_vg_anim.torch_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
 end
 
-item_device.set_nightvision = function (section, state)
+item_device.set_nightvision = function(section, state)
     if mcm_enable_nvg_animation and z_beefs_nvgs.play_animation then
         z_beefs_nvgs.play_animation = false
         set_nightvision_animated(section, state)
@@ -129,6 +129,7 @@ item_device.set_nightvision = function (section, state)
     if (not section) then return end
 
     local nv_settings = nv_eff[ini_sys:r_string_ex(section, "nv_effect")]
+
     if (nv_settings) then
         nvg_generation = nv_settings.nvg_generation
         nvg_num_tubes = nv_settings.nvg_num_tubes
@@ -138,11 +139,8 @@ item_device.set_nightvision = function (section, state)
             console_update_nvg_shader()
             utils_obj.play_sound("interface\\inv_nv_start")
             item_device.nv_state = true
+            set_actor_callback_registered(true)
 
-            RegisterScriptCallback("actor_on_update", actor_on_update)
-            RegisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
-            RegisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
-            RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
         elseif (not state) and item_device.nv_state then
             console_disable_nvg_shader()
             crt_latch = false
@@ -152,11 +150,22 @@ item_device.set_nightvision = function (section, state)
             nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
             utils_obj.play_sound("interface\\inv_nv_off")
             item_device.nv_state = false
-            UnregisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
-            UnregisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
-            UnregisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
-            UnregisterScriptCallback("actor_on_update", actor_on_update)
+            set_actor_callback_registered(false)
         end
+    end
+end
+
+function set_actor_callback_registered(state)
+    if (state) then
+        RegisterScriptCallback("actor_on_update", actor_on_update)
+        RegisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
+        RegisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
+        RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+    else
+        UnregisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
+        UnregisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
+        UnregisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+        UnregisterScriptCallback("actor_on_update", actor_on_update)
     end
 end
 
