@@ -53,6 +53,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
   - MCM option to tweak amount of blur in shader.
   - MCM option to tweak max view distance in shader.
   - VG components / maintenance.
+  - VG brightness status display (when adjusting brightness)
   - VG upgrades (like weapon upgrades).
     - VG zoom upgrade. (like binocular).
     - VG recognition upgrade. (like binocular).
