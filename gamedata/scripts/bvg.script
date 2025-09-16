@@ -176,7 +176,7 @@ function set_nightvision_animated(section, state)
     if (lam2.get_action_with_tag("nvg_animation")) then return end
 
     bvg_anim.torch_state = 1
-    local weapon_zoomed = axr_main.weapon_is_zoomed and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
+    local weapon_zoomed = bvg_util.check_weapon_zoomed() and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
     local det_active = db.actor:active_detector() or nil
 
     -- If holding weapon and aiming disable ADS.
@@ -271,13 +271,15 @@ function set_glitch_power(power)
 end
 
 function check_nvg_blocked()
+    nvg_blocker_scope = check_active_weapon_restricts_nvg()
+
     return (nvg_blocker_pda or nvg_blocker_scope)
 end
 
 function update_weapon_zoom_in()
     if (not item_device.nv_state) then return end
 
-    local active_scope_restricts_nvg = check_active_scope_restricts_nvg()
+    local active_scope_restricts_nvg = check_active_weapon_restricts_nvg()
 
     if (active_scope_restricts_nvg) then
         nvg_blocker_scope = true
@@ -290,7 +292,9 @@ function update_weapon_zoom_in()
     end
 end
 
-function check_active_scope_restricts_nvg()
+function check_active_weapon_restricts_nvg()
+    if (bvg_util.check_weapon_zoomed()) then return false end
+
     if (not nvg_view_through_scope) then return true end
 
     local scope_name = bvg_util.try_get_active_scope_name()
@@ -404,7 +408,7 @@ function actor_on_update()
 
     if ((not zoom) and (item_device.nv_state) and (nvg_blocker_scope)) then
         -- check for disable NVG while ADS
-        if (nvg_blocker_scope and check_active_scope_restricts_nvg()) then
+        if (nvg_blocker_scope and check_active_weapon_restricts_nvg()) then
             nvg_blocker_scope = false
             console_update_nvg_shader()
         end

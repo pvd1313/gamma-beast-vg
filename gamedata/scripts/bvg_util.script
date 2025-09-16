@@ -10,6 +10,10 @@ function try_get_active_scope_name()
     return get_sight_section(wpn)
 end
 
+function check_weapon_zoomed()
+    return axr_main.weapon_is_zoomed == true
+end
+
 function try_get_active_weapon_zoom_type()
     local wpn = db.actor:active_item()
     if (not wpn) then return -1 end
