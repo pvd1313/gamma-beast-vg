@@ -1,0 +1,3 @@
+function play(sfx_id)
+    utils_obj.play_sound(sfx_id)
+end

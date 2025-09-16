@@ -137,7 +137,7 @@ item_device.set_nightvision = function(section, state)
 
         if state and (not item_device.nv_state) then
             console_update_nvg_shader()
-            utils_obj.play_sound("interface\\inv_nv_start")
+            beast_vg_sfx.play(beast_vg_sfx_id.vision_start)
             item_device.nv_state = true
             set_actor_callback_registered(true)
 
@@ -148,7 +148,7 @@ item_device.set_nightvision = function(section, state)
             vignette_current = 1.0
             flip_down = 1
             nvg_radius = 0.5 -- hack to fix not correctly going back until i am better at this shit
-            utils_obj.play_sound("interface\\inv_nv_off")
+            beast_vg_sfx.play(beast_vg_sfx_id.vision_finish)
             item_device.nv_state = false
             set_actor_callback_registered(false)
         end
@@ -216,17 +216,16 @@ function brightness_adjust()
             nvg_gain_current = nvg_gain_max
             gain_directionality = not gain_directionality
         end
-
     elseif not gain_directionality and nvg_gain_current >= nvg_gain_min then
         nvg_gain_current = nvg_gain_current - step_size
         if nvg_gain_current <= nvg_gain_min then
             nvg_gain_current = nvg_gain_min
             gain_directionality = not gain_directionality
         end
-
     end
-    local snd_adjust = sound_object("interface\\inv_nvg")
-    snd_adjust:play(db.actor, 0, sound_object.s2d)
+
+    beast_vg_sfx.play(beast_vg_sfx_id.brightness_adjust)
+
     console_update_nvg_shader()
 end
 
