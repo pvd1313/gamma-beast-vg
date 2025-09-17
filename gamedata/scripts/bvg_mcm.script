@@ -11,7 +11,7 @@ function fetch_config()
 
     if (bvg.debug) then
         bvg_log.info("Config fetched. New config:")
-        bvg_log.table(bvg_cfg)
+        bvg_log.table("bvg_cfg", bvg_cfg)
     end
 end
 
