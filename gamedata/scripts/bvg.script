@@ -1,4 +1,4 @@
-debug = true
+debug_enabled = false
 
 local nvg_radius = 0.5 -- Radius of circles.
 
@@ -39,25 +39,6 @@ local zoom = true
 
 -- Variables for auto-turn-off functionality.
 local nvg_blocker_pda = false
-
--- Variables to store the effect.
-local nv_eff = {
-    ["nightvision_1"] = {
-        nvg_generation = 1,
-        nvg_num_tubes = 1.0,
-        nvg_mode = 3.0
-    },
-    ["nightvision_2"] = {
-        nvg_generation = 2,
-        nvg_num_tubes = 2.0,
-        nvg_mode = 0.0
-    },
-    ["nightvision_3"] = {
-        nvg_generation = 3,
-        nvg_num_tubes = 4.0,
-        nvg_mode = 0.0
-    }
-}
 
 -----------------------------------------------------------------------------
 --        NVG DATA PACKING AND UPDATE FUNCTION
@@ -119,12 +100,13 @@ item_device.set_nightvision = function(section, state)
 
     if (not section) then return end
 
-    local nv_settings = nv_eff[ini_sys:r_string_ex(section, "nv_effect")]
+    local effect_id = bvg_ini.try_get_vision_effect_id(section)
 
-    if (nv_settings) then
-        nvg_generation = nv_settings.nvg_generation
-        nvg_num_tubes = nv_settings.nvg_num_tubes
-        nvg_mode = nv_settings.nvg_mode
+    if (effect_id ~= -1) then
+        local effect = bvg_mcm.get_vision_effect_table(effect_id)
+        nvg_generation = effect.generation
+        nvg_num_tubes = effect.num_tubes
+        nvg_mode = effect.mode
 
         if (state and (not item_device.nv_state)) then
             console_update_nvg_shader()
@@ -162,7 +144,7 @@ end
 
 function set_nightvision_animated(section, state)
     if (not section) then return end
-    if (not ini_sys:r_string_ex(section, "nv_effect")) then return end
+    if (bvg_ini.try_get_vision_effect_id(section) == -1) then return end
     if (not check_animation_allowed()) or (not item_device.can_toggle_torch()) then return end
     if (lam2.get_action_with_tag("nvg_animation")) then return end
 
