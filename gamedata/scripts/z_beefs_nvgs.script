@@ -6,10 +6,10 @@
 -- uni_anim_knives (G.A.M.M.A. 0.9.4)
 
 -- Referenced by: fix_beefnvg_anim (G.A.M.M.A. 0.9.4)
-local mc_anm_time_1 = 0
+mc_anm_time_1 = 0
 
 -- Referenced by: fix_beefnvg_anim (G.A.M.M.A. 0.9.4)
-local torch_anm_time = 0
+torch_anm_time = 0
 
 -- Referenced by: drx_da_main (G.A.M.M.A. 0.9.4)
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
@@ -18,7 +18,7 @@ function nvg_glitch(power)
 end
 
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
-local play_animation = true
+play_animation = true
 
 -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
 function brightness_adjust()

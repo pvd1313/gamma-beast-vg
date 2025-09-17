@@ -1,9 +1,15 @@
 <string_table>
 	<string id="ui_mcm_bvg_title">
-		<text>Beast VG</text>
+		<text>Beast Vision Goggles</text>
 	</string>
 	<string id="ui_mcm_menu_bvg">
 		<text>Beast VG</text>
+	</string>
+	<string id="ui_mcm_bvg_enable_torch_animation">
+		<text>Enable hand animation</text>
+	</string>
+	<string id="ui_mcm_bvg_enable_torch_animation_desc">
+		<text>If this box is checked, player will use hand animation when NVG turned on / off.</text>
 	</string>
 	<string id="ui_mcm_bvg_gain_max">
 		<text>The max gain that can be applied to NVGs:</text>

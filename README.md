@@ -15,6 +15,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 
 ### Requirements:
 - [S.T.A.L.K.E.R. Anomaly v1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
+- [Modded Exes: Ecolog Edition](https://github.com/ProfLander/xray-monolith/releases/)
 - [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases)
 - [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10)
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone)
@@ -35,6 +36,9 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 
 ### Other:
 - Removed support for 2D scopes.
+- Major script refactoring.
+- MCM structure changes.
+- MCM FDDA NVG animation option moved to BVG MCM, FDDA option still there but does nothing.
 
 # Notes
 
@@ -52,11 +56,12 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
   - MCM option to turn off VG when 3D PDA is fully opened only.
   - MCM option to tweak amount of blur in shader.
   - MCM option to tweak max view distance in shader.
-  - VG components / maintenance.
   - VG brightness status display (when adjusting brightness).
-  - VG MCM key bind for brightness.
-  - Shared MCM settings (key binds, animation).
-  - VG upgrades (like weapon upgrades).
+  - VG brightness adjust animation.
+  - VG MCM better key bind config for brightness.
+  - VG / torch enabled status icons.
+  - VG in-game calibration (like color correction).
+  - VG components / upgrades / maintenance (like weapons).
     - VG zoom upgrade. (like binocular).
     - VG recognition upgrade. (like binocular).
 - Youtrack / any other tracker for mod development.

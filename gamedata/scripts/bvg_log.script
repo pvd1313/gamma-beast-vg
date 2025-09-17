@@ -1,0 +1,25 @@
+function info(message)
+    printf("BVG: " .. message)
+end
+
+-- TODO: Not working.
+function table(obj)
+    deep_print_table(obj, 2)
+end
+
+-- TODO: Not working.
+function deep_print_table(t, indent)
+    indent = indent or 0
+
+    for key, val in pairs(t) do
+        if type(val) == "table" then
+            local format = string.rep(" ", indent) .. key .. ":"
+            printf(format)
+
+            deep_print_table(value, indent + 1)
+        else
+            local format = string.rep(" ", indent) .. key .. ": "
+            print(format .. tostring(value))
+        end
+    end
+end

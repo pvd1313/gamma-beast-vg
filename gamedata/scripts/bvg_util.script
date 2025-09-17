@@ -10,6 +10,20 @@ function try_get_active_scope_name()
     return get_sight_section(wpn)
 end
 
+function deep_clone(source)
+    local dst = { }
+
+    for key, val in pairs(source) do
+        if type(val) == "table" then
+            dst[key] = deep_clone(val)
+        else
+            dst[key] = val
+        end
+    end
+
+    return dst
+end
+
 function check_weapon_zoomed()
     return axr_main.weapon_is_zoomed == true
 end
@@ -24,13 +38,13 @@ function try_get_active_weapon_zoom_type()
     return c_wpn:GetZoomType()
 end
 
--- Copied from: z_3d_scopes.scipt (G.A.M.M.A. 0.9.4)
-function get_sight_section(wpn)
-    local wpn_section = wpn:section()
+-- Copied from: z_3d_scopes.script (G.A.M.M.A. 0.9.4)
+function get_sight_section(weapon)
+    local wpn_section = weapon:section()
 
     local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
     if (modular_attachments) then
-        local c_wpn = wpn:cast_Weapon()
+        local c_wpn = weapon:cast_Weapon()
         if (c_wpn:IsScopeAttached()) then
             return c_wpn:GetScopeName()
         end

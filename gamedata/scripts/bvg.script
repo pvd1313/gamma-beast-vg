@@ -1,14 +1,6 @@
--- MCM values
-local nvg_gain_max = 2.0             -- Max value for nvg gain (brightness).
-local nvg_gain_min = 0.5             -- Min value for nvg gain (brightness).
-local nvg_washout_thresh = 0.1       -- Used to calculate washout effect on light sources.
-local nvg_view_through_scope = false -- Can you keep your NVGs on when looking through scope?
-local nvg_off_when_nv_scope = false  -- Disable goggles when aimed with NV scope?
-local nvg_off_when_hv_scope = false  -- Disable goggles when aimed with HV scope?
-local nvg_off_when_binoc = false     -- Disable goggles when aimed with binocular?
-local nvg_gain_offset = 1.0          -- Offset for nvg gain to accomodate for brighter/darker worlds.
-local nvg_stays_pda = true           -- Disable nvg on PDA?
-local nvg_radius = 0.5               -- Radius of circles.
+debug = true
+
+local nvg_radius = 0.5 -- Radius of circles.
 
 -- Variables
 local nvg_generation = 0         -- 1, 2, or 3.
@@ -47,7 +39,6 @@ local zoom = true
 
 -- Variables for auto-turn-off functionality.
 local nvg_blocker_pda = false
-local mcm_enable_nvg_animation = true
 
 -- Variables to store the effect.
 local nv_eff = {
@@ -76,10 +67,10 @@ function pack_nvg_data()
     local x_1 = tostring(nvg_generation)                      -- Generation (1,2,3) - outputs 1.x to 3.x
     local x_2 = tostring(nvg_num_tubes * 10)                  -- Num Tubes (1,2,4,1.1,1.2) outputs x.10, x.20, x.40, x.11, or x.12
     local y_1 = tostring(math.floor(nvg_gain_current * 10))   -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment.
-    local y_2 = tostring(math.floor(nvg_washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment.
+    local y_2 = tostring(math.floor(bvg_cfg.washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment.
     local z_1 = tostring(math.floor(vignette_current * 100))  -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment.
     local z_2 = tostring(math.floor(glitch_power * 10))       -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
-    local w_1 = tostring((math.floor(nvg_gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment.
+    local w_1 = tostring((math.floor(bvg_cfg.gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment.
     local w_2 = tostring(nvg_mode)                            -- Mode (0,1) - outputs w.0 or w.1 depending on mode.
 
     return "(" ..
@@ -120,7 +111,7 @@ function check_animation_allowed()
 end
 
 item_device.set_nightvision = function(section, state)
-    if mcm_enable_nvg_animation and z_beefs_nvgs.play_animation then
+    if (bvg_cfg.enable_torch_animation and z_beefs_nvgs.play_animation) then
         z_beefs_nvgs.play_animation = false
         set_nightvision_animated(section, state)
         return
@@ -135,13 +126,13 @@ item_device.set_nightvision = function(section, state)
         nvg_num_tubes = nv_settings.nvg_num_tubes
         nvg_mode = nv_settings.nvg_mode
 
-        if state and (not item_device.nv_state) then
+        if (state and (not item_device.nv_state)) then
             console_update_nvg_shader()
             bvg_sfx.play(bvg_sfx_id.vision_start)
             item_device.nv_state = true
             set_actor_callback_registered(true)
 
-        elseif (not state) and item_device.nv_state then
+        elseif ((not state) and item_device.nv_state) then
             console_disable_nvg_shader()
             crt_latch = false
             flip_latch = false
@@ -190,14 +181,14 @@ function set_nightvision_animated(section, state)
 
     if (state) then
         -- Enable NVG.
-        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))       -- Anim bug? small delay to prevent ctd.
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))  -- Anim bug? small delay to prevent ctd.
         lam2.add_action(bvg_anim.get_template_action_nvg_enable_start())  -- Enter hand motion.
         lam2.add_action(bvg_anim.get_template_action_nvg_enable(section)) -- Equip nvg motion.
     else
         -- Disable NVG
         lam2.add_action(bvg_anim.get_template_action_nvg_disable_start())  -- Fade in.
         lam2.add_action(bvg_anim.get_template_action_nvg_disable(section)) -- Unequip NVG motion.
-        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))        -- Anim bug? Small delay to prevent ctd.
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))   -- Anim bug? Small delay to prevent ctd.
         lam2.add_action(bvg_anim.get_template_action_nvg_disable_end())    -- Exit hand motion.
     end
 end
@@ -207,18 +198,18 @@ function brightness_adjust()
         return
     end
 
-    local step_size = (nvg_gain_max - nvg_gain_min) / 3
-    if (gain_directionality and nvg_gain_current <= nvg_gain_max) then
+    local step_size = (bvg_cfg.gain_max - bvg_cfg.gain_min) / 3
+    if (gain_directionality and nvg_gain_current <= bvg_cfg.gain_max) then
         nvg_gain_current = nvg_gain_current + step_size
-        if (nvg_gain_current >= nvg_gain_max) then
-            nvg_gain_current = nvg_gain_max
+        if (nvg_gain_current >= bvg_cfg.gain_max) then
+            nvg_gain_current = bvg_cfg.gain_max
             gain_directionality = not gain_directionality
         end
 
-    elseif (not gain_directionality and nvg_gain_current >= nvg_gain_min) then
+    elseif (not gain_directionality and nvg_gain_current >= bvg_cfg.gain_min) then
         nvg_gain_current = nvg_gain_current - step_size
-        if (nvg_gain_current <= nvg_gain_min) then
-            nvg_gain_current = nvg_gain_min
+        if (nvg_gain_current <= bvg_cfg.gain_min) then
+            nvg_gain_current = bvg_cfg.gain_min
             gain_directionality = not gain_directionality
         end
     end
@@ -292,20 +283,20 @@ end
 function check_active_weapon_restricts_nvg()
     if (bvg_util.check_weapon_zoomed()) then return false end
 
-    if (not nvg_view_through_scope) then return true end
+    if (not bvg_cfg.view_through_scope) then return true end
 
     local scope_name = bvg_util.try_get_active_scope_name()
     if (not scope_name) then return false end
 
-    if (nvg_off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
+    if (bvg_cfg.off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
         return true
     end
 
-    if (nvg_off_when_nv_scope and nvg_night_scope_names[scope_name]) then
+    if (bvg_cfg.off_when_nv_scope and nvg_night_scope_names[scope_name]) then
         return true
     end
 
-    if (nvg_off_when_binoc and nvg_binoc_names[scope_name]) then
+    if (bvg_cfg.off_when_binoc and nvg_binoc_names[scope_name]) then
         return true
     end
 
@@ -317,33 +308,9 @@ end
 -----------------------------------------------------------------------------
 
 function on_game_start()
-    RegisterScriptCallback("on_game_load", on_game_load)
-    RegisterScriptCallback("on_option_change", on_option_change)
+    RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
 
-    on_option_change()
-end
-
-function on_game_load()
-    mcm_enable_nvg_animation = liz_fdda_redone_mcm.get_config("nvg/enable")
-end
-
-function on_option_change()
-    nvg_gain_max = bvg_mcm.get_config("gain_max")
-    nvg_gain_min = bvg_mcm.get_config("gain_min")
-    nvg_gain_offset = bvg_mcm.get_config("gain_offset")
-    nvg_washout_thresh = bvg_mcm.get_config("washout_thresh")
-    nvg_view_through_scope = bvg_mcm.get_config("view_through_scope")
-    nvg_off_when_nv_scope = bvg_mcm.get_config("off_when_nv_scope")
-    nvg_off_when_hv_scope = bvg_mcm.get_config("off_when_hv_scope")
-    nvg_off_when_binoc = bvg_mcm.get_config("off_when_binoc")
-    nv_eff["nightvision_1"].nvg_num_tubes = bvg_mcm.get_config("gen1_tubes")
-    nv_eff["nightvision_2"].nvg_num_tubes = bvg_mcm.get_config("gen2_tubes")
-    nv_eff["nightvision_3"].nvg_num_tubes = bvg_mcm.get_config("gen3_tubes")
-    nv_eff["nightvision_1"].nvg_mode = bvg_mcm.get_config("gen1_mode")
-    nv_eff["nightvision_2"].nvg_mode = bvg_mcm.get_config("gen2_mode")
-    nv_eff["nightvision_3"].nvg_mode = bvg_mcm.get_config("gen3_mode")
-    nvg_stays_pda = bvg_mcm.get_config("stays_pda")
-    mcm_enable_nvg_animation = liz_fdda_redone_mcm.get_config("nvg/enable")
+    bvg_mcm.fetch_config()
 end
 
 function actor_on_weapon_zoom_in()
@@ -367,12 +334,12 @@ function actor_on_info_callback(npc, info_id)
     local actor = db.actor
 
     if (actor and item_device.nv_state) then
-        if (info_id == "ui_pda" and not nvg_stays_pda) then
+        if (info_id == "ui_pda" and not bvg_cfg.stays_pda) then
             if (not nvg_blocker_pda) then
                 console_disable_nvg_shader()
                 nvg_blocker_pda = true
             end
-        elseif (info_id == "ui_pda_hide" and not nvg_stays_pda) then
+        elseif (info_id == "ui_pda_hide" and not bvg_cfg.stays_pda) then
             if (nvg_blocker_pda) then
                 console_update_nvg_shader()
                 nvg_blocker_pda = false
