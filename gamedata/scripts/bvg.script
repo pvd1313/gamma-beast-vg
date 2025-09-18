@@ -1,22 +1,5 @@
 debug_enabled = false
 
-local nvg_radius = 0.5 -- Radius of circles.
-
--- Variables
-local nvg_generation = 0         -- 1, 2, or 3.
-local nvg_num_tubes = 0          -- 1, 2, or 4 tubes -- 11 for single offset left and 12 for single offset right.
-local nvg_gain_current = 1       -- Current gain setting.
-local gain_directionality = true -- Directionality of brightness adjust.
-local vignette_amount = 0.05     -- Standard vignette value.
-local vignette_current = 1.0     -- Current vignette value, for turn-on/ turn-off effect.
-local vignette_speed = 1.4       -- How fast vignette changes.
-local glitch_power = 0           -- How much 'glitch' to add to NVGs.
-local nvg_mode = 0               -- Overlay preset.
-local crt_latch = false          -- Latches crt effect on turn-on.
-local flip_latch = false         -- Latches flip down effect on turn-on.
-local flip_speed = 1.4           -- How fast to flip down.
-local flip_down = 1              -- Flip down value (1 all the way up, 100 all the way down).
-
 -- Configs (v.fuchadzhy failed to add it to LTX, thats why it is here, hard-coded).
 -- Also maybe there is way to detect scope type at runtime.
 local nvg_heat_scope_names = {
@@ -35,9 +18,6 @@ local nvg_binoc_names = {
 
 -- Variables for on-weapon zoom.
 local nvg_blocker_scope = false
-local zoom = true
-
--- Variables for auto-turn-off functionality.
 local nvg_blocker_pda = false
 
 -----------------------------------------------------------------------------
@@ -45,24 +25,24 @@ local nvg_blocker_pda = false
 -----------------------------------------------------------------------------
 
 function pack_nvg_data()
-    local x_1 = tostring(nvg_generation)                      -- Generation (1,2,3) - outputs 1.x to 3.x
-    local x_2 = tostring(nvg_num_tubes * 10)                  -- Num Tubes (1,2,4,1.1,1.2) outputs x.10, x.20, x.40, x.11, or x.12
-    local y_1 = tostring(math.floor(nvg_gain_current * 10))   -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment.
+    local x_1 = tostring(bvg_var.generation)                      -- Generation (1,2,3) - outputs 1.x to 3.x
+    local x_2 = tostring(bvg_var.num_tubes * 10)                  -- Num Tubes (1,2,4,1.1,1.2) outputs x.10, x.20, x.40, x.11, or x.12
+    local y_1 = tostring(math.floor(bvg_var.gain * 10))   -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment.
     local y_2 = tostring(math.floor(bvg_cfg.washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment.
-    local z_1 = tostring(math.floor(vignette_current * 100))  -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment.
-    local z_2 = tostring(math.floor(glitch_power * 10))       -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
+    local z_1 = tostring(math.floor(bvg_var.vignette * 100))  -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment.
+    local z_2 = tostring(math.floor(bvg_var.glitch_power * 10))       -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
     local w_1 = tostring((math.floor(bvg_cfg.gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment.
-    local w_2 = tostring(nvg_mode)                            -- Mode (0,1) - outputs w.0 or w.1 depending on mode.
+    local w_2 = tostring(bvg_var.mode)                            -- Mode (0,1) - outputs w.0 or w.1 depending on mode.
 
     return "(" ..
     x_1 .. "." .. x_2 .. "," .. y_1 .. "." .. y_2 .. "," .. z_1 .. "." .. z_2 .. "," .. w_1 .. "." .. w_2 .. ")"
 end
 
 function pack_nvg_data_2()
-    local x_1 = tostring(math.floor(flip_down)) -- Flip down amount - outputs 1.x to 100.x
+    local x_1 = tostring(math.floor(bvg_var.flip_down)) -- Flip down amount - outputs 1.x to 100.x
     local x_2 = tostring(0)
     local y_1 = tostring(0)
-    local y_2 = tostring(math.floor(nvg_radius * 10)) -- Radius for NVG effect - outputs 0.0 to 0.9
+    local y_2 = tostring(math.floor(bvg_var.vg_radius * 10)) -- Radius for NVG effect - outputs 0.0 to 0.9
     local z_1 = tostring(0)
     local z_2 = tostring(0)
     local w_1 = tostring(0)
@@ -73,7 +53,7 @@ function pack_nvg_data_2()
 end
 
 function console_update_nvg_shader()
-    get_console():execute("r__nightvision " .. nvg_generation)
+    get_console():execute("r__nightvision " .. bvg_var.generation)
     get_console():execute("shader_param_8 " .. pack_nvg_data())
     get_console():execute("shader_param_7 " .. pack_nvg_data_2())
 end
@@ -104,9 +84,9 @@ item_device.set_nightvision = function(section, state)
 
     if (effect_id ~= -1) then
         local effect = bvg_mcm.get_vision_effect_table(effect_id)
-        nvg_generation = effect.generation
-        nvg_num_tubes = effect.num_tubes
-        nvg_mode = effect.mode
+        bvg_var.generation = effect.generation
+        bvg_var.num_tubes = effect.num_tubes
+        bvg_var.mode = effect.mode
 
         if (state and (not item_device.nv_state)) then
             console_update_nvg_shader()
@@ -116,11 +96,11 @@ item_device.set_nightvision = function(section, state)
 
         elseif ((not state) and item_device.nv_state) then
             console_disable_nvg_shader()
-            crt_latch = false
-            flip_latch = false
-            vignette_current = 1.0
-            flip_down = 1
-            nvg_radius = 0.5 -- Hack to fix not correctly going back until i am better at this shit
+            bvg_var.crt_latch = false
+            bvg_var.flip_latch = false
+            bvg_var.vignette = 1.0
+            bvg_var.flip_down = 1
+            bvg_var.vg_radius = 0.5 -- Hack to fix not correctly going back until i am better at this shit
             bvg_sfx.play(bvg_sfx.vision_finish_uri)
             item_device.nv_state = false
             set_actor_callback_registered(false)
@@ -181,18 +161,18 @@ function brightness_adjust()
     end
 
     local step_size = (bvg_cfg.gain_max - bvg_cfg.gain_min) / 3
-    if (gain_directionality and nvg_gain_current <= bvg_cfg.gain_max) then
-        nvg_gain_current = nvg_gain_current + step_size
-        if (nvg_gain_current >= bvg_cfg.gain_max) then
-            nvg_gain_current = bvg_cfg.gain_max
-            gain_directionality = not gain_directionality
+    if (bvg_var.gain_dir and bvg_var.gain <= bvg_cfg.gain_max) then
+        bvg_var.gain = bvg_var.gain + step_size
+        if (bvg_var.gain >= bvg_cfg.gain_max) then
+            bvg_var.gain = bvg_cfg.gain_max
+            bvg_var.gain_dir = not bvg_var.gain_dir
         end
 
-    elseif (not gain_directionality and nvg_gain_current >= bvg_cfg.gain_min) then
-        nvg_gain_current = nvg_gain_current - step_size
-        if (nvg_gain_current <= bvg_cfg.gain_min) then
-            nvg_gain_current = bvg_cfg.gain_min
-            gain_directionality = not gain_directionality
+    elseif (not bvg_var.gain_dir and bvg_var.gain >= bvg_cfg.gain_min) then
+        bvg_var.gain = bvg_var.gain - step_size
+        if (bvg_var.gain <= bvg_cfg.gain_min) then
+            bvg_var.gain = bvg_cfg.gain_min
+            bvg_var.gain_dir = not bvg_var.gain_dir
         end
     end
 
@@ -207,33 +187,33 @@ end
 -----------------------------------------------------------------------------
 
 function state_change_effect()
-    if (not flip_latch and item_device.nv_state) then
-        if (flip_down < 100) then
-            flip_down = flip_down * flip_speed
+    if (not bvg_var.flip_latch and item_device.nv_state) then
+        if (bvg_var.flip_down < 100) then
+            bvg_var.flip_down = bvg_var.flip_down * bvg_var.flip_speed
         end
 
-        if (flip_down >= 100) then
-            flip_down = 100
-            flip_latch = true
+        if (bvg_var.flip_down >= 100) then
+            bvg_var.flip_down = 100
+            bvg_var.flip_latch = true
         end
     end
 
-    if (flip_latch and not crt_latch and item_device.nv_state) then
-        if (vignette_current > vignette_amount) then
-            vignette_current = vignette_current * (1 / vignette_speed)
+    if (bvg_var.flip_latch and not bvg_var.crt_latch and item_device.nv_state) then
+        if (bvg_var.vignette > bvg_var.vignette_amount) then
+            bvg_var.vignette = bvg_var.vignette * (1 / bvg_var.vignette_speed)
         end
 
-        if (vignette_current <= vignette_amount) then
-            vignette_current = vignette_amount
-            crt_latch = true
+        if (bvg_var.vignette <= bvg_var.vignette_amount) then
+            bvg_var.vignette = bvg_var.vignette_amount
+            bvg_var.crt_latch = true
         end
     end
 end
 
 -- NVG glitch effect during blowouts and psy storms.
 function set_glitch_power(power)
-    if (item_device.nv_state and glitch_power ~= power) then
-        glitch_power = power
+    if (item_device.nv_state and bvg_var.glitch_power ~= power) then
+        bvg_var.glitch_power = power
         if (not check_nvg_blocked()) then
             console_update_nvg_shader()
         end
@@ -296,13 +276,13 @@ function on_game_start()
 end
 
 function actor_on_weapon_zoom_in()
-    zoom = true
+    bvg_var.wpn_zoomed_in = true
     wpn_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
     update_weapon_zoom_in()
 end
 
 function actor_on_weapon_zoom_out()
-    zoom = false
+    bvg_var.wpn_zoomed_in = false
 
     if (not item_device.nv_state) then return end
 
@@ -335,7 +315,7 @@ local tmr_step = 200
 local wpn_zoom_type = -1
 
 function actor_on_update()
-    if ((not crt_latch or not flip_latch) and (item_device.nv_state)) then
+    if ((not bvg_var.crt_latch or not bvg_var.flip_latch) and (item_device.nv_state)) then
         state_change_effect()
         console_update_nvg_shader()
     end
@@ -344,7 +324,7 @@ function actor_on_update()
     if tg < tmr then return end
     tmr = tg + tmr_step
 
-    if (zoom) then
+    if (bvg_var.wpn_zoomed_in) then
         local new_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
         if (new_zoom_type ~= wpn_zoom_type) then
             wpn_zoom_type = new_zoom_type
@@ -352,7 +332,7 @@ function actor_on_update()
             end
     end
 
-    if ((not zoom) and (item_device.nv_state) and (nvg_blocker_scope)) then
+    if ((not bvg_var.wpn_zoomed_in) and (item_device.nv_state) and (nvg_blocker_scope)) then
         -- check for disable NVG while ADS
         if (nvg_blocker_scope and check_active_weapon_restricts_nvg()) then
             nvg_blocker_scope = false

@@ -1,0 +1,47 @@
+-- Radius of circles.
+-- TODO: v.fuchadzhy: Constant. Did theRealBeef wanted to animate circles?
+vg_radius = 0.5
+
+-- 1, 2, 3
+generation = 0
+
+-- 1, 2, or 4 tubes -- 11 for single offset left and 12 for single offset right.
+num_tubes = 0
+
+-- Current gain setting.
+gain = 1
+
+-- Directionality of brightness adjust.
+-- TODO : v.fuchadzhy: Constant. Get it out of here, Stalker.
+gain_dir = true
+
+-- Standard vignette value.
+-- TODO : v.fuchadzhy: Constant. Get it out of here, Stalker.
+vignette_amount = 0.05;
+
+-- Current vignette value, for turn-on / turn-off effect.
+vignette = 1.0
+
+-- How fast vignette changes.
+vignette_speed = 1.4
+
+-- How much 'glitch' to add to NVGs.
+glitch_power = 0
+
+-- Overlay preset.
+mode = 0
+
+-- Latches crt effect on turn-on.
+crt_latch = false
+
+-- Latches flip down effect on turn-on.
+flip_latch = false
+
+-- How fast to flip down.
+-- TODO : v.fuchadzhy: Constant. Get it out of here, Stalker.
+flip_speed = 1.4
+
+-- Flip down value (1 all the way up, 100 all the way down).
+flip_down = 1
+
+wpn_zoomed_in = true
