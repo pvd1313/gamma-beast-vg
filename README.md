@@ -47,7 +47,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 - Turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
-- MCM settings is on applied on turned on VG.
+- MCM settings is not applied on turned-on VG.
 - VG are turned on if VG is not allowed with ADS and zoom type is changed.
 
 ### Ideas:
@@ -85,3 +85,4 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 - [HeatVision v1.3 [DLTX]](https://www.moddb.com/mods/stalker-anomaly/addons/heatvision-v02-extension-for-beefs-nvg-dx11engine-mod/)
 - [Shader Based 2D Scopes [1.5.1][DX10+][Engine-mod] V1.3 DLTX support](https://www.moddb.com/mods/stalker-anomaly/addons/shader-based-2d-scopes-151dx11engine-mod)
 - [Modded Exes: Ecolog Edition](https://discord.com/channels/912320241713958912/1417405402873729025)
+- [Modular Attachment System](https://www.moddb.com/mods/stalker-anomaly/addons/modular-attachment-system)
