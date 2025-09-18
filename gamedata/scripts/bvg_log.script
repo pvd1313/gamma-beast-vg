@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Log utilities.
+
 function info(message)
     printf("BVG: " .. message)
 end

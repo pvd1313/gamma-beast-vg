@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Mixed utilities.
+
 function try_get_active_scope_name()
     local wpn = db.actor:active_item()
     if (not wpn) then return nil end

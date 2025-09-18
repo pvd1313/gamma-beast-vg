@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: INI weapon references.
+
 local vision_effect_id = {
     ["nightvision_1"] = 0,
     ["nightvision_2"] = 1,

@@ -1,20 +1,6 @@
-debug_enabled = false
-
--- Configs (v.fuchadzhy failed to add it to LTX, thats why it is here, hard-coded).
--- Also maybe there is way to detect scope type at runtime.
-local nvg_heat_scope_names = {
-    ["1pn93n2_1gs"] = true,
-    ["t12"] = true,
-    ["gauss_sight"] = true,
-}
-local nvg_night_scope_names = {
-    ["1pn93"] = true,
-    ["pn23"] = true,
-    ["vulkan"] = true,
-}
-local nvg_binoc_names = {
-    ["wpn_binoc_inv"] = true,
-}
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Main.
 
 -- Variables for on-weapon zoom.
 local nvg_blocker_scope = false
@@ -189,7 +175,7 @@ end
 function state_change_effect()
     if (not bvg_var.flip_latch and item_device.nv_state) then
         if (bvg_var.flip_down < 100) then
-            bvg_var.flip_down = bvg_var.flip_down * bvg_var.flip_speed
+            bvg_var.flip_down = bvg_var.flip_down * bvg_cst.flip_speed
         end
 
         if (bvg_var.flip_down >= 100) then
@@ -199,12 +185,12 @@ function state_change_effect()
     end
 
     if (bvg_var.flip_latch and not bvg_var.crt_latch and item_device.nv_state) then
-        if (bvg_var.vignette > bvg_var.vignette_amount) then
-            bvg_var.vignette = bvg_var.vignette * (1 / bvg_var.vignette_speed)
+        if (bvg_var.vignette > bvg_cst.vignette_amount) then
+            bvg_var.vignette = bvg_var.vignette * (1 / bvg_cst.vignette_speed)
         end
 
-        if (bvg_var.vignette <= bvg_var.vignette_amount) then
-            bvg_var.vignette = bvg_var.vignette_amount
+        if (bvg_var.vignette <= bvg_cst.vignette_amount) then
+            bvg_var.vignette = bvg_cst.vignette_amount
             bvg_var.crt_latch = true
         end
     end
@@ -250,15 +236,15 @@ function check_active_weapon_restricts_nvg()
     local scope_name = bvg_util.try_get_active_scope_name()
     if (not scope_name) then return false end
 
-    if (bvg_cfg.off_when_hv_scope and nvg_heat_scope_names[scope_name]) then
+    if (bvg_cfg.off_when_hv_scope and bvg_cst.heat_scope_names[scope_name]) then
         return true
     end
 
-    if (bvg_cfg.off_when_nv_scope and nvg_night_scope_names[scope_name]) then
+    if (bvg_cfg.off_when_nv_scope and bvg_cst.night_scope_names[scope_name]) then
         return true
     end
 
-    if (bvg_cfg.off_when_binoc and nvg_binoc_names[scope_name]) then
+    if (bvg_cfg.off_when_binoc and bvg_cst.binoc_names[scope_name]) then
         return true
     end
 

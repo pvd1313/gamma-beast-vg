@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Sound effects.
+
 vision_start_uri = "interface\\inv_nv_start"
 vision_finish_uri = "interface\\inv_nv_off"
 brightness_adjust_uri = "interface\\inv_nvg"

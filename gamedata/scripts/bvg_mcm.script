@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: MCM support.
+
 local default = bvg_util.deep_clone(bvg_cfg)
 
 function get_config(key)
@@ -35,7 +39,7 @@ function fetch_config()
         bvg_cfg[key] = get_config(key)
     end
 
-    if (bvg.debug_enabled) then
+    if (bvg_cst.debug_enabled) then
         bvg_log.info("Config fetched. New config:")
         bvg_log.table("bvg_cfg", bvg_cfg)
     end

@@ -1,3 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Animation.
+
 torch_state = 0
 
 function get_template_action_nvg_enable_start()
