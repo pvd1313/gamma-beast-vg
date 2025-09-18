@@ -27,16 +27,16 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 
 # Changes
 ### Features:
-- Added MCM option to block VGs when ADS with HV scopes.
-- Added MCM option to block VGs when ADS with NV scopes.
-- Added MCM option to block VGs when viewing through binocular.
+- Added MCM option to block VG when ADS with HV scopes.
+- Added MCM option to block VG when ADS with NV scopes.
+- Added MCM option to block VG when viewing through binocular.
 
 ### Fixes:
-- Removed ability to toggle NVGs brightness when NVGs is temporarily disabled, to prevent shader from turning on.
+- Removed ability to toggle VG brightness when VG is temporarily disabled, to prevent shader from turning on.
 
 ### Other:
-- Removed support for 2D scopes.
 - Major script refactoring.
+- Removed support for 2D scopes.
 - MCM structure changes.
 - MCM FDDA NVG animation option moved to BVG MCM. FDDA option still there, but does nothing.
 
@@ -44,11 +44,11 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 
 ### Known issues:
 - Integrated weapon scopes not supported.
-- Turning on VGs while on ADS / binocular will turn on VGs shader without following MCM defined logic.
-- VGs do not care if NV scope is turned on / off.
+- Turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
+- VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
-- MCM settings is on applied on turned on VGs.
-- VGs are turned on if VG is not allowed with ADS and zoom type is changed.
+- MCM settings is on applied on turned on VG.
+- VG are turned on if VG is not allowed with ADS and zoom type is changed.
 
 ### Ideas:
 - Gameplay
@@ -63,6 +63,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
   - VG MCM better key bind config for brightness.
   - VG / torch enabled status icons.
   - VG in-game calibration (like color correction).
+  - VG block animation for turn on / off (sound?).
   - VG components / upgrades / maintenance (like weapons).
     - VG zoom upgrade. (like binocular).
     - VG recognition upgrade. (like binocular).
