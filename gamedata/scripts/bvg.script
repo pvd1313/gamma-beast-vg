@@ -110,7 +110,7 @@ item_device.set_nightvision = function(section, state)
 
         if (state and (not item_device.nv_state)) then
             console_update_nvg_shader()
-            bvg_sfx.play(bvg_sfx_id.vision_start)
+            bvg_sfx.play(bvg_sfx.vision_start_uri)
             item_device.nv_state = true
             set_actor_callback_registered(true)
 
@@ -121,7 +121,7 @@ item_device.set_nightvision = function(section, state)
             vignette_current = 1.0
             flip_down = 1
             nvg_radius = 0.5 -- Hack to fix not correctly going back until i am better at this shit
-            bvg_sfx.play(bvg_sfx_id.vision_finish)
+            bvg_sfx.play(bvg_sfx.vision_finish_uri)
             item_device.nv_state = false
             set_actor_callback_registered(false)
         end
@@ -196,7 +196,7 @@ function brightness_adjust()
         end
     end
 
-    bvg_sfx.play(bvg_sfx_id.brightness_adjust)
+    bvg_sfx.play(bvg_sfx.brightness_adjust_uri)
 
     console_update_nvg_shader()
 end

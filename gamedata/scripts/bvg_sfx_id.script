@@ -1,3 +1,0 @@
-vision_start = "interface\\inv_nv_start"
-vision_finish = "interface\\inv_nv_off"
-brightness_adjust = "interface\\inv_nvg"
