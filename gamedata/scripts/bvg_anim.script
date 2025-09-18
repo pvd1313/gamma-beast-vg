@@ -4,6 +4,79 @@
 
 torch_state = 0
 
+function set_vision_animated(section, state)
+    if (not section) then return end
+    if (bvg_ini.try_get_vision_effect_id(section) == -1) then return end
+    if (not is_animation_allowed()) or (not item_device.can_toggle_torch()) then return end
+    if (lam2.get_action_with_tag("nvg_animation")) then return end
+
+    bvg_anim.torch_state = 1
+    local weapon_zoomed = bvg_util.check_weapon_zoomed() and (not (IsPistol(db.actor:active_item(), nil)) or db.actor:active_detector())
+    local det_active = db.actor:active_detector() or nil
+
+    -- If holding weapon and aiming disable ADS.
+    if (db.actor:active_item() and (not det_active and weapon_zoomed)) then
+        if (get_console():get_bool("wpn_aim_toggle")) then
+            level.press_action(bind_to_dik(key_bindings.kWPN_ZOOM))
+        else
+            level.release_action(bind_to_dik(key_bindings.kWPN_ZOOM))
+        end
+    end
+
+    if (state) then
+        -- Enable VG.
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))  -- Anim bug? small delay to prevent ctd.
+        lam2.add_action(get_template_action_nvg_enable_start())  -- Enter hand motion.
+        lam2.add_action(get_template_action_nvg_enable(section)) -- Equip nvg motion.
+    else
+        -- Disable VG
+        lam2.add_action(get_template_action_nvg_disable_start())  -- Fade in.
+        lam2.add_action(get_template_action_nvg_disable(section)) -- Unequip NVG motion.
+        lam2.add_action(lam2.get_template_action_wait_for_seconds(0.05))   -- Anim bug? Small delay to prevent ctd.
+        lam2.add_action(get_template_action_nvg_disable_end())    -- Exit hand motion.
+    end
+end
+
+function actor_on_update()
+    -- TODO : v.fuchadzhy: This might be not safe. What if VG will turn off in the middle of animation?
+    if (not item_device.nv_state) then
+        return
+    end
+
+    if ((not bvg_var.crt_latch or not bvg_var.flip_latch)) then
+        latch_animation_update()
+        bvg_cg.update_shader()
+    end
+end
+
+function latch_animation_update()
+    if (not bvg_var.flip_latch and item_device.nv_state) then
+        if (bvg_var.flip_down < 100) then
+            bvg_var.flip_down = bvg_var.flip_down * bvg_cst.flip_speed
+        end
+
+        if (bvg_var.flip_down >= 100) then
+            bvg_var.flip_down = 100
+            bvg_var.flip_latch = true
+        end
+    end
+
+    if (bvg_var.flip_latch and not bvg_var.crt_latch and item_device.nv_state) then
+        if (bvg_var.vignette > bvg_cst.vignette_amount) then
+            bvg_var.vignette = bvg_var.vignette * (1 / bvg_cst.vignette_speed)
+        end
+
+        if (bvg_var.vignette <= bvg_cst.vignette_amount) then
+            bvg_var.vignette = bvg_cst.vignette_amount
+            bvg_var.crt_latch = true
+        end
+    end
+end
+
+function is_animation_allowed()
+    return (bvg_anim.torch_state == 0 and (not game.only_movekeys_allowed()) and (not IsMoveState("mcClimb")))
+end
+
 function get_template_action_nvg_enable_start()
     local a = lam2.get_template_action_play_animation()
     a.tag = "nvg_animation"
