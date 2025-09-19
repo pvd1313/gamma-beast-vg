@@ -2,18 +2,6 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Mixed utilities.
 
-function try_get_active_scope_name()
-    local wpn = db.actor:active_item()
-    if (not wpn) then return nil end
-
-    local c_wpn = wpn:cast_Weapon()
-    if (not c_wpn) then return nil end
-
-    if (c_wpn:GetZoomType() ~= 0) then return nil end
-
-    return get_sight_section(wpn)
-end
-
 function deep_clone(source)
     local dst = { }
 
@@ -26,39 +14,4 @@ function deep_clone(source)
     end
 
     return dst
-end
-
-function check_weapon_zoomed()
-    return axr_main.weapon_is_zoomed == true
-end
-
-function try_get_active_weapon_zoom_type()
-    local wpn = db.actor:active_item()
-    if (not wpn) then return -1 end
-
-    local c_wpn = wpn:cast_Weapon()
-    if (not c_wpn) then return -1 end
-
-    return c_wpn:GetZoomType()
-end
-
--- Copied from: z_3d_scopes.script (G.A.M.M.A. 0.9.4)
-function get_sight_section(weapon)
-    local wpn_section = weapon:section()
-
-    local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
-    if (modular_attachments) then
-        local c_wpn = weapon:cast_Weapon()
-        if (c_wpn:IsScopeAttached()) then
-            return c_wpn:GetScopeName()
-        end
-        return nil
-    end
-
-    local parent = ini_sys:r_string_ex(wpn_section, "parent_section") or wpn_section
-    if #parent == #wpn_section then
-        return wpn_section
-    end
-
-    return wpn_section:sub(#parent + 2)
 end

@@ -2,7 +2,9 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: User config / MCM default settings / current settings state.
 
+-- TODO: v.fuchadzhy: Rename. 
 view_through_scope = false
+
 off_when_nv_scope = false
 off_when_hv_scope = false
 off_when_binoc = false

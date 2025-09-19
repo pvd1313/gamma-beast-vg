@@ -1,0 +1,114 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Shader block during weapon ADS / Binocular / PDA / Device offline.
+
+local blocker_weapon = 0
+local blocker_pda = 0
+local blocker_device_offline = 0
+
+local flag_update_next_time = 0
+
+local cache_weapon_zoom_type = -1
+local cache_actor_holding_pda = false
+local cache_any_flag_on = false
+local cache_device_online = false
+
+function is_any_flag_on()
+    return (blocker_weapon + blocker_pda + blocker_device_offline) > 0
+end
+
+function update_flags()
+    blocker_weapon = 0
+    if (is_actor_weapon_blocks_vg()) then
+        blocker_weapon = 1
+    end
+    
+    -- 1: device is off.
+    blocker_device_offline = (not cache_device_online) and 1 or 0
+    
+    -- 1: blocked by pda.
+    blocker_pda = (cache_actor_holding_pda and not bvg_cfg.stays_pda) and 1 or 0
+end
+
+function is_actor_weapon_blocks_vg()
+    local weapon = bvg_weapon.try_get_actor_weapon()
+    if (weapon == nil) then return false end
+
+    -- X-Ray Weapon.cpp
+    local xr_cweapon = weapon:cast_Weapon()
+    if (xr_cweapon == nil) then return false end
+
+    -- If no zoom then no block.
+    if (not xr_cweapon:IsZoomed()) then return false end
+
+    -- If ADS not allowed.
+    if (not bvg_cfg.view_through_scope) then return true end
+
+    -- Scope. Or item name (if not a scope, or binocular).
+    local scope_name = bvg_weapon.try_get_weapon_zoomed_scope_name(weapon)
+
+    -- Blocked by heat scope?
+    if (bvg_cfg.off_when_hv_scope and bvg_cst.heat_scope_names[scope_name]) then
+        return true
+    end
+
+    -- Blocked by night scope?
+    if (bvg_cfg.off_when_nv_scope and bvg_cst.night_scope_names[scope_name]) then
+        return true
+    end
+
+    -- Blocked by binocular?
+    if (bvg_cfg.off_when_binoc and bvg_cst.binoc_names[scope_name]) then
+        return true
+    end
+
+    return false
+end
+
+function notify_pda_is_used(is_pda_used)
+    cache_actor_holding_pda = is_pda_used
+    schedule_early_update()
+end
+
+function schedule_early_update()
+    next_update_time = bvg_cst.blocker_flag_update_delay * -1;
+end
+
+function update()
+    -- Zoom type switch handling.
+    local weapon_zoom_type = bvg_weapon.try_get_actor_weapon_zoom_type()
+    if (weapon_zoom_type ~= cache_weapon_zoom_type) then
+        cache_weapon_zoom_type = weapon_zoom_type
+        schedule_early_update()
+    end
+    
+    -- Device on / off handling.
+    local device_online = item_device.nv_state
+    if (device_online ~= cache_device_online) then
+        cache_device_online = device_online
+        schedule_early_update()
+    end
+    
+    -- Animator has bigger priority.
+    if (bvg_anim.is_playing()) then return end
+    
+    -- Update every 5th frame or so.
+    local time = time_global()
+    if (time < flag_update_next_time) then return end
+    flag_update_next_time = time + bvg_cst.blocker_flag_update_delay
+    
+    -- Blocking magic.
+    update_flags()
+    
+    -- Set shader state.
+    local any_flag_on = is_any_flag_on()
+    if (any_flag_on ~= cache_any_flag_on) then
+        cache_any_flag_on = any_flag_on
+
+        if (cache_any_flag_on) then
+            bvg_cg.disable_shader()
+        else
+            bvg_cg.update_shader()        
+        end
+    end 
+end

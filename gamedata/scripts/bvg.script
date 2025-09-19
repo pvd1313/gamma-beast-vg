@@ -2,63 +2,53 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Main.
 
--- Variables for on-weapon zoom.
-local nvg_blocker_scope = false
-local nvg_blocker_pda = false
-
 item_device.set_nightvision = function(section, state)
     if (bvg_cfg.enable_torch_animation and z_beefs_nvgs.play_animation) then
         z_beefs_nvgs.play_animation = false
         bvg_anim.set_vision_animated(section, state)
-        return
+    else
+        set_vision_device_state(section, state)
     end
+end
 
-    if (not section) then return end
+function set_vision_device_state(section, state)
+    if (section == nil) then return end
 
     local effect_id = bvg_ini.try_get_vision_effect_id(section)
+    if (effect_id == -1) then return end
 
-    if (effect_id ~= -1) then
-        local effect = bvg_mcm.get_vision_effect_table(effect_id)
-        bvg_var.generation = effect.generation
-        bvg_var.num_tubes = effect.num_tubes
-        bvg_var.mode = effect.mode
+    -- TODO: v.fuchadzhy: Should be moved to bvg_cg. Will also help with MCM config sync bug. 
+    local effect = bvg_mcm.get_vision_effect_table(effect_id)
+    bvg_var.generation = effect.generation
+    bvg_var.num_tubes = effect.num_tubes
+    bvg_var.mode = effect.mode
 
-        if (state and (not item_device.nv_state)) then
-            bvg_cg.update_shader()
-            bvg_sfx.play(bvg_sfx.vision_start_uri)
-            item_device.nv_state = true
-            set_actor_callback_registered(true)
-
-        elseif ((not state) and item_device.nv_state) then
-            bvg_cg.disable_shader()
-            bvg_var.crt_latch = false
-            bvg_var.flip_latch = false
-            bvg_var.vignette = 1.0
-            bvg_var.flip_down = 1
-            bvg_var.vg_radius = 0.5 -- Hack to fix not correctly going back until i am better at this shit
-            bvg_sfx.play(bvg_sfx.vision_finish_uri)
-            item_device.nv_state = false
-            set_actor_callback_registered(false)
-        end
-    end
-end
-
-function set_actor_callback_registered(state)
     if (state) then
-        RegisterScriptCallback("actor_on_update", actor_on_update)
-        RegisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
-        RegisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
-        RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+        -- Turn on.
+        bvg_sfx.play(bvg_sfx.vision_start_uri);
+        item_device.nv_state = true
     else
-        UnregisterScriptCallback("actor_on_weapon_zoom_in", actor_on_weapon_zoom_in)
-        UnregisterScriptCallback("actor_on_weapon_zoom_out", actor_on_weapon_zoom_out)
-        UnregisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
-        UnregisterScriptCallback("actor_on_update", actor_on_update)
+        -- Turn off.
+        bvg_var.crt_latch = false
+        bvg_var.flip_latch = false
+        bvg_var.vignette = 1.0
+        bvg_var.flip_down = 1
+        
+        item_device.nv_state = false
+        
+        -- TODO: v.fuchadzhy: If it will be constant, no need to update it here.
+        -- theRealBeef: Hack to fix not correctly going back until I am better at this shit
+        bvg_var.vg_radius = 0.5 
     end
+
+    -- Blocker will handle the magic.
+    bvg_blocker.schedule_early_update()
 end
+
 
 function brightness_adjust()
-    if ((not item_device.nv_state) or (check_nvg_blocked())) then
+    -- TODO: v.fuchadzhy: What about switching brightness during animation?
+    if (bvg_blocker.is_any_flag_on() or not item_device.nv_state) then
         return
     end
 
@@ -79,134 +69,40 @@ function brightness_adjust()
     end
 
     bvg_sfx.play(bvg_sfx.brightness_adjust_uri)
-
+    
     bvg_cg.update_shader()
 end
 
 -- NVG glitch effect during blowouts and psy storms.
 function set_glitch_power(power)
-    if (item_device.nv_state and bvg_var.glitch_power ~= power) then
+    if (bvg_var.glitch_power ~= power) then
         bvg_var.glitch_power = power
-        if (not check_nvg_blocked()) then
+        if (not bvg_blocker.is_any_flag_on()) then
             bvg_cg.update_shader()
         end
     end
 end
 
-function check_nvg_blocked()
-    nvg_blocker_scope = check_active_weapon_restricts_nvg()
-
-    return (nvg_blocker_pda or nvg_blocker_scope)
-end
-
-function update_weapon_zoom_in()
-    if (not item_device.nv_state) then return end
-
-    local active_scope_restricts_nvg = check_active_weapon_restricts_nvg()
-
-    if (active_scope_restricts_nvg) then
-        nvg_blocker_scope = true
-        bvg_cg.disable_shader()
-
-    elseif (not active_scope_restricts_nvg and nvg_blocker_scope) then
-        nvg_blocker_scope = false
-        bvg_cg.update_shader()
-
-    end
-end
-
-function check_active_weapon_restricts_nvg()
-    if (bvg_util.check_weapon_zoomed()) then return false end
-
-    if (not bvg_cfg.view_through_scope) then return true end
-
-    local scope_name = bvg_util.try_get_active_scope_name()
-    if (not scope_name) then return false end
-
-    if (bvg_cfg.off_when_hv_scope and bvg_cst.heat_scope_names[scope_name]) then
-        return true
-    end
-
-    if (bvg_cfg.off_when_nv_scope and bvg_cst.night_scope_names[scope_name]) then
-        return true
-    end
-
-    if (bvg_cfg.off_when_binoc and bvg_cst.binoc_names[scope_name]) then
-        return true
-    end
-
-    return false
-end
-
------------------------------------------------------------------------------
---        Callbacks
------------------------------------------------------------------------------
-
 function on_game_start()
     RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
+    RegisterScriptCallback("actor_on_update", actor_on_update)
+    RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
 
     bvg_mcm.fetch_config()
 end
 
-function actor_on_weapon_zoom_in()
-    bvg_var.wpn_zoomed_in = true
-    wpn_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
-    update_weapon_zoom_in()
-end
-
-function actor_on_weapon_zoom_out()
-    bvg_var.wpn_zoomed_in = false
-
-    if (not item_device.nv_state) then return end
-
-    if (nvg_blocker_scope) then
-        nvg_blocker_scope = false
-        bvg_cg.update_shader()
-    end
-end
-
 function actor_on_info_callback(npc, info_id)
     local actor = db.actor
+    if (actor == nil) then return end
 
-    if (actor and item_device.nv_state) then
-        if (info_id == "ui_pda" and not bvg_cfg.stays_pda) then
-            if (not nvg_blocker_pda) then
-                bvg_cg.disable_shader()
-                nvg_blocker_pda = true
-            end
-        elseif (info_id == "ui_pda_hide" and not bvg_cfg.stays_pda) then
-            if (nvg_blocker_pda) then
-                bvg_cg.update_shader()
-                nvg_blocker_pda = false
-            end
-        end
+    if (info_id == "ui_pda") then
+        bvg_blocker.notify_pda_is_used(true)
+    elseif (info_id == "ui_pda_hide") then
+        bvg_blocker.notify_pda_is_used(false)
     end
 end
 
-local tmr = 0
-local tmr_step = 200
-local wpn_zoom_type = -1
-
 function actor_on_update()
-    bvg_anim.actor_on_update()
-
-    tg = time_global()
-    if tg < tmr then return end
-    tmr = tg + tmr_step
-
-    if (bvg_var.wpn_zoomed_in) then
-        local new_zoom_type = bvg_util.try_get_active_weapon_zoom_type()
-        if (new_zoom_type ~= wpn_zoom_type) then
-            wpn_zoom_type = new_zoom_type
-            update_weapon_zoom_in()
-            end
-    end
-
-    if ((not bvg_var.wpn_zoomed_in) and (item_device.nv_state) and (nvg_blocker_scope)) then
-        -- check for disable NVG while ADS
-        if (nvg_blocker_scope and check_active_weapon_restricts_nvg()) then
-            nvg_blocker_scope = false
-            bvg_cg.update_shader()
-        end
-    end
+    bvg_anim.update()
+    bvg_blocker.update()
 end

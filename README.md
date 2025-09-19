@@ -25,7 +25,8 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 2. Put `Beast VG` right after `FDDA Redone` or `FDDA Redone Fixes`.
 3. Enjoy (:
 
-# Changes
+# Changes vs Beef's NVG
+
 ### Features:
 - Added MCM option to block VG when ADS with HV scopes.
 - Added MCM option to block VG when ADS with NV scopes.
@@ -49,6 +50,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 - DX8 / DX9 not supported.
 - MCM settings is not applied on turned-on VG.
 - VG are turned on if VG is not allowed with ADS and zoom type is changed.
+- Screen is blurred after VG off. 
 
 ### Ideas:
 - Gameplay

@@ -6,7 +6,8 @@
   ],
   "Lua.workspace.ignoreSubmodules": false,
   "Lua.diagnostics.disable": [
-    "lowercase-global"
+    "lowercase-global",
+    "trailing-space"
   ],
   "Lua.runtime.plugin": "C:/repo/anomaly-definitions/plugin.lua",
   "Lua.runtime.version": "Lua 5.1",
