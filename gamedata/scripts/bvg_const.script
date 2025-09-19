@@ -7,7 +7,6 @@ vignette_amount = 0.05 -- Standard vignette value.
 flip_speed = 1.4       -- How fast to flip down.
 vignette_speed = 1.4   -- How fast vignette changes.
 
-
 -- For vision blocker.
 heat_scope_names = {
     ["1pn93n2_1gs"] = true,

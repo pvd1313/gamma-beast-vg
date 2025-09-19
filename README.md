@@ -1,10 +1,12 @@
 # About
 Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 
-### Based on mods:
+### Based on:
 - Beef's NVG - theRealBeef
 - FDDA Redone - lizzardman
+- FDDA Redone Fixes - Kute
 - G.A.M.M.A. Massive Text Overhaul Project - SageDaHerb and Dr.Pr1nkos
+- G.A.M.M.A. Mod Organizer Profile (DX10 / DX11) - Grokitach
 
 ### Links:
 - [Github](https://github.com/pvd1313/gamma-beast-vg)
@@ -14,15 +16,16 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 # Installation
 
 ### Requirements:
-- [S.T.A.L.K.E.R. Anomaly v1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
+- [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 - [Modded Exes: Ecolog Edition](https://github.com/ProfLander/xray-monolith/releases/)
-- [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases)
-- [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10)
-- [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone)
+- [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases) (included in G.A.M.M.A. 0.9.4)
+- [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10) (included in G.A.M.M.A. 0.9.4)
+- [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone) (included in G.A.M.M.A. 0.9.4)
+- [FDDA Redone Fixes](https://www.moddb.com/addons/fdda-redone-fixes) (included in G.A.M.M.A. 0.9.4)
 
 ### Steps:
 1. Install `Beast VG` with `Mod Organizer`.
-2. Put `Beast VG` right after `FDDA Redone` or `FDDA Redone Fixes`.
+2. Put `Beast VG` right after `FDDA Redone Fixes`.
 3. Enjoy (:
 
 # Changes vs Beef's NVG
@@ -43,13 +46,17 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 
 # Notes
 
+### Warning:
+- `Beast VG` mod is not tested on vanilla [Anomaly v1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
+
 ### Known issues:
 - Integrated weapon scopes not supported.
 - Turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
 - MCM settings is not applied on turned-on VG.
-- Screen is blurred after VG off. 
+- VG loop audio when online seems to be not playing.
+- Crash when trying to unequip helmet with NV on (FDDA Redone)
 
 ### Ideas:
 - Gameplay

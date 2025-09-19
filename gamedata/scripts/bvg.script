@@ -2,15 +2,22 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Main.
 
-item_device.set_nightvision = function(section, state)
-    if (bvg_config.enable_torch_animation and z_beefs_nvgs.play_animation) then
-        z_beefs_nvgs.play_animation = false
-        bvg_animator.set_vision_animated(section, state)
-    else
-        set_vision_device_state(section, state)
-    end
+-- BVG entry point.
+function on_game_start()
+    
+    bvg_monkey.patch()
+    
+    RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
+    RegisterScriptCallback("actor_on_update", actor_on_update)
+    RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+
+    bvg_mcm.fetch_config()
+
 end
 
+-- Will change VG state. Without hand animation. Only vignette (dark fade) animation.
+---@see bvg_animator.script
+---@see bvg_monkey.script
 function set_vision_device_state(section, state)
     if (section == nil) then return end
 
@@ -25,8 +32,14 @@ function set_vision_device_state(section, state)
 
     if (state) then
         -- Turn on.
-        bvg_audio.play(bvg_audio.vision_start_uri);
+        -- TODO: v.fuchadzhy: Something else is starting audio. item_device.script? X-Ray?
+        -- bvg_audio.play(bvg_audio.vision_start_uri)
+        
         item_device.nv_state = true
+        
+        -- If we want instant turn on.
+        -- bvg_var.vignette = bvg_const.vignette_amount
+        -- bvg_var.flip_down = 100
     else
         -- Turn off.
         bvg_var.crt_latch = false
@@ -36,15 +49,20 @@ function set_vision_device_state(section, state)
         
         item_device.nv_state = false
         
+        -- TODO: v.fuchadzhy: Hack. For now. Hand animation 'blocks' the blocker... -1 bug; +1 bug; :D
+        bvg_render.disable_shader()
+        
+        -- TODO: v.fuchadzhy: Something else is starting audio. item_device.script? X-Ray?
+        -- bvg_audio.play(bvg_audio.vision_finish_uri)
+        
         -- TODO: v.fuchadzhy: If it will be constant, no need to update it here.
-        -- theRealBeef: Hack to fix not correctly going back until I am better at this shit
-        bvg_var.vg_radius = 0.5 
+        -- theRealBeef: Hack to fix not correctly going back until I am better at this shit.
+        bvg_var.vg_radius = 0.5
     end
 
     -- Blocker will handle the magic.
     bvg_blocker.schedule_early_update()
 end
-
 
 function brightness_adjust()
     -- TODO: v.fuchadzhy: What about switching brightness during animation?
@@ -73,7 +91,7 @@ function brightness_adjust()
     bvg_render.update_shader()
 end
 
--- NVG glitch effect during blowouts and psy storms.
+-- VG glitch effect during Blowouts / Psy-Storms / Electra Anomaly.
 function set_glitch_power(power)
     if (bvg_var.glitch_power ~= power) then
         bvg_var.glitch_power = power
@@ -81,14 +99,6 @@ function set_glitch_power(power)
             bvg_render.update_shader()
         end
     end
-end
-
-function on_game_start()
-    RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
-    RegisterScriptCallback("actor_on_update", actor_on_update)
-    RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
-
-    bvg_mcm.fetch_config()
 end
 
 function actor_on_info_callback(npc, info_id)
