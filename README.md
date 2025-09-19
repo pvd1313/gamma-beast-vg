@@ -1,5 +1,5 @@
 # About
-Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
+Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 
 ### Based on mods:
 - Beef's NVG - theRealBeef
@@ -9,7 +9,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 ### Links:
 - [Github](https://github.com/pvd1313/gamma-beast-vg)
 - [ModDB] (wip)
-- G.A.M.M.A. Discord (wip)
+- [G.A.M.M.A. Discord] (wip)
 
 # Installation
 
@@ -33,7 +33,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 - Added MCM option to block VG when viewing through binocular.
 
 ### Fixes:
-- Removed ability to toggle VG brightness when VG is temporarily disabled, to prevent shader from turning on.
+- Removed ability to toggle VG brightness when VG is blocked, to prevent shader from turning on.
 
 ### Other:
 - Major script refactoring.
@@ -49,7 +49,6 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
 - MCM settings is not applied on turned-on VG.
-- VG are turned on if VG is not allowed with ADS and zoom type is changed.
 - Screen is blurred after VG off. 
 
 ### Ideas:
@@ -57,6 +56,7 @@ Next generation of Beef's NVG for DX10 / DX11 [G.A.M.M.A 0.9.4](https://discord.
   - VG state memory during game load / level transition.
   - VG low battery notification.
   - Heat VG.
+  - MCM option to turn off fade animation (vignette / latch).
   - MCM option to turn off VG when 3D PDA is fully opened only.
   - MCM option to tweak amount of blur in shader.
   - MCM option to tweak max view distance in shader.

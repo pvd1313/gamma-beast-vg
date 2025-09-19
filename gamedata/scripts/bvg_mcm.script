@@ -2,7 +2,7 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: MCM support.
 
-local default = bvg_util.deep_clone(bvg_cfg)
+local default = bvg_util.deep_clone(bvg_config)
 
 function get_config(key)
     if ui_mcm then return ui_mcm.get("bvg/" .. key) else return default[key] end
@@ -12,22 +12,22 @@ function get_vision_effect_table(effect_id)
     if (effect_id == 0) then
         return {
             generation = 1,
-            num_tubes = bvg_cfg.gen1_tubes,
-            mode = bvg_cfg.gen1_mode
+            num_tubes = bvg_config.gen1_tubes,
+            mode = bvg_config.gen1_mode
         }
 
     elseif (effect_id == 1) then
         return {
             generation = 2,
-            num_tubes = bvg_cfg.gen2_tubes,
-            mode = bvg_cfg.gen2_mode
+            num_tubes = bvg_config.gen2_tubes,
+            mode = bvg_config.gen2_mode
         }
 
     elseif (effect_id == 2) then
         return {
             generation = 3,
-            num_tubes = bvg_cfg.gen3_tubes,
-            mode = bvg_cfg.gen3_mode
+            num_tubes = bvg_config.gen3_tubes,
+            mode = bvg_config.gen3_mode
         }
     end
 
@@ -36,12 +36,12 @@ end
 
 function fetch_config()
     for key in pairs(default) do
-        bvg_cfg[key] = get_config(key)
+        bvg_config[key] = get_config(key)
     end
 
-    if (bvg_cst.debug_enabled) then
+    if (bvg_const.debug_enabled) then
         bvg_log.info("Config fetched. New config:")
-        bvg_log.table("bvg_cfg", bvg_cfg)
+        bvg_log.table("bvg_config", bvg_config)
     end
 end
 

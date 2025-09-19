@@ -3,9 +3,9 @@
 -- Beast Vision Goggles: Main.
 
 item_device.set_nightvision = function(section, state)
-    if (bvg_cfg.enable_torch_animation and z_beefs_nvgs.play_animation) then
+    if (bvg_config.enable_torch_animation and z_beefs_nvgs.play_animation) then
         z_beefs_nvgs.play_animation = false
-        bvg_anim.set_vision_animated(section, state)
+        bvg_animator.set_vision_animated(section, state)
     else
         set_vision_device_state(section, state)
     end
@@ -17,7 +17,7 @@ function set_vision_device_state(section, state)
     local effect_id = bvg_ini.try_get_vision_effect_id(section)
     if (effect_id == -1) then return end
 
-    -- TODO: v.fuchadzhy: Should be moved to bvg_cg. Will also help with MCM config sync bug. 
+    -- TODO: v.fuchadzhy: Should be moved to bvg_render. Will also help with MCM config sync bug. 
     local effect = bvg_mcm.get_vision_effect_table(effect_id)
     bvg_var.generation = effect.generation
     bvg_var.num_tubes = effect.num_tubes
@@ -25,7 +25,7 @@ function set_vision_device_state(section, state)
 
     if (state) then
         -- Turn on.
-        bvg_sfx.play(bvg_sfx.vision_start_uri);
+        bvg_audio.play(bvg_audio.vision_start_uri);
         item_device.nv_state = true
     else
         -- Turn off.
@@ -52,25 +52,25 @@ function brightness_adjust()
         return
     end
 
-    local step_size = (bvg_cfg.gain_max - bvg_cfg.gain_min) / 3
-    if (bvg_var.gain_dir and bvg_var.gain <= bvg_cfg.gain_max) then
+    local step_size = (bvg_config.gain_max - bvg_config.gain_min) / 3
+    if (bvg_var.gain_dir and bvg_var.gain <= bvg_config.gain_max) then
         bvg_var.gain = bvg_var.gain + step_size
-        if (bvg_var.gain >= bvg_cfg.gain_max) then
-            bvg_var.gain = bvg_cfg.gain_max
+        if (bvg_var.gain >= bvg_config.gain_max) then
+            bvg_var.gain = bvg_config.gain_max
             bvg_var.gain_dir = not bvg_var.gain_dir
         end
 
-    elseif (not bvg_var.gain_dir and bvg_var.gain >= bvg_cfg.gain_min) then
+    elseif (not bvg_var.gain_dir and bvg_var.gain >= bvg_config.gain_min) then
         bvg_var.gain = bvg_var.gain - step_size
-        if (bvg_var.gain <= bvg_cfg.gain_min) then
-            bvg_var.gain = bvg_cfg.gain_min
+        if (bvg_var.gain <= bvg_config.gain_min) then
+            bvg_var.gain = bvg_config.gain_min
             bvg_var.gain_dir = not bvg_var.gain_dir
         end
     end
 
-    bvg_sfx.play(bvg_sfx.brightness_adjust_uri)
+    bvg_audio.play(bvg_audio.brightness_adjust_uri)
     
-    bvg_cg.update_shader()
+    bvg_render.update_shader()
 end
 
 -- NVG glitch effect during blowouts and psy storms.
@@ -78,7 +78,7 @@ function set_glitch_power(power)
     if (bvg_var.glitch_power ~= power) then
         bvg_var.glitch_power = power
         if (not bvg_blocker.is_any_flag_on()) then
-            bvg_cg.update_shader()
+            bvg_render.update_shader()
         end
     end
 end
@@ -103,6 +103,6 @@ function actor_on_info_callback(npc, info_id)
 end
 
 function actor_on_update()
-    bvg_anim.update()
+    bvg_animator.update()
     bvg_blocker.update()
 end

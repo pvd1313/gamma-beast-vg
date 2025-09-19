@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: User config / MCM default settings / current settings state.
+-- Beast Vision Goggles: User config / MCM default settings / Current settings state.
 
 -- TODO: v.fuchadzhy: Rename. 
 view_through_scope = false

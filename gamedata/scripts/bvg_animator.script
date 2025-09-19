@@ -60,8 +60,8 @@ function update()
         latch_animation_update()
         
         -- TODO: v.fuchadzhy: This is very bad. We sending console / gpu commands every frame.
-        -- To make things worse, bvg_cg packs data with string concat.
-        bvg_cg.update_shader()
+        -- To make things worse, bvg_render packs data with string concat.
+        bvg_render.update_shader()
     end
 end
 
@@ -69,7 +69,7 @@ end
 function latch_animation_update()
     if (not bvg_var.flip_latch and item_device.nv_state) then
         if (bvg_var.flip_down < 100) then
-            bvg_var.flip_down = bvg_var.flip_down * bvg_cst.flip_speed
+            bvg_var.flip_down = bvg_var.flip_down * bvg_const.flip_speed
         end
 
         if (bvg_var.flip_down >= 100) then
@@ -79,12 +79,12 @@ function latch_animation_update()
     end
 
     if (bvg_var.flip_latch and not bvg_var.crt_latch and item_device.nv_state) then
-        if (bvg_var.vignette > bvg_cst.vignette_amount) then
-            bvg_var.vignette = bvg_var.vignette * (1 / bvg_cst.vignette_speed)
+        if (bvg_var.vignette > bvg_const.vignette_amount) then
+            bvg_var.vignette = bvg_var.vignette * (1 / bvg_const.vignette_speed)
         end
 
-        if (bvg_var.vignette <= bvg_cst.vignette_amount) then
-            bvg_var.vignette = bvg_cst.vignette_amount
+        if (bvg_var.vignette <= bvg_const.vignette_amount) then
+            bvg_var.vignette = bvg_const.vignette_amount
             bvg_var.crt_latch = true
         end
     end
