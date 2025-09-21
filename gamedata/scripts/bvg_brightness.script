@@ -1,0 +1,33 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: VG brighntess adjust.
+
+local gain = 1
+local gain_dir = true
+
+function try_adjust()
+    if (bvg_blocker.is_any_flag_on() or not item_device.nv_state) then
+        return
+    end
+
+    local step_size = (bvg_config.gain_max - bvg_config.gain_min) / 3
+    
+    if (gain_dir and gain <= bvg_config.gain_max) then
+        gain = gain + step_size
+        if (gain >= bvg_config.gain_max) then
+            gain = bvg_config.gain_max
+            gain_dir = not gain_dir
+        end
+
+    elseif (not gain_dir and gain >= bvg_config.gain_min) then
+        gain = gain - step_size
+        if (gain <= bvg_config.gain_min) then
+            gain = bvg_config.gain_min
+            gain_dir = not gain_dir
+        end
+    end
+
+    bvg_audio.play(bvg_audio.brightness_adjust_uri)
+    
+    bvg_render.set_gain(gain)
+end

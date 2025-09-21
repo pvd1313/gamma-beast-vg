@@ -1,0 +1,41 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Everything that expected to be exposed to other external (not bvg) scripts.
+
+function set_device_state(input)
+    -- Hand animation.
+    if (input.play_hand_animation == true) then
+        input.play_hand_animation = false
+
+        if (bvg_hand_animator.can_play()) then
+            bvg_hand_animator.play(input, set_device_state)
+        end
+
+        return
+    end
+    
+    bvg_vision_effect.sync_render(input.item_section)
+
+    -- Latch (shader) animation.
+    if (input.play_latch_animation) then
+        input.play_latch_animation = false
+        
+        bvg_latch_animator.play(input, set_device_state)
+        
+        return
+    end
+
+    item_device.nv_state = input.target_state
+    
+    -- Blocker will handle the magic.
+    bvg_blocker.schedule_early_update()
+end
+
+function adjust_brightness()
+    bvg_brightness.try_adjust()
+end
+
+-- VG glitch effect during Blowouts / Psy-Storms / Electra Anomaly.
+function set_glitch_power(power)
+    bvg_render.set_glitch_power(power)
+end

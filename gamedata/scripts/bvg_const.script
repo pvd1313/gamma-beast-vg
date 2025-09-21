@@ -27,4 +27,11 @@ binoc_names = {
 }
 
 -- 200ms, 5Hz. How fast blocker reacts to actor changes.
-blocker_flag_update_delay = 200 
+blocker_flag_update_delay = 200
+
+-- For differenct type of VG, ini defined.
+vision_effect_id = {
+    ["nightvision_1"] = 0,
+    ["nightvision_2"] = 1,
+    ["nightvision_3"] = 2
+}

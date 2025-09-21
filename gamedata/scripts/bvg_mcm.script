@@ -8,32 +8,6 @@ function get_config(key)
     if ui_mcm then return ui_mcm.get("bvg/" .. key) else return default[key] end
 end
 
-function get_vision_effect_table(effect_id)
-    if (effect_id == 0) then
-        return {
-            generation = 1,
-            num_tubes = bvg_config.gen1_tubes,
-            mode = bvg_config.gen1_mode
-        }
-
-    elseif (effect_id == 1) then
-        return {
-            generation = 2,
-            num_tubes = bvg_config.gen2_tubes,
-            mode = bvg_config.gen2_mode
-        }
-
-    elseif (effect_id == 2) then
-        return {
-            generation = 3,
-            num_tubes = bvg_config.gen3_tubes,
-            mode = bvg_config.gen3_mode
-        }
-    end
-
-    abort("Unknown vision effect id: " .. tostring(effect_id))
-end
-
 function fetch_config()
     for key in pairs(default) do
         bvg_config[key] = get_config(key)

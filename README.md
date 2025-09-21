@@ -23,10 +23,9 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone) (included in G.A.M.M.A. 0.9.4)
 - [FDDA Redone Fixes](https://www.moddb.com/addons/fdda-redone-fixes) (included in G.A.M.M.A. 0.9.4)
 
-### Steps:
+### G.A.M.M.A. DX10 / DX11:
 1. Install `Beast VG` with `Mod Organizer`.
 2. Put `Beast VG` right after `FDDA Redone Fixes`.
-3. Enjoy (:
 
 # Changes vs Beef's NVG
 
@@ -37,6 +36,7 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 
 ### Fixes:
 - Removed ability to toggle VG brightness when VG is blocked, to prevent shader from turning on.
+- Fixed turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
 
 ### Other:
 - Major script refactoring.
@@ -45,18 +45,15 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - MCM FDDA NVG animation option moved to BVG MCM. FDDA option still there, but does nothing.
 
 # Notes
-
-### Warning:
 - `Beast VG` mod is not tested on vanilla [Anomaly v1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
 
 ### Known issues:
 - Integrated weapon scopes not supported.
-- Turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
 - MCM settings is not applied on turned-on VG.
-- VG loop audio when online seems to be not playing.
-- Crash when trying to unequip helmet with NV on (FDDA Redone)
+- VG loop audio when VG enabled seems to be not playing.
+- Crash when trying to unequip helmet with VG on (FDDA Redone)
 
 ### Ideas:
 - Gameplay

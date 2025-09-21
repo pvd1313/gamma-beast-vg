@@ -5,100 +5,18 @@
 -- BVG entry point.
 function on_game_start()
     
+    bvg_class.patch()
+    
     bvg_monkey.patch()
     
+    bvg_render.set_gain(1)
+    bvg_render.set_glitch_power(0)
+
     RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
 
     bvg_mcm.fetch_config()
-
-end
-
--- Will change VG state. Without hand animation. Only vignette (dark fade) animation.
----@see bvg_animator.script
----@see bvg_monkey.script
-function set_vision_device_state(section, state)
-    if (section == nil) then return end
-
-    local effect_id = bvg_ini.try_get_vision_effect_id(section)
-    if (effect_id == -1) then return end
-
-    -- TODO: v.fuchadzhy: Should be moved to bvg_render. Will also help with MCM config sync bug. 
-    local effect = bvg_mcm.get_vision_effect_table(effect_id)
-    bvg_var.generation = effect.generation
-    bvg_var.num_tubes = effect.num_tubes
-    bvg_var.mode = effect.mode
-
-    if (state) then
-        -- Turn on.
-        -- TODO: v.fuchadzhy: Something else is starting audio. item_device.script? X-Ray?
-        -- bvg_audio.play(bvg_audio.vision_start_uri)
-        
-        item_device.nv_state = true
-        
-        -- If we want instant turn on.
-        -- bvg_var.vignette = bvg_const.vignette_amount
-        -- bvg_var.flip_down = 100
-    else
-        -- Turn off.
-        bvg_var.crt_latch = false
-        bvg_var.flip_latch = false
-        bvg_var.vignette = 1.0
-        bvg_var.flip_down = 1
-        
-        item_device.nv_state = false
-        
-        -- TODO: v.fuchadzhy: Hack. For now. Hand animation 'blocks' the blocker... -1 bug; +1 bug; :D
-        bvg_render.disable_shader()
-        
-        -- TODO: v.fuchadzhy: Something else is starting audio. item_device.script? X-Ray?
-        -- bvg_audio.play(bvg_audio.vision_finish_uri)
-        
-        -- TODO: v.fuchadzhy: If it will be constant, no need to update it here.
-        -- theRealBeef: Hack to fix not correctly going back until I am better at this shit.
-        bvg_var.vg_radius = 0.5
-    end
-
-    -- Blocker will handle the magic.
-    bvg_blocker.schedule_early_update()
-end
-
-function brightness_adjust()
-    -- TODO: v.fuchadzhy: What about switching brightness during animation?
-    if (bvg_blocker.is_any_flag_on() or not item_device.nv_state) then
-        return
-    end
-
-    local step_size = (bvg_config.gain_max - bvg_config.gain_min) / 3
-    if (bvg_var.gain_dir and bvg_var.gain <= bvg_config.gain_max) then
-        bvg_var.gain = bvg_var.gain + step_size
-        if (bvg_var.gain >= bvg_config.gain_max) then
-            bvg_var.gain = bvg_config.gain_max
-            bvg_var.gain_dir = not bvg_var.gain_dir
-        end
-
-    elseif (not bvg_var.gain_dir and bvg_var.gain >= bvg_config.gain_min) then
-        bvg_var.gain = bvg_var.gain - step_size
-        if (bvg_var.gain <= bvg_config.gain_min) then
-            bvg_var.gain = bvg_config.gain_min
-            bvg_var.gain_dir = not bvg_var.gain_dir
-        end
-    end
-
-    bvg_audio.play(bvg_audio.brightness_adjust_uri)
-    
-    bvg_render.update_shader()
-end
-
--- VG glitch effect during Blowouts / Psy-Storms / Electra Anomaly.
-function set_glitch_power(power)
-    if (bvg_var.glitch_power ~= power) then
-        bvg_var.glitch_power = power
-        if (not bvg_blocker.is_any_flag_on()) then
-            bvg_render.update_shader()
-        end
-    end
 end
 
 function actor_on_info_callback(npc, info_id)
@@ -113,6 +31,7 @@ function actor_on_info_callback(npc, info_id)
 end
 
 function actor_on_update()
-    bvg_animator.update()
+    bvg_latch_animator.update()
     bvg_blocker.update()
+    bvg_render.update()
 end

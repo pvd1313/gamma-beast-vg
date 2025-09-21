@@ -8,15 +8,13 @@ end
 
 -- Player invoked VG state change, from item_device.script. keyboard :)
 function item_device_set_nightvision(section, state)
-    -- z_beefs_nvgs.play_animation is used here as event / method argument.
-    if (bvg_config.enable_torch_animation and z_beefs_nvgs.play_animation) then
-
-        z_beefs_nvgs.play_animation = false
-
-        bvg_animator.set_vision_animated(section, state)
-
-    else
-         bvg.set_vision_device_state(section, state)
-
-    end
+    local data = VisionDeviceStateInput:new()
+    data.target_state = state
+    data.item_section = section
+    data.play_hand_animation = bvg_config.enable_torch_animation
+    data.play_latch_animation = true
+    data.play_audio = true
+    data:validate()
+    
+    bvg_api.set_device_state(data)
 end

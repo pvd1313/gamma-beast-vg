@@ -1,0 +1,55 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Vision effect.
+
+function sync_render(item_section)
+    local effect_id = try_get_vision_effect_id(item_section)
+    if (effect_id == -1) then return end
+
+    local effect = get_vision_effect_table(effect_id)
+    bvg_render.set_generation(effect.generation)
+    bvg_render.set_num_tubes(effect.num_tubes)
+    bvg_render.set_mode(effect.mode)
+end
+
+function try_get_vision_effect_id(section)
+    local effect_str = ini_sys:r_string_ex(section, "nv_effect")
+
+    if (effect_str == nil) then
+        return -1
+    end
+
+    local effect_id = bvg_const.vision_effect_id[effect_str]
+
+    if (effect_id == nil) then
+        return -1;
+    end
+
+    return effect_id
+end
+
+function get_vision_effect_table(effect_id)
+    if (effect_id == 0) then
+        return {
+            generation = 1,
+            num_tubes = bvg_config.gen1_tubes,
+            mode = bvg_config.gen1_mode
+        }
+
+    elseif (effect_id == 1) then
+        return {
+            generation = 2,
+            num_tubes = bvg_config.gen2_tubes,
+            mode = bvg_config.gen2_mode
+        }
+
+    elseif (effect_id == 2) then
+        return {
+            generation = 3,
+            num_tubes = bvg_config.gen3_tubes,
+            mode = bvg_config.gen3_mode
+        }
+    end
+
+    abort("Unknown vision effect id: " .. tostring(effect_id))
+end

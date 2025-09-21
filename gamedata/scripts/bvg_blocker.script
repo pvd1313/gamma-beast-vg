@@ -10,7 +10,6 @@ local flag_update_next_time = 0
 
 local cache_weapon_zoom_type = -1
 local cache_actor_holding_pda = false
-local cache_any_flag_on = false
 local cache_device_online = false
 
 function is_any_flag_on()
@@ -90,7 +89,10 @@ function update()
     end
     
     -- Animator has bigger priority.
-    if (bvg_animator.is_playing()) then return end
+    if (bvg_latch_animator.is_playing()) then return end
+    
+    -- Animator has bigger priority.
+    if (bvg_hand_animator.is_playing()) then return end
     
     -- Update every 5th frame or so.
     local time = time_global()
@@ -101,14 +103,5 @@ function update()
     update_flags()
     
     -- Set shader state.
-    local any_flag_on = is_any_flag_on()
-    if (any_flag_on ~= cache_any_flag_on) then
-        cache_any_flag_on = any_flag_on
-
-        if (cache_any_flag_on) then
-            bvg_render.disable_shader()
-        else
-            bvg_render.update_shader()        
-        end
-    end 
+    bvg_render.set_enabled(not is_any_flag_on())    
 end
