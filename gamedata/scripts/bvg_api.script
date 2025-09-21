@@ -14,8 +14,8 @@ function set_device_state(input)
         return
     end
     
-    bvg_vision_effect.sync_render(input.item_section)
-
+    bvg_render.set_item_section(input.item_section)
+    
     -- Latch (shader) animation.
     if (input.play_latch_animation) then
         input.play_latch_animation = false

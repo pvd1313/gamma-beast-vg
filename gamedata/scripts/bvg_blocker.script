@@ -16,6 +16,11 @@ function is_any_flag_on()
     return (blocker_weapon + blocker_pda + blocker_device_offline) > 0
 end
 
+function notify_config_changed()
+    -- We don't cache config settings. Just schedule early update.
+    schedule_early_update()
+end
+
 function update_flags()
     blocker_weapon = 0
     if (is_actor_weapon_blocks_vg()) then

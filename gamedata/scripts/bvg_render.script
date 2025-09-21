@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Render.
+-- Beast Vision Goggles: Render basic features.
 
 local param_flip_down = -1
 local param_vignette = -1
@@ -67,6 +67,11 @@ function set_glitch_power(value)
         param_glitch_power = value
         is_dirty = true
     end
+end
+
+function notify_config_changed()
+    -- We dont cache config settings, so just mark shader dirty.
+    is_dirty = true
 end
     
 function update()

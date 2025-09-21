@@ -35,12 +35,14 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - Added MCM option to block VG when viewing through binocular.
 
 ### Fixes:
-- Removed ability to toggle VG brightness when VG is blocked, to prevent shader from turning on.
-- Fixed turning on VG while on ADS / binocular will turn on VG shader without following MCM defined logic.
+
+- Fixed VG shader not following MCM logic: 
+  - If player tried to adjust brightness during ADS / PDA. Player can no longer adjust brightness when VG blocked.
+  - If VG is turned on during ADS / PDA.
+- Fixed changes in MCM settings are not applied to turned-on VG.
 
 ### Other:
 - Major script refactoring.
-- Removed support for 2D scopes.
 - MCM structure changes.
 - MCM FDDA NVG animation option moved to BVG MCM. FDDA option still there, but does nothing.
 
@@ -51,7 +53,7 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - Integrated weapon scopes not supported.
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
-- MCM settings is not applied on turned-on VG.
+- 2D scopes not supported.
 - VG loop audio when VG enabled seems to be not playing.
 
 ### Ideas:

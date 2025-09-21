@@ -4,19 +4,36 @@
 
 -- BVG entry point.
 function on_game_start()
-    
     bvg_class.patch()
-    
+    bvg_render_extension.patch()
     bvg_monkey.patch()
-    
+
     bvg_render.set_gain(1)
     bvg_render.set_glitch_power(0)
 
-    RegisterScriptCallback("on_option_change", bvg_mcm.fetch_config)
+    RegisterScriptCallback("on_option_change", on_option_change)
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
 
+    on_option_change()
+end
+
+function on_option_change()
     bvg_mcm.fetch_config()
+    bvg_render.notify_config_changed()
+    bvg_brightness.notify_config_changed()
+    bvg_blocker.notify_config_changed()
+    
+    local actor = db.actor
+    if (actor == nil) then return end
+    
+    local torch = actor:item_in_slot(10)
+    if (torch == nil) then return end
+    
+    local item_section = torch:section()
+    if (item_section == nil) then return end
+    
+    bvg_render.set_item_section(item_section)
 end
 
 function actor_on_info_callback(npc, info_id)

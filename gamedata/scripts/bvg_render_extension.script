@@ -1,8 +1,12 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Vision effect.
+-- Beast Vision Goggles: Render extra features.
 
-function sync_render(item_section)
+function patch()
+    bvg_render.set_item_section = set_item_section
+end
+
+function set_item_section(item_section)
     local effect_id = try_get_vision_effect_id(item_section)
     if (effect_id == -1) then return end
 
