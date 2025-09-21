@@ -3,12 +3,12 @@
 -- Beast Vision Goggles: Classes.
 
 function patch()
-    _G.VisionDeviceStateInput = {}
-    _G.VisionDeviceStateInput.__index = VisionDeviceStateInput
-    _G.VisionDeviceStateInput.new = VisionDeviceStateInput_new
+    _G.BVG_StateInput = {}
+    _G.BVG_StateInput.__index = BVG_StateInput
+    _G.BVG_StateInput.new = BVG_StateInput_new
 end
 
-function VisionDeviceStateInput_new()
+function BVG_StateInput_new()
     clone = { }
 
     -- Boolean. True: Invoker wants to enable VG.
@@ -29,31 +29,30 @@ function VisionDeviceStateInput_new()
     clone.play_audio = nil
     
     -- Internal arguments validation.
-    clone.validate = VisionDeviceStateInput_validate
+    clone.validate = BVG_StateInput_validate
     
     return clone
 end
 
-function VisionDeviceStateInput_validate(this)
-    
+function BVG_StateInput_validate(this)
     if (this.target_state == nil) then
-        abort("VisionDeviceStateInput_validate: 'target_state' is not assigned.")
+        abort("BVG_StateInput_validate: 'target_state' is not assigned.")
     end
     
     if (this.item_section == nil) then
-        abort("VisionDeviceStateInput_validate: 'item_section' is not assigned.")
+        abort("BVG_StateInput_validate: 'item_section' is not assigned.")
     end
     
     if (this.play_hand_animation == nil) then
-        abort("VisionDeviceStateInput_validate: 'play_hand_animation' is not assigned.")
+        abort("BVG_StateInput_validate: 'play_hand_animation' is not assigned.")
     end
     
     if (this.play_latch_animation == nil) then
-        abort("VisionDeviceStateInput_validate: 'play_latch_animation' is not assigned.")
+        abort("BVG_StateInput_validate: 'play_latch_animation' is not assigned.")
     end
     
     if (this.play_audio == nil) then
-        abort("VisionDeviceStateInput_validate: 'play_audio' is not assigned.")
+        abort("BVG_StateInput_validate: 'play_audio' is not assigned.")
     end 
 
 end

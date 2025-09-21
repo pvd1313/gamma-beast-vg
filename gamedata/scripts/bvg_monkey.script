@@ -3,12 +3,19 @@
 -- Beast Vision Goggles: Script monkey patches.
 
 function patch()
+    -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
     item_device.set_nightvision = item_device_set_nightvision
+    
+    -- Referenced by: drx_da_main (G.A.M.M.A. 0.9.4)
+    -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
+    z_beefs_nvgs.nvg_glitch = bvg_api.set_glitch_power
+    
+    -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
+    z_beefs_nvgs.brightness_adjust = bvg_api.adjust_brightness
 end
 
--- Player invoked VG state change, from item_device.script. keyboard :)
 function item_device_set_nightvision(section, state)
-    local data = VisionDeviceStateInput:new()
+    local data = BVG_StateInput:new()
     data.target_state = state
     data.item_section = section
     data.play_hand_animation = bvg_config.enable_torch_animation
