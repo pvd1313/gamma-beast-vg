@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Hand animation.
+-- Beast Vision Goggles: Hand animation controller.
 
 torch_state = 0
 

@@ -15,15 +15,16 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 
 # Installation
 
-### Requirements:
+### Dependencies:
 - [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 - [Modded Exes: Ecolog Edition](https://github.com/ProfLander/xray-monolith/releases/)
 - [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases) (included in G.A.M.M.A. 0.9.4)
 - [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10) (included in G.A.M.M.A. 0.9.4)
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone) (included in G.A.M.M.A. 0.9.4)
 - [FDDA Redone Fixes](https://www.moddb.com/addons/fdda-redone-fixes) (included in G.A.M.M.A. 0.9.4)
+- [Oleh's Miscellaneous Sound Improvements]() (included in G.A.M.M.A. 0.9.4)
 
-### G.A.M.M.A. DX10 / DX11:
+### G.A.M.M.A. 0.9.4 DX10 / DX11:
 1. Install `Beast VG` with `Mod Organizer`.
 2. Put `Beast VG` right after `FDDA Redone Fixes`.
 
@@ -54,7 +55,7 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
 - 2D scopes not supported.
-- VG loop audio when VG enabled seems to be not playing.
+- VG not turned off if device removed from item slot.
 
 ### Ideas:
 - Gameplay

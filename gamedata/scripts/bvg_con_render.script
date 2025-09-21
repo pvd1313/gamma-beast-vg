@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Render basic features.
+-- Beast Vision Goggles: Shader render controller.
 
 local param_flip_down = -1
 local param_vignette = -1

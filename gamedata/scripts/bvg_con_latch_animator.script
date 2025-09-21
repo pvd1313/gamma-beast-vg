@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Latch animation (shader: vignette + flip_down)
+-- Beast Vision Goggles: Latch animation (shader: vignette + flip_down) controller.
 
 -- -1: Not playing
 --  0: First step. (flip latch)

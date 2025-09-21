@@ -7,9 +7,8 @@ function on_game_start()
     bvg_class.patch()
     bvg_con_render_extension.patch()
     bvg_monkey.patch()
-
-    bvg_con_render.set_gain(1)
-    bvg_con_render.set_glitch_power(0)
+    
+    bvg_con.initialize()
 
     RegisterScriptCallback("on_option_change", on_option_change)
     RegisterScriptCallback("actor_on_update", actor_on_update)

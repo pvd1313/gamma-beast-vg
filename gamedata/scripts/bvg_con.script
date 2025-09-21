@@ -2,6 +2,13 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Controllers group.
 
+function initialize()
+    bvg_con_audio.initialize()
+    
+    bvg_con_render.set_gain(1)
+    bvg_con_render.set_glitch_power(0)
+end
+
 function notify_config_changed()
     bvg_con_render.notify_config_changed()
     bvg_con_brightness.notify_config_changed()
@@ -12,4 +19,5 @@ function update()
     bvg_con_latch_animator.update()
     bvg_con_blocker.update()
     bvg_con_render.update()
+    bvg_con_audio.update()
 end

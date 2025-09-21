@@ -14,10 +14,11 @@ function set_device_state(input)
         return
     end
     
+    -- Update VG generation / mode / tubes.
     bvg_con_render.set_item_section(input.item_section)
     
     -- Latch (shader) animation.
-    if (input.play_latch_animation) then
+    if (input.play_latch_animation == true) then
         input.play_latch_animation = false
         
         bvg_con_latch_animator.play(input, set_device_state)

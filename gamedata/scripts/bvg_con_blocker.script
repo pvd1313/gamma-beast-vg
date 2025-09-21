@@ -1,6 +1,6 @@
 -- DCGM - CYGI License.
 -- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Shader block during weapon ADS / Binocular / PDA / Device offline.
+-- Beast Vision Goggles: Shader blocker during weapon ADS / Binocular / PDA / Device offline.
 
 local blocker_weapon = 0
 local blocker_pda = 0

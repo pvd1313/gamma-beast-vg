@@ -35,3 +35,6 @@ vision_effect_id = {
     ["nightvision_2"] = 1,
     ["nightvision_3"] = 2
 }
+
+-- Delay before loop audio begins playing, seconds.
+device_loop_sfx_start_delay = 0.5

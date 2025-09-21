@@ -1,0 +1,8 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Universal resource identifiers.
+
+sfx_vision_start = "interface\\inv_nv_loop_start"
+sfx_vision_finish = "interface\\inv_nv_loop_end"
+sfx_vision_loop = "interface\\inv_nv_loop"
+sfx_vision_brightness = "interface\\inv_nvg"
