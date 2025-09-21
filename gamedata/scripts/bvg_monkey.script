@@ -6,6 +6,9 @@ function patch()
     -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
     item_device.set_nightvision = item_device_set_nightvision
     
+    -- Referenced by: liz_fdda_redone_headgear_animations (G.A.M.M.A. 0.9.4)
+    z_beefs_nvgs.set_nightvision_animated = z_beefs_nvgs_set_nightvision_animated
+    
     -- Referenced by: drx_da_main (G.A.M.M.A. 0.9.4)
     -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
     z_beefs_nvgs.nvg_glitch = bvg_api.set_glitch_power
@@ -15,6 +18,18 @@ function patch()
 end
 
 function item_device_set_nightvision(section, state)
+    local data = BVG_StateInput:new()
+    data.target_state = state
+    data.item_section = section
+    data.play_hand_animation = bvg_config.enable_torch_animation
+    data.play_latch_animation = true
+    data.play_audio = true
+    data:validate()
+    
+    bvg_api.set_device_state(data)
+end
+
+function z_beefs_nvgs_set_nightvision_animated(section, state)
     local data = BVG_StateInput:new()
     data.target_state = state
     data.item_section = section

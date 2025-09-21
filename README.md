@@ -53,7 +53,6 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - DX8 / DX9 not supported.
 - MCM settings is not applied on turned-on VG.
 - VG loop audio when VG enabled seems to be not playing.
-- Crash when trying to unequip helmet with VG on (FDDA Redone)
 
 ### Ideas:
 - Gameplay
