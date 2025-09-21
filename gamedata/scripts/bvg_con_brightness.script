@@ -11,17 +11,17 @@ function notify_config_changed()
     
     if (gain > bvg_config.gain_max) then
         gain = bvg_config.gain_max
-        bvg_render.set_gain(gain)
+        bvg_con_render.set_gain(gain)
     end
     
     if (gain < bvg_config.gain_min) then
         gain = bvg_config.gain_min
-        bvg_render.set_gain(gain)
+        bvg_con_render.set_gain(gain)
     end
 end
 
 function try_adjust()
-    if (bvg_blocker.is_any_flag_on() or not item_device.nv_state) then
+    if (bvg_con_blocker.is_any_flag_on() or not item_device.nv_state) then
         return
     end
 
@@ -44,5 +44,5 @@ function try_adjust()
 
     bvg_audio.play(bvg_audio.brightness_adjust_uri)
     
-    bvg_render.set_gain(gain)
+    bvg_con_render.set_gain(gain)
 end

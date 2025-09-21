@@ -5,11 +5,11 @@
 -- BVG entry point.
 function on_game_start()
     bvg_class.patch()
-    bvg_render_extension.patch()
+    bvg_con_render_extension.patch()
     bvg_monkey.patch()
 
-    bvg_render.set_gain(1)
-    bvg_render.set_glitch_power(0)
+    bvg_con_render.set_gain(1)
+    bvg_con_render.set_glitch_power(0)
 
     RegisterScriptCallback("on_option_change", on_option_change)
     RegisterScriptCallback("actor_on_update", actor_on_update)
@@ -20,9 +20,8 @@ end
 
 function on_option_change()
     bvg_mcm.fetch_config()
-    bvg_render.notify_config_changed()
-    bvg_brightness.notify_config_changed()
-    bvg_blocker.notify_config_changed()
+    
+    bvg_con.notify_config_changed()
     
     local actor = db.actor
     if (actor == nil) then return end
@@ -33,7 +32,7 @@ function on_option_change()
     local item_section = torch:section()
     if (item_section == nil) then return end
     
-    bvg_render.set_item_section(item_section)
+    bvg_con_render.set_item_section(item_section)
 end
 
 function actor_on_info_callback(npc, info_id)
@@ -41,14 +40,12 @@ function actor_on_info_callback(npc, info_id)
     if (actor == nil) then return end
 
     if (info_id == "ui_pda") then
-        bvg_blocker.notify_pda_is_used(true)
+        bvg_con_blocker.notify_pda_is_used(true)
     elseif (info_id == "ui_pda_hide") then
-        bvg_blocker.notify_pda_is_used(false)
+        bvg_con_blocker.notify_pda_is_used(false)
     end
 end
 
 function actor_on_update()
-    bvg_latch_animator.update()
-    bvg_blocker.update()
-    bvg_render.update()
+    bvg_con.update()
 end

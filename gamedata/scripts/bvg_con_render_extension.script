@@ -3,7 +3,7 @@
 -- Beast Vision Goggles: Render extra features.
 
 function patch()
-    bvg_render.set_item_section = set_item_section
+    bvg_con_render.set_item_section = set_item_section
 end
 
 function set_item_section(item_section)
@@ -11,9 +11,9 @@ function set_item_section(item_section)
     if (effect_id == -1) then return end
 
     local effect = get_vision_effect_table(effect_id)
-    bvg_render.set_generation(effect.generation)
-    bvg_render.set_num_tubes(effect.num_tubes)
-    bvg_render.set_mode(effect.mode)
+    bvg_con_render.set_generation(effect.generation)
+    bvg_con_render.set_num_tubes(effect.num_tubes)
+    bvg_con_render.set_mode(effect.mode)
 end
 
 function try_get_vision_effect_id(section)

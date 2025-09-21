@@ -24,14 +24,14 @@ function play(data, callback)
     if (data.target_state) then
         flip_down = 1
         vignette = 1
-        bvg_render.set_vignette(vignette)
-        bvg_render.set_flip_down(flip_down)
-        bvg_render.set_enabled(true)
+        bvg_con_render.set_vignette(vignette)
+        bvg_con_render.set_flip_down(flip_down)
+        bvg_con_render.set_enabled(true)
         playing_state = 0
     else
         -- Disabling animation is not implemented.
         playing_state = -1
-        bvg_render.set_enabled(false)
+        bvg_con_render.set_enabled(false)
         if (callback ~= nil) then
             callback(data)
         end
@@ -39,8 +39,8 @@ function play(data, callback)
 end
 
 --function play_vg_enable_instant()
---    bvg_render.set_flip_down(100)
---    bvg_render.set_vignette(bvg_const.vignette_amount)
+--    bvg_con_render.set_flip_down(100)
+--    bvg_con_render.set_vignette(bvg_const.vignette_amount)
 --end
 
 function update()
@@ -53,9 +53,9 @@ function update()
         
         if (flip_down >= 100) then
             playing_state = 1
-            bvg_render.set_flip_down(100)
+            bvg_con_render.set_flip_down(100)
         else
-            bvg_render.set_flip_down(flip_down)
+            bvg_con_render.set_flip_down(flip_down)
         
         return
         
@@ -67,13 +67,13 @@ function update()
         
         if (vignette <= bvg_const.vignette_amount) then
             playing_state = -1
-            bvg_render.set_vignette(bvg_const.vignette_amount)
+            bvg_con_render.set_vignette(bvg_const.vignette_amount)
             
             if (cache_callback ~= nil) then
                 cache_callback(cache_data)
             end
         else
-            bvg_render.set_vignette(vignette)
+            bvg_con_render.set_vignette(vignette)
         end
     end
 end

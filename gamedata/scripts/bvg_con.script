@@ -1,0 +1,15 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Controllers group.
+
+function notify_config_changed()
+    bvg_con_render.notify_config_changed()
+    bvg_con_brightness.notify_config_changed()
+    bvg_con_blocker.notify_config_changed()
+end
+
+function update()
+    bvg_con_latch_animator.update()
+    bvg_con_blocker.update()
+    bvg_con_render.update()
+end
