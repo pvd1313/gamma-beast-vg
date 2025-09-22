@@ -2,8 +2,6 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Audio controller.
 
-local cache_device_enabled = false
-
 function initialize()
     sound_vision_start = sound_object(bvg_uri.sfx_vision_start)
     sound_vision_finish = sound_object(bvg_uri.sfx_vision_finish)
@@ -11,22 +9,23 @@ function initialize()
     sound_vision_loop = sound_object(bvg_uri.sfx_vision_loop)
 end
 
-function update()
-    -- We currently don't have full control over item_device.nv_state. (e.g. low battery / unequip can disable VG)
-    if (cache_device_enabled ~= item_device.nv_state) then
-        cache_device_enabled = item_device.nv_state
-        
-        if (cache_device_enabled) then
-            play_shot(sound_vision_start)
-        else
-            play_shot(sound_vision_finish)
-        end
-        
-        play_loop(sound_vision_loop, cache_device_enabled, bvg_const.device_loop_sfx_start_delay)
+function play_device_state(target_state)
+    if (target_state) then
+        play_shot(sound_vision_start)
+    else
+        play_shot(sound_vision_finish)
     end
 end
 
-function notify_brightness_changed()
+function play_device_loop(target_state, play_with_delay)
+    if (play_with_delay) then
+        play_loop(sound_vision_loop, target_state, bvg_const.device_loop_sfx_start_delay)
+    else
+        play_loop(sound_vision_loop, target_state, 0)
+    end
+end
+
+function play_brightness()
     play_shot(sound_vision_brightness)
 end
 
