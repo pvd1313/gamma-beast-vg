@@ -20,7 +20,7 @@ end
 function play(data, callback)
     cache_data = data
     cache_callback = callback
-    
+
     if (data.target_state) then
         flip_down = 1
         vignette = 1
@@ -38,10 +38,16 @@ function play(data, callback)
     end
 end
 
---function play_vg_enable_instant()
---    bvg_con_render.set_flip_down(100)
---    bvg_con_render.set_vignette(bvg_const.vignette_amount)
---end
+function play_instant(target_state)
+    if (target_state) then
+        bvg_con_render.set_flip_down(100)
+        bvg_con_render.set_vignette(bvg_const.vignette_amount)
+        bvg_con_render.set_enabled(true)
+    else
+        bvg_con_render.set_enabled(false)
+    end
+
+end
 
 function update()
     if (playing_state == -1) then

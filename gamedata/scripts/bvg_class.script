@@ -23,11 +23,9 @@ function BVG_StateInput_new()
     -- Boolean. True: VG can skip animation if it is can not be started.
     clone.can_skip_animation = nil
     
-    -- TODO: v.fuchadzhy: Not implemented.
     -- Boolean. True: Invoker wants to play latch animation (vg turning on) (latch + flip_down shader params).
     clone.play_latch_animation = nil
     
-    -- TODO: v.fuchadzhy: Not implemented.
     -- Boolean. True: Invoker wants to play audio.
     clone.play_audio = nil
     
