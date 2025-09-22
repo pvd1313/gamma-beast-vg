@@ -2,6 +2,7 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Everything that expected to be exposed to other external (not bvg) scripts.
 
+---@see BVG_StateInput
 function set_device_state(input)
     -- Hand animation.
     if (input.play_hand_animation == true) then
@@ -9,27 +10,34 @@ function set_device_state(input)
 
         if (bvg_con_hand_animator.can_play()) then
             bvg_con_hand_animator.play(input, set_device_state)
+            return
+            
+        elseif (input.can_skip_animation) then
+            -- Skip animation.
+        else
+            return
         end
-
-        return
     end
-    
+
     -- Update VG generation / mode / tubes.
     bvg_con_render.set_item_section(input.item_section)
-    
+
     -- Latch (shader) animation.
     if (input.play_latch_animation == true) then
         input.play_latch_animation = false
         
         bvg_con_latch_animator.play(input, set_device_state)
-        
+
         return
     end
 
     item_device.nv_state = input.target_state
-    
-    -- Blocker will handle the magic.
-    bvg_con_blocker.schedule_early_update()
+
+    bvg_con_blocker.notify_device_state_changed(input.target_state) 
+end
+
+function get_device_state()
+    return item_device.nv_state
 end
 
 function adjust_brightness()

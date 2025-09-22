@@ -15,6 +15,9 @@ function patch()
     
     -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
     z_beefs_nvgs.brightness_adjust = bvg_api.adjust_brightness
+    
+    -- Referenced by: item_device (G.A.M.M.A. 0.9.4)
+    z_beefs_nvgs.play_animation = false
 end
 
 function item_device_set_nightvision(section, state)
@@ -24,7 +27,10 @@ function item_device_set_nightvision(section, state)
     data.play_hand_animation = bvg_config.enable_torch_animation
     data.play_latch_animation = true
     data.play_audio = true
+    data.can_skip_animation = not z_beefs_nvgs.play_animation
     data:validate()
+    
+    z_beefs_nvgs.play_animation = false
     
     bvg_api.set_device_state(data)
 end
@@ -36,6 +42,7 @@ function z_beefs_nvgs_set_nightvision_animated(section, state)
     data.play_hand_animation = bvg_config.enable_torch_animation
     data.play_latch_animation = true
     data.play_audio = true
+    data.can_skip_animation = false
     data:validate()
     
     bvg_api.set_device_state(data)

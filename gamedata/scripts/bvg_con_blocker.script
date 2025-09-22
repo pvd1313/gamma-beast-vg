@@ -74,6 +74,11 @@ function notify_pda_is_used(is_pda_used)
     schedule_early_update()
 end
 
+function notify_device_state_changed(device_state)
+    cache_device_online = device_state
+    schedule_early_update()
+end
+
 function schedule_early_update()
     next_update_time = bvg_const.blocker_flag_update_delay * -1;
 end
@@ -83,13 +88,6 @@ function update()
     local weapon_zoom_type = bvg_weapon.try_get_actor_weapon_zoom_type()
     if (weapon_zoom_type ~= cache_weapon_zoom_type) then
         cache_weapon_zoom_type = weapon_zoom_type
-        schedule_early_update()
-    end
-    
-    -- Device on / off handling.
-    local device_online = item_device.nv_state
-    if (device_online ~= cache_device_online) then
-        cache_device_online = device_online
         schedule_early_update()
     end
     

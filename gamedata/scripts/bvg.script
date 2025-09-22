@@ -2,6 +2,10 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Main.
 
+-- Remarks:
+-- NVG item removing from slot is controlled by item_device.
+-- NVG switch on / off (player input) is controlled by item_device.
+
 -- BVG entry point.
 function on_game_start()
     bvg_class.patch()

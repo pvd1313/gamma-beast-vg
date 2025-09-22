@@ -17,7 +17,6 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 
 ### Dependencies:
 - [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
-- [Modded Exes: Ecolog Edition](https://github.com/ProfLander/xray-monolith/releases/)
 - [Mod Organizer](https://github.com/ModOrganizer2/modorganizer/releases) (included in G.A.M.M.A. 0.9.4)
 - [Beef's NVG](https://www.moddb.com/addons/beefs-shader-based-nvgs-v10) (included in G.A.M.M.A. 0.9.4)
 - [FDDA Redone](https://www.moddb.com/mods/stalker-anomaly/addons/fdda-redone) (included in G.A.M.M.A. 0.9.4)
@@ -55,7 +54,6 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - VG do not care if NV scope is turned on / off.
 - DX8 / DX9 not supported.
 - 2D scopes not supported.
-- VG not turned off if device removed from item slot.
 
 ### Ideas:
 - Gameplay
@@ -94,3 +92,9 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - [Shader Based 2D Scopes [1.5.1][DX10+][Engine-mod] V1.3 DLTX support](https://www.moddb.com/mods/stalker-anomaly/addons/shader-based-2d-scopes-151dx11engine-mod)
 - [Modded Exes: Ecolog Edition](https://discord.com/channels/912320241713958912/1417405402873729025)
 - [Modular Attachment System](https://www.moddb.com/mods/stalker-anomaly/addons/modular-attachment-system)
+
+# Modding
+- Please do not refer to old `z_beefs_nvg`. Check `bvg_api` for all implemented public VG api.
+- All resolved BVG mod conflicts are in `bvg_monkey`.
+- Consider contributing to this repo if you are willing to change VG, instead of creating new mod.
+- Consider contributing to this repo if you are resolved yet another mod conflict.
