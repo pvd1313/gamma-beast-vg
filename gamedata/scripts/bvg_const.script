@@ -3,6 +3,8 @@
 -- Beast Vision Goggles: Constants.
 
 debug_enabled = false  -- Log various mod info?
+
+-- TODO: v.fuchadzhy: Move to latch animator, storing it makes no sense. It is not clear what is "standart".
 vignette_amount = 0.05 -- Standard vignette value.
 flip_speed = 1.4       -- How fast to flip down.
 vignette_speed = 1.4   -- How fast vignette changes.

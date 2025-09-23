@@ -8,6 +8,7 @@ view_through_scope = false
 off_when_nv_scope = false
 off_when_hv_scope = false
 off_when_binoc = false
+save_device_state = false
 stays_pda = true
 gain_max = 2.0
 gain_min = 0.5

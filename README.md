@@ -1,5 +1,5 @@
 # About
-Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
+Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 
 ### Based on:
 - Beef's NVG - theRealBeef
@@ -33,12 +33,12 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - Added MCM option to block VG when ADS with HV scopes.
 - Added MCM option to block VG when ADS with NV scopes.
 - Added MCM option to block VG when viewing through binocular.
+- Added MCM option to remember VG state between levels / game loads.
 
 ### Fixes:
 
-- Fixed VG shader not following MCM logic: 
-  - If player tried to adjust brightness during ADS / PDA. Player can no longer adjust brightness when VG blocked.
-  - If VG is turned on during ADS / PDA.
+- Fixed VG shader not following MCM logic if player tried to adjust brightness during ADS / PDA. Player can no longer adjust brightness when VG blocked.
+- Fixed VG shader not following MCM logic If VG is turned on during ADS / PDA.
 - Fixed changes in MCM settings are not applied to turned-on VG.
 
 ### Other:
@@ -57,7 +57,6 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 
 ### Ideas:
 - Gameplay
-  - VG state memory during game load / level transition.
   - VG low battery notification.
   - Heat VG.
   - MCM option to turn off fade animation (vignette / latch).
@@ -86,6 +85,8 @@ Next generation of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://disc
 - [NVG Eyecups - GAMMA](https://www.moddb.com/mods/stalker-anomaly/addons/beefs-nvg-blur-removal)
 - [Beef's NVG with smooth edges](https://www.moddb.com/mods/stalker-anomaly/addons/beefs-nvg-with-smooth-edges)
 - [T-7 Thermal Goggles based on HeatVision v1.1 mod for Anomaly](https://discord.com/channels/912320241713958912/1168998049113178122)
+- [Beefs NVGs/ Improved alt aim fix and BAS NV Scopes](https://discord.com/channels/912320241713958912/1205458333100671027)
+- [Beef's NVG, Improved](https://www.moddb.com/mods/stalker-anomaly/addons/beefs-nvg-improved)
 
 ### Consider
 - [HeatVision v1.3 [DLTX]](https://www.moddb.com/mods/stalker-anomaly/addons/heatvision-v02-extension-for-beefs-nvg-dx11engine-mod/)

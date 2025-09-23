@@ -13,6 +13,12 @@
 	<string id="ui_mcm_bvg_enable_torch_animation_desc">
 		<text>Если эта опция включена, игрок будет проигрывать анимацию рук при включении / выключении ПНВ.</text>
 	</string>
+	<string id="ui_mcm_bvg_save_device_state">
+		<text>Записывать состояние ПНВ в игровое сохранение</text>
+	</string>
+	<string id="ui_mcm_bvg_save_device_state_desc">
+		<text>Если эта опция активирована, ПНВ будет включен, если он был включен во время сохранения или перед переходом в другую локацию.</text>
+	</string>
 	<string id="ui_mcm_bvg_gain_max">
 		<text>Максимальное усиление ПНВ</text>
 	</string>

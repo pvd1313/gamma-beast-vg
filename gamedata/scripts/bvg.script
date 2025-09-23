@@ -11,9 +11,11 @@ function on_game_start()
     bvg_class.patch()
     bvg_con_render_extension.patch()
     bvg_monkey.patch()
-    
+
     bvg_con.initialize()
 
+    RegisterScriptCallback("load_state", on_load_state)
+    RegisterScriptCallback("save_state", on_save_state)
     RegisterScriptCallback("on_option_change", on_option_change)
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
@@ -21,18 +23,46 @@ function on_game_start()
     on_option_change()
 end
 
+function on_load_state(m_data)
+    if (not bvg_config.save_device_state) then return end
+    
+    bvg_storage.load_state(m_data)
+    
+    if (bvg_storage.device_enabled == true) then
+        
+        -- Delayed activation required to make sure actor is initialized.
+        CreateTimeEvent("bvg_device_after_load_auto_activation", 0, 0.1, function()
+            item_section = bvg_util.get_actor_vision_goggles_item_section()
+            if (item_section == nil) then return true end
+                    
+            input = BVG_StateInput:new()
+            input.item_section = item_section
+            input.can_skip_animation = true
+            input.play_audio = false
+            input.play_hand_animation = false
+            input.target_state = true
+            input.play_latch_animation = false
+            input:validate()
+
+            bvg_api.set_device_state(input)
+            
+            return true
+        end)
+    end
+end
+
+function on_save_state(m_data)
+    if (not bvg_config.save_device_state) then return end
+    
+    bvg_storage.save_state(m_data)
+end
+
 function on_option_change()
     bvg_mcm.fetch_config()
     
     bvg_con.notify_config_changed()
     
-    local actor = db.actor
-    if (actor == nil) then return end
-    
-    local torch = actor:item_in_slot(10)
-    if (torch == nil) then return end
-    
-    local item_section = torch:section()
+    local item_section = bvg_util.get_actor_vision_goggles_item_section()
     if (item_section == nil) then return end
     
     bvg_con_render.set_item_section(item_section)

@@ -1,0 +1,18 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Persistent storage (game saves).
+
+device_enabled = false
+
+function load_state(m_data)
+    local data = m_data.bvg_storage
+    if (data == nil) then return end
+    
+    device_enabled = data.device_enabled == true
+end
+
+function save_state(m_data)
+    m_data.bvg_storage = {
+        device_enabled = bvg_api.get_device_state() == true
+    }
+end
