@@ -2,47 +2,49 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: VG brighntess adjust controller.
 
-local gain = 1
-local gain_dir = true
+local step = 2
 
 function notify_config_changed()
-    -- TODO: v.fuchadzhy: Will not work correctly with adjusting by current step, if min / max changed. 
-    -- Will be simplier to rewrite logic later.
+    if (step > bvg_config.gain_step_count - 1) then
+        step = bvg_config.gain_step_count - 1
+    end
+
+    update_gain()
+end
+
+function get_gain_step()
+    return step
+end
+
+function set_gain_step(step_int)
+    step = step_int
     
-    if (gain > bvg_config.gain_max) then
-        gain = bvg_config.gain_max
-        bvg_con_render.set_gain(gain)
+    if (step > bvg_config.gain_step_count - 1) then
+        step = 0
     end
     
-    if (gain < bvg_config.gain_min) then
-        gain = bvg_config.gain_min
-        bvg_con_render.set_gain(gain)
-    end
+    update_gain()    
 end
 
 function try_adjust()
     if (bvg_con_blocker.is_any_flag_on() or not item_device.nv_state) then
         return
     end
-
-    local step_size = (bvg_config.gain_max - bvg_config.gain_min) / 3
     
-    if (gain_dir and gain <= bvg_config.gain_max) then
-        gain = gain + step_size
-        if (gain >= bvg_config.gain_max) then
-            gain = bvg_config.gain_max
-            gain_dir = not gain_dir
-        end
-
-    elseif (not gain_dir and gain >= bvg_config.gain_min) then
-        gain = gain - step_size
-        if (gain <= bvg_config.gain_min) then
-            gain = bvg_config.gain_min
-            gain_dir = not gain_dir
-        end
+    step = step + 1
+    
+    if (step > bvg_config.gain_step_count - 1) then
+        step = 0
     end
     
-    bvg_con_render.set_gain(gain)
-    
+    update_gain()
+
     bvg_con_audio.play_brightness()
+end
+
+function update_gain()
+    local power = step / (bvg_config.gain_step_count - 1)
+    local gain = bvg_config.gain_min + power * (bvg_config.gain_max - bvg_config.gain_min)
+    
+    bvg_con_render.set_gain(gain)
 end

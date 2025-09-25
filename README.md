@@ -33,7 +33,8 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 - Added MCM option to block VG when ADS with HV scopes.
 - Added MCM option to block VG when ADS with NV scopes.
 - Added MCM option to block VG when viewing through binocular.
-- Added MCM option to remember VG state between levels / game loads.
+- Added MCM option to remember VG state / brightness setup between levels / game loads.
+- Added MCM option to change amount of brightness levels.
 
 ### Fixes:
 
@@ -42,6 +43,7 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 - Fixed changes in MCM settings are not applied to turned-on VG.
 
 ### Other:
+- In-game VG brightness level control will follow "repeat" logic, instead of "ping-pong". When brightness level goes over max, it will go straight back to min, instead on max - 1.
 - Major script refactoring.
 - MCM structure changes.
 - MCM FDDA NVG animation option moved to BVG MCM. FDDA option still there, but does nothing.
@@ -59,6 +61,7 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 - Gameplay
   - VG low battery notification.
   - Heat VG.
+  - MCM option to change NVG color.
   - MCM option to turn off fade animation (vignette / latch).
   - MCM option to turn off VG when 3D PDA is fully opened only.
   - MCM option to tweak amount of blur in shader.

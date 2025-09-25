@@ -13,6 +13,7 @@ stays_pda = true
 gain_max = 2.0
 gain_min = 0.5
 gain_offset = 1.0
+gain_step_count = 3.0
 washout_thresh = 0.1
 gen1_tubes = 1.0
 gen2_tubes = 2.0

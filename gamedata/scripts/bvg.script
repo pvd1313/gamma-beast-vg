@@ -28,6 +28,8 @@ function on_load_state(m_data)
     
     bvg_storage.load_state(m_data)
     
+    bvg_con_brightness.set_gain_step(bvg_storage.gain_step)
+    
     if (bvg_storage.device_enabled == true) then
         
         -- Delayed activation required to make sure actor is initialized.
