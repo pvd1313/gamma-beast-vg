@@ -50,24 +50,26 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 
 # Notes
 - `Beast VG` mod is not tested on vanilla [Anomaly v1.5.3](https://www.moddb.com/mods/stalker-anomaly/news/stalker-anomaly-version-153-release)
+- DX8 / DX9 are not supported.
+- 2D scopes are not supported.
 
 ### Known issues:
 - Integrated weapon scopes not supported.
 - VG do not care if NV scope is turned on / off.
-- DX8 / DX9 not supported.
-- 2D scopes not supported.
 
 ### Ideas:
 - Gameplay
   - VG low battery notification.
   - Heat VG.
+  - Brightness switching animation (shader gain lerp).
+  - MCM option to change glitch power.
   - MCM option to change NVG color.
   - MCM option to turn off fade animation (vignette / latch).
   - MCM option to turn off VG when 3D PDA is fully opened only.
   - MCM option to tweak amount of blur in shader.
   - MCM option to tweak max view distance in shader.
   - VG brightness status display (when adjusting brightness).
-  - VG brightness adjust animation.
+  - VG brightness adjust animation (hand)
   - VG MCM better key bind config for brightness.
   - VG / torch enabled status icons.
   - VG in-game calibration (like color correction).

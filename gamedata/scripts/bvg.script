@@ -30,7 +30,7 @@ function on_load_state(m_data)
     
     bvg_con_brightness.set_gain_step(bvg_storage.gain_step)
     
-    if (bvg_storage.device_enabled == true) then
+    if (bvg_storage.device_enabled ~= bvg_api.get_device_state()) then
         
         -- Delayed activation required to make sure actor is initialized.
         CreateTimeEvent("bvg_device_after_load_auto_activation", 0, 0.1, function()
@@ -42,7 +42,7 @@ function on_load_state(m_data)
             input.can_skip_animation = true
             input.play_audio = false
             input.play_hand_animation = false
-            input.target_state = true
+            input.target_state = bvg_storage.device_enabled
             input.play_latch_animation = false
             input:validate()
 
