@@ -1,0 +1,46 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: In-game shader tuning UI.
+
+class "UIBVGEditor" (CUIScriptWnd)
+
+local window = nil
+
+function UIBVGEditor:__init()
+    super()
+    self:InitControls()
+end
+
+function UIBVGEditor:__finalize()
+end
+
+-- Load XML and bind UI elements
+function UIBVGEditor:InitControls()
+    self.xml = CScriptXmlInit()
+    self.xml:ParseFile("bvg_editor.xml")
+
+    -- Root window
+    self.xml:InitStatic("main", self)
+
+    -- Example button
+    self.my_button = self.xml:Init3tButton("main:my_button", self)
+    self:Register(self.my_button, "btn_click")
+end
+
+-- Handle button clicks
+function UIBVGEditor:OnButtonClick(btn)
+    if btn == self.my_button then
+        printf("Button was pressed!")
+        return true
+    end
+    return false
+end
+
+-- Show function
+function show()
+    if window == nil then
+        window = UIBVGEditor()
+        get_hud():AddDialogToRender(window)
+        window:ShowDialog(true)
+    end
+end

@@ -1,0 +1,19 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Editor UI layout.
+
+-- TODO: v.fuchadzhy: This is broken. It will not preserve element order.
+
+body = 
+{
+    id = "f06c9c7e30c746acbdb92453e97a4a12",
+    type = bvg_yoga_element_type.box,
+    style = { layout = bvg_yoga_style_layout.vertical },
+    
+    test_button =
+    {
+        id = "b2e5c3f71c844a2ea9b2d8a41a6e8799",
+        type = bvg_yoga_element_type.button,
+        style = { text = "Hello, world!" }
+    }
+}

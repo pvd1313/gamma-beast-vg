@@ -1,3 +1,5 @@
+![Image](image.png)
+
 # About
 Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://discord.com/invite/stalker-gamma)
 
@@ -10,7 +12,6 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 
 ### Links:
 - [Github](https://github.com/pvd1313/gamma-beast-vg)
-- [ModDB] (wip)
 - [G.A.M.M.A. Discord] (wip)
 
 # Installation
@@ -99,8 +100,4 @@ Yet another remake of Beef's NVG for **DX10 / DX11** [G.A.M.M.A 0.9.4](https://d
 - [Modded Exes: Ecolog Edition](https://discord.com/channels/912320241713958912/1417405402873729025)
 - [Modular Attachment System](https://www.moddb.com/mods/stalker-anomaly/addons/modular-attachment-system)
 
-# Modding
-- Please do not refer to old `z_beefs_nvg`. Check `bvg_api` for all implemented public VG api.
-- All resolved BVG mod conflicts are in `bvg_monkey`.
-- Consider contributing to this repo if you are willing to change VG, instead of creating new mod.
-- Consider contributing to this repo if you are resolved yet another mod conflict.
+# [Modding](modding.md)

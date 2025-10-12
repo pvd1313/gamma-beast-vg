@@ -97,7 +97,7 @@ function pack_data_0()
     local y_1 = tostring(math.floor(param_gain * 10))                -- Gain Adjust (0.1 to 3) -- outputs 1.y to 30.y in 1. increment.
     local y_2 = tostring(math.floor(bvg_config.washout_thresh * 10)) -- Washout Thresh (0.0 - 0.9) - outputs y.0 to y.9 in .1 increment.
     local z_1 = tostring(math.floor(param_vignette * 100))           -- Vignette Amount (0.0 to 1.0) outputs 0.z to 100.z in 1. increment.
-    local z_2 = tostring(math.floor(param_glitch_power * 10))      -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
+    local z_2 = tostring(math.floor(param_glitch_power * 10))        -- Glitch Power (0.0 - 0.9) - outputs z.0 to z.9 in .1 increment.
     local w_1 = tostring((math.floor(bvg_config.gain_offset * 10)))  -- Gain Offset (0.5 to 3.0) - outputs 5.w to 30.w in 1. increment.
 
     return "(" ..

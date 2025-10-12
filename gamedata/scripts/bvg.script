@@ -8,17 +8,19 @@
 
 -- BVG entry point.
 function on_game_start()
-    bvg_class.patch()
+    bvg_class_0.patch()
     bvg_con_render_extension.patch()
     bvg_monkey.patch()
 
-    bvg_con.initialize()
+    bvg_yoga.boot()
+    bvg_con.boot()
 
     RegisterScriptCallback("load_state", on_load_state)
     RegisterScriptCallback("save_state", on_save_state)
     RegisterScriptCallback("on_option_change", on_option_change)
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+    RegisterScriptCallback("imgui_on_render", imgui_on_render)
 
     on_option_change()
 end
@@ -79,6 +81,10 @@ function actor_on_info_callback(npc, info_id)
     elseif (info_id == "ui_pda_hide") then
         bvg_con_blocker.notify_pda_is_used(false)
     end
+end
+
+function imgui_on_render(name)
+    bvg_con_editor.render(name)
 end
 
 function actor_on_update()

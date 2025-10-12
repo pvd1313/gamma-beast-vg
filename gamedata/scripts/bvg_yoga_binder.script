@@ -1,0 +1,24 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Yoga binds.
+
+function bind_all_elements()
+    bind(bvg_yoga_element_con_root, bvg_yoga_element_type.root)
+    bind(bvg_yoga_element_con_box, bvg_yoga_element_type.box)
+    bind(bvg_yoga_element_con_button, bvg_yoga_element_type.button)
+end
+
+function bind(element_controller, element_type)
+    validate(element_controller)
+    
+    if (bvg_yoga.element_controller[element_type] ~= nil) then
+        abort("Failed to bind controller. Element type is already registered: " .. element_type)
+    end
+    
+    bvg_yoga.element_controller[element_type] = element_controller
+    bvg_yoga.element_child_support[element_type] = element_controller.is_children_supported()
+end
+
+function validate(element_controller)
+    -- TODO: v.fuchadzhy: Add controller validation (all methods implemented).
+end

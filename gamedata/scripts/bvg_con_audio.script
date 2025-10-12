@@ -2,7 +2,7 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- Beast Vision Goggles: Audio controller.
 
-function initialize()
+function boot()
     sound_vision_start = sound_object(bvg_uri.sfx_vision_start)
     sound_vision_finish = sound_object(bvg_uri.sfx_vision_finish)
     sound_vision_brightness = sound_object(bvg_uri.sfx_vision_brightness)
