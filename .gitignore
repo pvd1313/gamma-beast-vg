@@ -1,6 +1,31 @@
-# Rider
-/.idea/
-/Folder.DotSettings.user
-
 # Mod Organizer
 /meta.ini
+
+# Build artifacts
+bin/
+obj/
+
+# Rider / JetBrains
+**/.idea/
+/Folder.DotSettings.user
+*.sln.iml
+*.DotSettings.user
+*.userprefs
+
+# NuGet
+*.nupkg
+*.nuget.cache
+project.assets.json
+project.nuget.cache
+
+# Build-generated files
+*.g.cs
+*.AssemblyInfo.cs
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.cache
+*.props
+*.targets
+
+# Logs and temporary
+*.log
+*.tmp
