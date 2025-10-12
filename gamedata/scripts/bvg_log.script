@@ -30,10 +30,10 @@ function deep_print_table(tab, indent)
             local format = string.rep("  ", indent) .. key .. ":"
             printf(format)
 
-            deep_print_table(value, indent + 1)
+            deep_print_table(val, indent + 1)
         else
             local format = string.rep("  ", indent) .. key .. ": "
-            printf(format .. tostring(value))
+            printf(format .. tostring(val))
         end
     end
 end
