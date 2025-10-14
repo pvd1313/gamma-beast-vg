@@ -1,0 +1,59 @@
+# Deploying pipe virtual machine instruction list
+# Replace paths to your actual paths to make it work
+# Run deploy.bat or deploy.sh
+# Requires .Net installed
+
+# $ : set variable
+# @ : set procedure parameter
+# . : run procedure
+# # : comment :)
+# Check Binder.cs for all bound instructions.
+
+# All instruction will be printed to console before execution.
+@ enabled 1
+. instruction_print
+
+### Set folders:
+$ OUT "C:/Games/Gamma/mods/Beast VG"
+$ ROOT C:/repo/beast_vg
+
+### Clean output folder:
+@ folder $OUT$  # Set procedure parameter
+. delete_folder # Invoke procedure
+
+### Russian localization:
+@ source_file $ROOT$/gamedata/configs/text/eng/bvg_mcm.xml
+@ target_file $OUT$/gamedata/configs/text/eng/bvg_mcm.xml
+. copy_file
+
+### English localization:
+@ source_file $ROOT$/gamedata/configs/text/rus/bvg_mcm.xml
+@ target_file $OUT$/gamedata/configs/text/rus/bvg_mcm.xml
+. copy_file
+
+### Scripts. Will copy all source folder and subfolders files into one target folder.
+@ source_folder $ROOT$/gamedata/scripts
+@ target_folder $OUT$/gamedata/scripts
+@ file_mask *.script
+. copy_flatten_folder
+
+@ enabled 0
+. instruction_print
+
+
+### Fancy final message.
+
+@ message ""
+. print_line
+
+@ message "+------------------------------+"
+. print_line
+
+@ message "| Done. Press any key to exit. |"
+. print_line
+
+@ message "+------------------------------+"
+. print_line
+
+@ timeout_ms 3000 # -1 will make infinite timeout.
+. read_key
