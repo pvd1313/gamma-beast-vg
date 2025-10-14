@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace PipeMachine.Utility;
 
-public static class Safe
+public static class Context
 {
     public static void Run(string errorMessage, Action action)
     {
@@ -15,11 +15,11 @@ public static class Safe
         }
         catch (Exception e)
         {
-            Terminate(errorMessage, e);
+            _terminateWithException(errorMessage, e);
         }
     }
     
-    private static void Terminate(string errorMessage, Exception exception)
+    private static void _terminateWithException(string errorMessage, Exception exception)
     {
         if (Debugger.IsAttached)
         {
@@ -42,5 +42,21 @@ public static class Safe
         Console.ReadKey();
 
         throw new Exception("Application terminated.", exception);
+    }
+
+    public static void Terminate(string errorMessage)
+    {
+        if (Debugger.IsAttached)
+        {
+            throw new Exception(errorMessage);
+        }
+        
+        Console.WriteLine(errorMessage);
+        
+        Console.WriteLine("Press any key to exit...");
+        
+        Console.ReadKey();
+        
+        throw new Exception("Application terminated: " + errorMessage);
     }
 }

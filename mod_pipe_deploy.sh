@@ -1,0 +1,1 @@
+dotnet run --project "./pipe_machine/PipeMachine.csproj" -- "./mod/pipe/deploy.pipe"
