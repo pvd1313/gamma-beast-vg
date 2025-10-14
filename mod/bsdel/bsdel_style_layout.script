@@ -1,0 +1,7 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BSDEL: Element types.
+
+invalid = 0
+vertical = 1
+horizontal = 2

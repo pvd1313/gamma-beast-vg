@@ -1,0 +1,27 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BVG: Mixed utilities.
+
+function deep_clone(source)
+    local dst = {}
+
+    for key, val in pairs(source) do
+        if type(val) == "table" then
+            dst[key] = deep_clone(val)
+        else
+            dst[key] = val
+        end
+    end
+
+    return dst
+end
+
+function get_actor_vision_goggles_item_section()
+    local actor = db.actor
+    if (actor == nil) then return nil end
+    
+    local torch = actor:item_in_slot(10)
+    if (torch == nil) then return nil end
+    
+    return torch:section()
+end

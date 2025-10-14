@@ -1,8 +1,0 @@
--- DCGM - CYGI License.
--- Copyright (c) 2025 Victor Fuchadzhy.
--- Beast Vision Goggles: Yoga element types.
-
-invalid = 0 --
-root = 1    -- system
-box = 2     -- container
-button = 3  --

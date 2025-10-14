@@ -15,24 +15,30 @@
 
 ### Set folders:
 $ OUT "C:/Games/Gamma/mods/Beast VG"
-$ ROOT C:/repo/beast_vg
+$ ROOT C:/repo/beast_vg/mod
 
 ### Clean output folder:
 @ folder $OUT$  # Set procedure parameter
 . delete_folder # Invoke procedure
 
 ### Russian localization:
-@ source_file $ROOT$/gamedata/configs/text/eng/bvg_mcm.xml
+@ source_file $ROOT$/bvg/localization/eng.xml
 @ target_file $OUT$/gamedata/configs/text/eng/bvg_mcm.xml
 . copy_file
 
 ### English localization:
-@ source_file $ROOT$/gamedata/configs/text/rus/bvg_mcm.xml
+@ source_file $ROOT$/bvg/localization/rus.xml
 @ target_file $OUT$/gamedata/configs/text/rus/bvg_mcm.xml
 . copy_file
 
-### Scripts. Will copy all source folder and subfolders files into one target folder.
-@ source_folder $ROOT$/gamedata/scripts
+### BVG Scripts. Will copy all source folder and subfolders files into one target folder.
+@ source_folder $ROOT$/bvg/script
+@ target_folder $OUT$/gamedata/scripts
+@ file_mask *.script
+. copy_flatten_folder
+
+### BSDEL Scripts.
+@ source_folder $ROOT$/bsdel
 @ target_folder $OUT$/gamedata/scripts
 @ file_mask *.script
 . copy_flatten_folder

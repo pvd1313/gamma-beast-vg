@@ -1,0 +1,92 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- Beast Vision Goggles: Main.
+
+-- Remarks:
+-- NVG item removing from slot is controlled by item_device.
+-- NVG switch on / off (player input) is controlled by item_device.
+
+-- BVG entry point.
+function on_game_start()
+    bvg_class_0.patch()
+    bvg_con_render_extension.patch()
+    bvg_monkey.patch()
+
+    bsdel.boot()
+    bvg_con.boot()
+
+    RegisterScriptCallback("load_state", on_load_state)
+    RegisterScriptCallback("save_state", on_save_state)
+    RegisterScriptCallback("on_option_change", on_option_change)
+    RegisterScriptCallback("actor_on_update", actor_on_update)
+    RegisterScriptCallback("actor_on_info_callback", actor_on_info_callback)
+    RegisterScriptCallback("imgui_on_render", imgui_on_render)
+
+    on_option_change()
+end
+
+function on_load_state(m_data)
+    if (not bvg_config.save_device_state) then return end
+    
+    bvg_storage.load_state(m_data)
+    
+    bvg_con_brightness.set_gain_step(bvg_storage.gain_step)
+    
+    if (bvg_storage.device_enabled ~= bvg_api.get_device_state()) then
+        
+        -- Delayed activation required to make sure actor is initialized.
+        CreateTimeEvent("bvg_device_after_load_auto_activation", 0, 0.1, function()
+            item_section = bvg_util.get_actor_vision_goggles_item_section()
+            if (item_section == nil) then return true end
+                    
+            input = BVG_StateInput:new()
+            input.item_section = item_section
+            input.can_skip_animation = true
+            input.play_audio = false
+            input.play_hand_animation = false
+            input.target_state = bvg_storage.device_enabled
+            input.play_latch_animation = false
+            input:validate()
+
+            bvg_api.set_device_state(input)
+            
+            return true
+        end)
+    end
+end
+
+function on_save_state(m_data)
+    if (not bvg_config.save_device_state) then return end
+    
+    bvg_storage.save_state(m_data)
+end
+
+function on_option_change()
+    bvg_mcm.fetch_config()
+    
+    bvg_con.notify_config_changed()
+    
+    local item_section = bvg_util.get_actor_vision_goggles_item_section()
+    if (item_section == nil) then return end
+    
+    bvg_con_render.set_item_section(item_section)
+end
+
+function actor_on_info_callback(npc, info_id)
+    local actor = db.actor
+    if (actor == nil) then return end
+
+    if (info_id == "ui_pda") then
+        bvg_con_blocker.notify_pda_is_used(true)
+    elseif (info_id == "ui_pda_hide") then
+        bvg_con_blocker.notify_pda_is_used(false)
+    end
+end
+
+function imgui_on_render(name)
+    bvg_con_editor.render(name)
+end
+
+function actor_on_update()
+    bvg_con.update()
+end

@@ -1,0 +1,42 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BVG: Constants.
+
+debug_enabled = false  -- Log various mod info?
+
+-- TODO: v.fuchadzhy: Move to latch animator, storing it makes no sense. It is not clear what is "standart".
+vignette_amount = 0.05 -- Standard vignette value.
+flip_speed = 1.4       -- How fast to flip down.
+vignette_speed = 1.4   -- How fast vignette changes.
+
+-- For vision blocker.
+heat_scope_names = {
+    ["1pn93n2_1gs"] = true,
+    ["t12"] = true,
+    ["gauss_sight"] = true,
+}
+
+-- For vision blocker.
+night_scope_names = {
+    ["1pn93"] = true,
+    ["pn23"] = true,
+    ["vulkan"] = true,
+}
+
+-- For vision blocker.
+binoc_names = {
+    ["wpn_binoc_inv"] = true,
+}
+
+-- 200ms, 5Hz. How fast blocker reacts to actor changes.
+blocker_flag_update_delay = 200
+
+-- For differenct type of VG, ini defined.
+vision_effect_id = {
+    ["nightvision_1"] = 0,
+    ["nightvision_2"] = 1,
+    ["nightvision_3"] = 2
+}
+
+-- Delay before loop audio begins playing, seconds.
+device_loop_sfx_start_delay = 0.5

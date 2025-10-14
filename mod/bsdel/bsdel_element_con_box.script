@@ -1,0 +1,19 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BSDEL: Box / container controller.
+
+function is_children_supported()
+    return true
+end
+
+function validate_style(style)
+
+end
+
+function begin_draw(element)
+
+end
+
+function end_draw(element)
+
+end

@@ -1,0 +1,59 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BVG: Utilites for weapon handling.
+
+function try_get_actor_weapon_zoom_type()
+    local xr_cweapon = try_get_actor_xr_cweapon()
+    if (xr_cweapon == nil) then return -1 end
+    
+    return xr_cweapon:GetZoomType()
+end
+
+function is_actor_weapon_zoomed()
+    return axr_main.weapon_is_zoomed == true
+end
+
+function try_get_actor_xr_cweapon()
+    local weapon = try_get_actor_weapon()
+    if (weapon == nil) then return nil end
+
+    return weapon:cast_Weapon()
+end
+
+function try_get_actor_weapon()
+    return db.actor:active_item()
+end
+
+function try_get_weapon_zoomed_scope_name(weapon)
+    if (weapon == nil) then return nil end
+
+    local xr_cweapon = weapon:cast_Weapon()
+    if (xr_cweapon == nil) then return nil end
+    
+    -- TODO: v.fuchadzhy: Side scopes not supported.
+    -- We assume that any non-main scope is default scope for now.
+    if (xr_cweapon:GetZoomType() ~= 0) then return nil end
+    
+    return get_sight_section(weapon)
+end
+
+-- Copied from: z_3d_scopes.script (G.A.M.M.A. 0.9.4)
+function get_sight_section(weapon)
+    local wpn_section = weapon:section()
+
+    local modular_attachments = ini_sys:r_bool_ex(wpn_section, "modular_attachments", false)
+    if (modular_attachments) then
+        local xr_cweapon = weapon:cast_Weapon()
+        if (xr_cweapon:IsScopeAttached()) then
+            return xr_cweapon:GetScopeName()
+        end
+        return nil
+    end
+
+    local parent = ini_sys:r_string_ex(wpn_section, "parent_section") or wpn_section
+    if #parent == #wpn_section then
+        return wpn_section
+    end
+
+    return wpn_section:sub(#parent + 2)
+end

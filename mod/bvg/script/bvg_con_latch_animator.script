@@ -1,0 +1,85 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BVG: Latch animation (shader: vignette + flip_down) controller.
+
+-- -1: Not playing
+--  0: First step. (flip latch)
+--  1: Second step. (crt latch)
+local playing_state = -1
+
+local cache_data = nil
+local cache_callback = nil
+
+local flip_down = 1
+local vignette = bvg_const.vignette_amount
+
+function is_playing()
+    return playing_state ~= -1
+end
+
+function play(data, callback)
+    cache_data = data
+    cache_callback = callback
+
+    if (data.target_state) then
+        flip_down = 1
+        vignette = 1
+        bvg_con_render.set_vignette(vignette)
+        bvg_con_render.set_flip_down(flip_down)
+        bvg_con_render.set_enabled(true)
+        playing_state = 0
+    else
+        -- Disabling animation is not implemented.
+        playing_state = -1
+        bvg_con_render.set_enabled(false)
+        if (callback ~= nil) then
+            callback(data)
+        end
+    end
+end
+
+function play_instant(target_state)
+    if (target_state) then
+        bvg_con_render.set_flip_down(100)
+        bvg_con_render.set_vignette(bvg_const.vignette_amount)
+        bvg_con_render.set_enabled(true)
+    else
+        bvg_con_render.set_enabled(false)
+    end
+
+end
+
+function update()
+    if (playing_state == -1) then
+        return
+    end
+    
+    if (playing_state == 0) then
+        flip_down = flip_down * bvg_const.flip_speed    
+        
+        if (flip_down >= 100) then
+            playing_state = 1
+            bvg_con_render.set_flip_down(100)
+        else
+            bvg_con_render.set_flip_down(flip_down)
+        
+        return
+        
+        end
+    end
+    
+    if (playing_state == 1) then
+        vignette = vignette * (1 / bvg_const.vignette_speed)
+        
+        if (vignette <= bvg_const.vignette_amount) then
+            playing_state = -1
+            bvg_con_render.set_vignette(bvg_const.vignette_amount)
+            
+            if (cache_callback ~= nil) then
+                cache_callback(cache_data)
+            end
+        else
+            bvg_con_render.set_vignette(vignette)
+        end
+    end
+end

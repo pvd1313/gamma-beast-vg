@@ -1,0 +1,21 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BVG: Persistent storage (game saves).
+
+device_enabled = false
+gain_step = 0
+
+function load_state(m_data)
+    local data = m_data.bvg_storage
+    if (data == nil) then return end
+    
+    device_enabled = data.device_enabled == true
+    gain_step = data.gain_step or 0
+end
+
+function save_state(m_data)
+    m_data.bvg_storage = {
+        device_enabled = bvg_api.get_device_state() == true,
+        gain_step = bvg_con_brightness.get_gain_step() or 0
+    }
+end

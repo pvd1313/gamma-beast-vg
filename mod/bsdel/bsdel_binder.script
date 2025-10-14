@@ -1,0 +1,24 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BSDEL: Binds.
+
+function bind_all_elements()
+    bind(bsdel_element_con_root, bsdel_element_type.root)
+    bind(bsdel_element_con_box, bsdel_element_type.box)
+    bind(bsdel_element_con_button, bsdel_element_type.button)
+end
+
+function bind(element_controller, element_type)
+    validate(element_controller)
+    
+    if (bsdel.element_controller[element_type] ~= nil) then
+        abort("Failed to bind controller. Element type is already registered: " .. element_type)
+    end
+    
+    bsdel.element_controller[element_type] = element_controller
+    bsdel.element_child_support[element_type] = element_controller.is_children_supported()
+end
+
+function validate(element_controller)
+    -- TODO: v.fuchadzhy: Add controller validation (all methods implemented).
+end

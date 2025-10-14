@@ -1,0 +1,84 @@
+-- DCGM - CYGI License.
+-- Copyright (c) 2025 Victor Fuchadzhy.
+-- BSDEL: Lua -> render_tree parser.
+
+function create_render_tree_element(element_body, element_name, parent, parent_path)
+    local element =
+    {
+        type = bsdel_element_type.invalid,
+        name = element_name,
+        id = nil,
+        style = nil
+    }
+
+    local element_path = parent_path .. " > " .. element_name
+    local element_initialized = false
+    local element_supports_children = false
+    local got_type = false
+    local got_id = false
+    local got_style = false
+    
+    -- TODO: v.fuchadzhy: This is broken. It will not preserve element order. Can be solved with 00_buttonName. Hacky.
+    
+    for key, value in pairs(element_body) do
+        if (key == "type") then
+            if (got_type) then error(element_path, "type is duplicated") end
+            element.type = value
+            got_type = true
+        
+        elseif (key == "id") then
+            if (got_id) then error(element_path, "id is duplicated") end
+            element.id = value
+            got_id = true
+        
+        elseif (key == "style") then
+            if (got_style) then error(element_path, "style is duplicated") end
+            element.style = bvg_util.deep_clone(value)
+            got_style = true
+        
+        end
+
+        if (got_type and got_id and got_style) then
+            validate_element_meta(element)
+            element_initialized = true
+            
+            element_supports_children = bsdel.is_element_supports_children(element.type);
+            if (element_supports_children) then
+                element.children = { }
+            end
+            
+            local array = parent.children 
+            array[#array + 1] = element
+        
+            break
+        end
+    end
+
+    if (not element_initialized) then
+        error(element_path, "missing some meta fields (id / type / style)")
+    end
+    
+    if (element_supports_children) then
+        for key, value in pairs(element_body) do
+            if (not is_meta_field_name(key)) then
+                create_render_tree_element(value, key, element, element_path)
+            end
+        end
+    end
+end
+
+function is_meta_field_name(key)
+    if (key == "type" or key == "id" or key == "style") then
+        return true
+    end
+    
+    return false
+end
+
+function validate_element_meta(element)
+    -- TODO: v.fuchadzhy: Add type, id, style validation.
+end
+
+function error(path, message)
+    abort(path .. ": " .. message)
+end
