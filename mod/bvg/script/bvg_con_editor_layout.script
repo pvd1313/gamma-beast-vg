@@ -2,7 +2,7 @@
 -- Copyright (c) 2025 Victor Fuchadzhy.
 -- BVG: Editor UI layout.
 
--- TODO: v.fuchadzhy: This is broken. It will not preserve element order.
+-- _N currently used as a hack to preserve order. Parser will try to extract it.
 
 body = 
 {
@@ -10,10 +10,31 @@ body =
     type = bsdel_element_type.box,
     style = { layout = bsdel_style_layout.vertical },
     
-    test_button =
+    accept_changes_button_1 =
     {
         id = "b2e5c3f71c844a2ea9b2d8a41a6e8799",
         type = bsdel_element_type.button,
-        style = { text = "Hello, world!" }
+        style = { text = "btn 1" }
+    },
+    
+    revert_changes_button_2 =
+    {
+        id = "b1a6f3e28f4d4c2ab9e70e1f3a4b5c6d",
+        type = bsdel_element_type.button,
+        style = { text = "btn 2" }
+    },
+    
+    reset_factory_button_3 =
+    {
+        id = "a1b2c3d4e5f67a8b9c0d1e2f3a4b5c6d",
+        type = bsdel_element_type.button,
+        style = { text = "btn 3" }
+    },
+    
+    do_something_else_button_4 =
+    {
+        id = "0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a",
+        type = bsdel_element_type.button,
+        style = { text = "btn 4" }
     }
 }

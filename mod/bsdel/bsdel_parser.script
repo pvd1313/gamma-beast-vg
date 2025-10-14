@@ -18,8 +18,6 @@ function create_render_tree_element(element_body, element_name, parent, parent_p
     local got_id = false
     local got_style = false
     
-    -- TODO: v.fuchadzhy: This is broken. It will not preserve element order. Can be solved with 00_buttonName. Hacky.
-    
     for key, value in pairs(element_body) do
         if (key == "type") then
             if (got_type) then error(element_path, "type is duplicated") end
@@ -47,8 +45,15 @@ function create_render_tree_element(element_body, element_name, parent, parent_p
                 element.children = { }
             end
             
-            local array = parent.children 
-            array[#array + 1] = element
+            local array = parent.children
+            order = tonumber(element_name:match("%d+"))
+            
+            if (order ~= nil) then
+                array[order] = element
+                element.name = element_name:gsub("_%d+$", "")
+            else
+                array[#array + 1] = element
+            end
         
             break
         end
