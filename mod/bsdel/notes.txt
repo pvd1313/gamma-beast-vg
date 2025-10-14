@@ -1,0 +1,36 @@
+// Jump to root
+@root
+
+$box #mfab &vertical :
+    $button #ugux &'Hello, world' ;
+    $box #medz &horizontal ;
+ 
+/* 
+Lets try reducing nesting.
+Lets create two more buttons.
+*/
+@mfab:medz >
+    $button #bibix &'Left button' ;
+    $button #babax &'Right button' ;
+
+// Lets modify main button meta
+@mfab:ugux &"Hello, SDLE!" *
+
+// Lets add central rect
+@mfab:medz:babax ^
+    $box #popox &'Central box!'
+
+// Lets swap button positions
+@mfab:medz:bibix <> @mfab:medz:babax
+
+// $ type
+// # id
+// & style
+// @ goto, load meta into memory
+// ; push element, jmp to next child
+// : push element, jmp to children [zero index]
+// > jmp to children [zero index]
+// >> jmp to children [last index]
+// * override meta
+// ^ jmp to parent, to previous child
+// swap nodes
