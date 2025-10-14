@@ -10,3 +10,10 @@
 - Deploying is done with virtual machine, check `./pipe/Pipe.sln`
 - You will need `.Net` installed, `.sh` files use `dotnet run` command to compile and run project.
 - You will need to tweak paths in `./mod/pipe/*.pipe` files.
+
+# Pipe
+- Simple virtual machine that executes instructions from `.pipe` files.
+- To run machine you need to provide initial `.pipe` file path.
+- Explore existing `.pipe` files to understand how it works.
+- Check `Binder.cs` for all built-in instructions and procedures.
+- You can extend existing operations pool to suit your demands.
