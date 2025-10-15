@@ -4,9 +4,9 @@ public class DeleteFolder : IProcedure
 {
     private string _folder;
     
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _folder = reader.Read("folder");
+        _folder = reader.ReadParameter("folder");
     }
 
     public void Run(Stack stack)

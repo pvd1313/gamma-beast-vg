@@ -4,9 +4,9 @@ public class InstructionPrint : IProcedure
 {
     private int _enabled;
     
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _enabled = int.Parse(reader.Read("enabled"));
+        _enabled = int.Parse(reader.ReadParameter("enabled"));
     }
 
     public void Run(Stack stack)

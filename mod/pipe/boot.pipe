@@ -1,0 +1,7 @@
+### Set global path variables.
+$ MOD_PATH "C:/repo/beast_vg/mod"
+$ DEPLOY_PATH "C:/Games/Gamma/mods/Beast VG"
+
+### All instruction will be printed to console before execution.
+@ enabled 1
+. instruction_print

@@ -36,6 +36,8 @@ public static class Context
 
             childException = childException.InnerException;
         }
+
+        Console.WriteLine();
     
         Console.WriteLine("Press any key to exit...");
 

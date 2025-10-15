@@ -6,9 +6,9 @@ public class ReadKey : IProcedure
 {
     private int _timeoutMS;
     
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _timeoutMS = int.Parse(reader.Read("timeout_ms"));
+        _timeoutMS = int.Parse(reader.ReadParameter("timeout_ms"));
     }
 
     public void Run(Stack stack)

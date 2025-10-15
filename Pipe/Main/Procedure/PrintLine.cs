@@ -4,9 +4,9 @@ public class PrintLine : IProcedure
 {
     private string _message;
     
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _message = reader.Read("message");
+        _message = reader.ReadParameter("message");
     }
 
     public void Run(Stack stack)

@@ -17,6 +17,7 @@ public class Binder
         _bindInstruction<Comment>('#');
         _bindInstruction<Variable>('$');
         _bindInstruction<Parameter>('@');
+        _bindInstruction<Return>('>');
 
         _procedure = new Instruction.Procedure();
         _bindProcedure<CopyFile>("copy_file");
@@ -25,6 +26,8 @@ public class Binder
         _bindProcedure<PrintLine>("print_line");
         _bindProcedure<ReadKey>("read_key");
         _bindProcedure<InstructionPrint>("instruction_print");
+        _bindProcedure<GetRuntimePath>("get_runtime_path");
+        _bindProcedure<RunPipeFile>("run_pipe_file");
 
         _machine.Inject(_procedure, '.');
     }

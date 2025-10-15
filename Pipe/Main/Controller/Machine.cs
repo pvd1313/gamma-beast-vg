@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Pipe;
 
 public class Machine : IMachine
@@ -6,6 +8,7 @@ public class Machine : IMachine
 
     private IInstruction[] _instructions;
     private IFileSystem _fileSystem;
+    private Stack _stack;
     private byte _isBooted;
 
     public void Boot(IFileSystem fileSystem)
@@ -14,6 +17,7 @@ public class Machine : IMachine
 
         _instructions = new IInstruction [INSTRUCTION_LIMIT];
         _fileSystem = fileSystem;
+        _stack = Stack.Create(_fileSystem, this);
 
         _isBooted = 1;
     }
@@ -34,27 +38,32 @@ public class Machine : IMachine
         _instructions[instructionIndex] = instruction;
     }
 
-    public void Run(string filePath)
+    public void Run(string pipeFilePath)
     {
         if (_isBooted == 0) throw new InvalidOperationException("machine is not booted");
-
-        Stack stack = Stack.Create();
         
-        using TextReader reader = File.OpenText(filePath);
+        string[] lines = File.ReadAllLines(pipeFilePath);
 
-        stack.SetFileSystem(_fileSystem);
-
+        string pipeAbsolute = Path.GetFullPath(pipeFilePath);
+        string pipeFolder = Path.GetDirectoryName(pipeAbsolute);
+        _stack.PushRuntimePath(pipeFolder);
+        
         string row = string.Empty;
-        int rowIndex = 1;
+        int rowIndex = 0;
 
         try
         {
-            for (; row != null; rowIndex++)
+            for (; rowIndex < lines.Length; rowIndex++)
             {
-                row = reader.ReadLine();
+                row = lines[rowIndex];
 
                 if (string.IsNullOrEmpty(row))
                 {
+                    if (_stack.GetConfig().instructionPrintEnabled)
+                    {
+                        Console.WriteLine();
+                    }
+                    
                     continue;
                 }
 
@@ -64,22 +73,42 @@ public class Machine : IMachine
 
                 if (instruction == null)
                 {
-                    throw new Exception("Instruction is not bound: " + instructionIndex);
+                    throw new Exception($"Unknown instruction: {instructionIndex} '{(char)instructionIndex}'");
                 }
 
-                stack.SetInstruction(row);
+                _stack.SetInstruction(row);
 
-                if (stack.GetConfig().instructionPrintEnabled)
+                if (_stack.GetConfig().instructionPrintEnabled)
                 {
                     Console.WriteLine(row);
                 }
 
-                instruction.Run(stack);
+                instruction.Run(_stack);
             }
+
+            _stack.PopRuntimePath();
         }
         catch (Exception exception)
         {
-            throw new Exception($"[{rowIndex}] {row}", exception);
+            StringBuilder builder = new ();
+
+            builder.AppendLine();
+
+            builder.AppendLine(pipeFilePath);
+
+            builder.AppendLine("...");
+
+            builder.Append('[');
+
+            builder.Append(rowIndex + 1);
+
+            builder.Append("] ");
+
+            builder.AppendLine(row);
+
+            builder.AppendLine("...");
+            
+            throw new Exception(builder.ToString(), exception);
         }
     }
 

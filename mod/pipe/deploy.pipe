@@ -1,65 +1,49 @@
 # Deploying pipe virtual machine instruction list
-# Replace paths to your actual paths to make it work
+# Replace paths to your actual paths to make it work, in boot.pipe
 # Run deploy.bat or deploy.sh
 # Requires .Net installed
 
 # $ : set variable
 # @ : set procedure parameter
+# > : return value from procedure to variable
 # . : run procedure
 # # : comment :)
 # Check Binder.cs for all bound instructions.
 
-# All instruction will be printed to console before execution.
-@ enabled 1
-. instruction_print
+### Get folder in which this .pipe is being executed.
+> return_path RUNTIME_PATH
+. get_runtime_path
 
-### Set folders:
-$ OUT "C:/Games/Gamma/mods/Beast VG"
-$ ROOT C:/repo/beast_vg/mod
+### Load path variables
+@ file $RUNTIME_PATH$/boot.pipe
+. run_pipe_file
 
 ### Clean output folder:
-@ folder $OUT$  # Set procedure parameter
+@ folder $DEPLOY_PATH$  # Set procedure parameter
 . delete_folder # Invoke procedure
 
 ### Russian localization:
-@ source_file $ROOT$/bvg/localization/eng.xml
-@ target_file $OUT$/gamedata/configs/text/eng/bvg_mcm.xml
+@ source_file $MOD_PATH$/bvg/localization/eng.xml
+@ target_file $DEPLOY_PATH$/gamedata/configs/text/eng/bvg_mcm.xml
 . copy_file
 
 ### English localization:
-@ source_file $ROOT$/bvg/localization/rus.xml
-@ target_file $OUT$/gamedata/configs/text/rus/bvg_mcm.xml
+@ source_file $MOD_PATH$/bvg/localization/rus.xml
+@ target_file $DEPLOY_PATH$/gamedata/configs/text/rus/bvg_mcm.xml
 . copy_file
 
 ### BVG Scripts. Will copy all source folder and subfolders files into one target folder.
-@ source_folder $ROOT$/bvg/script
-@ target_folder $OUT$/gamedata/scripts
+@ source_folder $MOD_PATH$/bvg/script
+@ target_folder $DEPLOY_PATH$/gamedata/scripts
 @ file_mask *.script
 . copy_flatten_folder
 
 ### BSDEL Scripts.
-@ source_folder $ROOT$/bsdel
-@ target_folder $OUT$/gamedata/scripts
+@ source_folder $MOD_PATH$/bsdel
+@ target_folder $DEPLOY_PATH$/gamedata/scripts
 @ file_mask *.script
 . copy_flatten_folder
 
-@ enabled 0
-. instruction_print
-
-
 ### Fancy final message.
-
-@ message ""
-. print_line
-
-@ message "+------------------------------+"
-. print_line
-
-@ message "| Done. Press any key to exit. |"
-. print_line
-
-@ message "+------------------------------+"
-. print_line
-
-@ timeout_ms 3000 # -1 will make infinite timeout.
-. read_key
+@ file $RUNTIME_PATH$/end.pipe
+. run_pipe_file

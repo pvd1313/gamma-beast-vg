@@ -6,11 +6,11 @@ public class CopyFlattenFolder : IProcedure
     private string _targetFolder;
     private string _fileMask;
     
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _sourceFolder = reader.Read("source_folder");
-        _targetFolder = reader.Read("target_folder");
-        _fileMask = reader.Read("file_mask");
+        _sourceFolder = reader.ReadParameter("source_folder");
+        _targetFolder = reader.ReadParameter("target_folder");
+        _fileMask = reader.ReadParameter("file_mask");
     }
 
     public void Run(Stack stack)

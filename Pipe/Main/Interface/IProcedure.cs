@@ -2,7 +2,7 @@ namespace Pipe;
 
 public interface IProcedure
 {
-    void Read(ParameterReader reader);
+    void Read(ProcedureReader reader);
 
     void Run(Stack stack);
 }

@@ -4,17 +4,24 @@ public class Stack
 {
     private IDictionary<string, string> _parameters;
     private IDictionary<string, string> _variables;
+    private IDictionary<string, string> _returns;
+    private Stack<string> _runtimePath;
     private string _instruction;
     private IFileSystem _fileSystem;
+    private IMachine _machine;
     private Evaluator _evaluator;
     private Config _config;
 
-    public static Stack Create()
+    public static Stack Create(IFileSystem fileSystem, IMachine machine)
     {
         return new Stack
         {
             _parameters = new Dictionary<string, string>(),
             _variables = new Dictionary<string, string>(),
+            _returns = new Dictionary<string, string>(),
+            _runtimePath = new Stack<string>(),
+            _fileSystem = fileSystem,
+            _machine = machine,
             _evaluator = Evaluator.Create()
         };
     }
@@ -39,14 +46,29 @@ public class Stack
         _instruction = value;
     }
 
-    public void SetFileSystem(IFileSystem fileSystem)
-    {
-        _fileSystem = fileSystem;
-    }
-
     public IFileSystem GetFileSystem()
     {
         return _fileSystem;
+    }
+
+    public IMachine GetMachine()
+    {
+        return _machine;
+    }
+
+    public void PushRuntimePath(string path)
+    {
+        _runtimePath.Push(path);
+    }
+
+    public string PopRuntimePath()
+    {
+        return _runtimePath.Pop();
+    }
+
+    public string PeekRuntimePath()
+    {
+        return _runtimePath.Peek();
     }
 
     public void SetVariable(string key, string value)
@@ -62,21 +84,44 @@ public class Stack
         }
     }
 
-    public string PopParameter(string key)
+    public void PushReturn(string key, string value)
     {
-        if (_parameters.Remove(key, out string value) == false)
+        if (_returns.TryAdd(key, value) == false)
         {
-            throw new Exception($"parameter '{key}' was not found in stack");
+            throw new Exception($"return '{key}' is already in stack");
+        }
+    }
+
+    public string PopReturn(string key)
+    {
+        if (_returns.Remove(key, out string value) == false)
+        {
+            throw new Exception($"return '{key}' was not found in stack.");
         }
 
         return value;
     }
 
-    public void FinishParameterReading()
+    public string PopParameter(string key)
+    {
+        if (_parameters.Remove(key, out string value) == false)
+        {
+            throw new Exception($"parameter '{key}' was not found in stack.");
+        }
+
+        return value;
+    }
+
+    public void FinishProcedureReading()
     {
         if (_parameters.Count > 0)
         {
             throw new Exception("not all parameters were consumed");
+        }
+
+        if (_returns.Count > 0)
+        {
+            throw new Exception("not all returns were consumed");
         }
     }
 
@@ -84,7 +129,7 @@ public class Stack
     {
         if (_variables.TryGetValue(key, out string value) == false)
         {
-            throw new KeyNotFoundException($"Variable '{key}' not found in dictionary.");
+            throw new KeyNotFoundException($"Variable '{key}' is not defined.");
         }
 
         return value;

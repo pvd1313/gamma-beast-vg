@@ -28,15 +28,15 @@ public class Procedure : IInstruction
 
         if (_procedures.TryGetValue(procedureIndex, out IProcedure procedure) == false)
         {
-            throw new Exception($"procedure '{procedureIndex}' was not found");
+            throw new Exception($"unknown procedure '{procedureIndex}'");
         }
         
-        procedure.Read(new ParameterReader
+        procedure.Read(new ProcedureReader
         {
             stack = stack
         });
         
-        stack.FinishParameterReading();
+        stack.FinishProcedureReading();
 
         procedure.Run(stack);
     }

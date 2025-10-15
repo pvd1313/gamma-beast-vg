@@ -5,10 +5,10 @@ public class CopyFile : IProcedure
     private string _sourceFile;
     private string _targetFile;
 
-    public void Read(ParameterReader reader)
+    public void Read(ProcedureReader reader)
     {
-        _sourceFile = reader.Read("source_file");
-        _targetFile = reader.Read("target_file");
+        _sourceFile = reader.ReadParameter("source_file");
+        _targetFile = reader.ReadParameter("target_file");
     }
 
     public void Run(Stack stack)

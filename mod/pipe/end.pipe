@@ -1,0 +1,17 @@
+@ enabled 0
+. instruction_print
+
+@ message ""
+. print_line
+
+@ message "+------------------------------+"
+. print_line
+
+@ message "| Done. Press any key to exit. |"
+. print_line
+
+@ message "+------------------------------+"
+. print_line
+
+@ timeout_ms 3000 # -1 will make infinite timeout.
+. read_key
