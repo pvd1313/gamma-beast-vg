@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipe", "Pipe.csproj", "{357FD1A2-116F-45B2-93CE-423A94181708}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipe", "Pipe\Pipe.csproj", "{4A0EA87B-864D-4058-902E-AD4A330CA086}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{357FD1A2-116F-45B2-93CE-423A94181708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{357FD1A2-116F-45B2-93CE-423A94181708}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{357FD1A2-116F-45B2-93CE-423A94181708}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{357FD1A2-116F-45B2-93CE-423A94181708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A0EA87B-864D-4058-902E-AD4A330CA086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A0EA87B-864D-4058-902E-AD4A330CA086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A0EA87B-864D-4058-902E-AD4A330CA086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A0EA87B-864D-4058-902E-AD4A330CA086}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

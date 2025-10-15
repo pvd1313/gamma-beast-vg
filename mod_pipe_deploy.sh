@@ -1,1 +1,1 @@
-dotnet run --project "./pipe/pipe.csproj" -- "./mod/pipe/deploy.pipe"
+dotnet run --project "./pipe/pipe/pipe.csproj" -- "./mod/pipe/deploy.pipe"
